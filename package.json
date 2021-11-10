@@ -8,13 +8,18 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "@assemblyscript/loader": "^0.19.18",
-    "assemblyscript": "^0.19.18"
+    "@assemblyscript/loader": "^0.19.17",
+    "assemblyscript": "^0.19.18",
+    "json-as": "^0.2.6",
+    "visitor-as": "^0.6.0"
   },
   "scripts": {
-    "asbuild:untouched": "asc assembly/index.ts --target debug",
-    "asbuild:optimized": "asc assembly/index.ts --target release",
+    "asbuild:untouched": "asc assembly/handle.ts --exportRuntime --enable reference-types --target debug",
+    "asbuild:optimized": "asc assembly/handle.ts --exportRuntime --enable reference-types --target release",
     "asbuild": "yarn asbuild:untouched && yarn asbuild:optimized",
+    "asbuild2:untouched": "asc assembly/class.ts --target debug",
+    "asbuild2:optimized": "asc assembly/class.ts --target release",
+    "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
     "test": "node tests"
   }
 }

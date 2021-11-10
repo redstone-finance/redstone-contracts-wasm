@@ -3,53 +3,83 @@
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_=>_none (func (param i32)))
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
- (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $none_=>_none (func))
+ (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $i32_i32_f64_f64_f64_f64_f64_=>_none (func (param i32 i32 f64 f64 f64 f64 f64)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
  (type $none_=>_i32 (func (result i32)))
  (import "env" "trace" (func $~lib/builtins/trace (param i32 i32 f64 f64 f64 f64 f64)))
- (import "foo" "console.log" (func $assembly/foo/console.log (param i32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
- (global $~lib/rt/itcms/white (mut i32) (i32.const 0))
- (global $~lib/rt/itcms/iter (mut i32) (i32.const 0))
- (global $~lib/rt/itcms/toSpace (mut i32) (i32.const 0))
- (global $~lib/rt/itcms/state (mut i32) (i32.const 0))
+ (global $assembly/class/Car.MAX_DOORS i32 (i32.const 5))
+ (global $assembly/class/Car.usualDoors i32 (i32.const 3))
  (global $~lib/rt/itcms/total (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/threshold (mut i32) (i32.const 0))
+ (global $~lib/rt/itcms/state (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/visitCount (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/pinSpace (mut i32) (i32.const 0))
+ (global $~lib/rt/itcms/iter (mut i32) (i32.const 0))
+ (global $~lib/rt/itcms/toSpace (mut i32) (i32.const 0))
+ (global $~lib/rt/itcms/white (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/fromSpace (mut i32) (i32.const 0))
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
  (global $~lib/ASC_SHRINK_LEVEL i32 (i32.const 0))
- (global $~lib/rt/__rtti_base i32 (i32.const 528))
- (global $~lib/memory/__data_end i32 (i32.const 588))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 16972))
- (global $~lib/memory/__heap_base i32 (i32.const 16972))
+ (global $assembly/class/Car i32 (i32.const 3))
+ (global $~lib/rt/__rtti_base i32 (i32.const 608))
+ (global $~lib/memory/__data_end i32 (i32.const 644))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17028))
+ (global $~lib/memory/__heap_base i32 (i32.const 17028))
  (memory $0 1)
- (data (i32.const 12) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00I\00n\00s\00i\00d\00e\00 \00h\00a\00n\00d\00l\00e\00 \00f\00u\00n\00c\00t\00i\00o\00n\00")
- (data (i32.const 76) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\12\00\00\00F\00r\00o\00m\00 \00w\00a\00s\00m\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 124) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00~\00l\00i\00b\00/\00r\00t\00/\00i\00t\00c\00m\00s\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 192) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 220) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
- (data (i32.const 284) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\14\00\00\00~\00l\00i\00b\00/\00r\00t\00.\00t\00s\00\00\00\00\00\00\00\00\00")
- (data (i32.const 332) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00\00\00\00\00")
- (data (i32.const 400) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 432) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 460) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 528) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02A\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 12) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00W\00A\00S\00M\00:\00 \00c\00a\00r\00 \00c\00o\00n\00s\00t\00r\00u\00c\00t\00o\00r\00\00\00")
+ (data (i32.const 76) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00\00\00\00\00")
+ (data (i32.const 140) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00~\00l\00i\00b\00/\00r\00t\00/\00i\00t\00c\00m\00s\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 208) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 240) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 268) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 332) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\14\00\00\00~\00l\00i\00b\00/\00r\00t\00.\00t\00s\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 384) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 412) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 476) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00W\00A\00S\00M\00:\00 \00o\00p\00e\00n\00D\00o\00o\00r\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 540) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00W\00A\00S\00M\00:\00 \00c\00l\00o\00s\00e\00D\00o\00o\00r\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 608) "\04\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00")
  (table $0 1 funcref)
  (elem $0 (i32.const 1))
+ (export "Car" (global $assembly/class/Car))
+ (export "Car.MAX_DOORS" (global $assembly/class/Car.MAX_DOORS))
+ (export "Car.usualDoors" (global $assembly/class/Car.usualDoors))
  (export "memory" (memory $0))
- (export "handle" (func $export:assembly/index/handle))
+ (export "Car#get:numDoors" (func $export:assembly/class/Car#get:numDoors))
+ (export "Car#set:numDoors" (func $export:assembly/class/Car#set:numDoors))
+ (export "Car#get:isDoorsOpen" (func $export:assembly/class/Car#get:isDoorsOpen))
+ (export "Car#set:isDoorsOpen" (func $export:assembly/class/Car#set:isDoorsOpen))
+ (export "Car#constructor" (func $export:assembly/class/Car#constructor))
+ (export "Car#openDoors" (func $export:assembly/class/Car#openDoors))
+ (export "Car#closeDoors" (func $export:assembly/class/Car#closeDoors))
  (start $~start)
- (func $~lib/rt/itcms/Object#get:color (param $0 i32) (result i32)
+ (func $assembly/class/Car#set:numDoors (param $0 i32) (param $1 i32)
   local.get $0
-  i32.load offset=4
-  i32.const 3
-  i32.and
+  local.get $1
+  i32.store
+ )
+ (func $~lib/rt/itcms/Object#set:nextWithColor (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=4
+ )
+ (func $~lib/rt/itcms/Object#set:prev (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=8
+ )
+ (func $~lib/rt/itcms/initLazy (param $0 i32) (result i32)
+  local.get $0
+  local.get $0
+  call $~lib/rt/itcms/Object#set:nextWithColor
+  local.get $0
+  local.get $0
+  call $~lib/rt/itcms/Object#set:prev
+  local.get $0
  )
  (func $~lib/rt/itcms/Object#get:next (param $0 i32) (result i32)
   local.get $0
@@ -59,15 +89,68 @@
   i32.xor
   i32.and
  )
- (func $~lib/rt/itcms/Object#set:prev (param $0 i32) (param $1 i32)
+ (func $~lib/rt/itcms/Object#get:color (param $0 i32) (result i32)
   local.get $0
-  local.get $1
-  i32.store offset=8
+  i32.load offset=4
+  i32.const 3
+  i32.and
  )
- (func $~lib/rt/itcms/Object#set:nextWithColor (param $0 i32) (param $1 i32)
+ (func $~lib/rt/itcms/visitRoots (param $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
   local.get $0
+  call $~lib/rt/__visit_globals
+  global.get $~lib/rt/itcms/pinSpace
+  local.set $1
   local.get $1
-  i32.store offset=4
+  call $~lib/rt/itcms/Object#get:next
+  local.set $2
+  loop $while-continue|0
+   local.get $2
+   local.get $1
+   i32.ne
+   local.set $3
+   local.get $3
+   if
+    i32.const 1
+    drop
+    local.get $2
+    call $~lib/rt/itcms/Object#get:color
+    i32.const 3
+    i32.eq
+    i32.eqz
+    if
+     i32.const 0
+     i32.const 160
+     i32.const 159
+     i32.const 16
+     call $~lib/builtins/abort
+     unreachable
+    end
+    local.get $2
+    i32.const 20
+    i32.add
+    local.get $0
+    call $~lib/rt/__visit_members
+    local.get $2
+    call $~lib/rt/itcms/Object#get:next
+    local.set $2
+    br $while-continue|0
+   end
+  end
+ )
+ (func $~lib/rt/itcms/Object#set:color (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $0
+  i32.load offset=4
+  i32.const 3
+  i32.const -1
+  i32.xor
+  i32.and
+  local.get $1
+  i32.or
+  call $~lib/rt/itcms/Object#set:nextWithColor
  )
  (func $~lib/rt/itcms/Object#set:next (param $0 i32) (param $1 i32)
   local.get $0
@@ -105,7 +188,7 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 144
+    i32.const 160
     i32.const 127
     i32.const 18
     call $~lib/builtins/abort
@@ -122,7 +205,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 144
+   i32.const 160
    i32.const 131
    i32.const 16
    call $~lib/builtins/abort
@@ -135,15 +218,6 @@
   local.get $1
   call $~lib/rt/itcms/Object#set:next
  )
- (func $~lib/rt/itcms/initLazy (param $0 i32) (result i32)
-  local.get $0
-  local.get $0
-  call $~lib/rt/itcms/Object#set:nextWithColor
-  local.get $0
-  local.get $0
-  call $~lib/rt/itcms/Object#set:prev
-  local.get $0
- )
  (func $~lib/rt/__typeinfo (param $0 i32) (result i32)
   (local $1 i32)
   global.get $~lib/rt/__rtti_base
@@ -153,8 +227,8 @@
   i32.load
   i32.gt_u
   if
-   i32.const 240
-   i32.const 304
+   i32.const 288
+   i32.const 352
    i32.const 22
    i32.const 28
    call $~lib/builtins/abort
@@ -220,7 +294,7 @@
    i32.eqz
    if (result i32)
     i32.const 0
-    i32.const 144
+    i32.const 160
     i32.const 147
     i32.const 30
     call $~lib/builtins/abort
@@ -243,140 +317,6 @@
    i32.const 2
   end
   call $~lib/rt/itcms/Object#linkTo
- )
- (func $~lib/rt/itcms/__link (param $0 i32) (param $1 i32) (param $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  local.get $1
-  i32.eqz
-  if
-   return
-  end
-  i32.const 1
-  drop
-  local.get $0
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 144
-   i32.const 294
-   i32.const 14
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $1
-  i32.const 20
-  i32.sub
-  local.set $3
-  local.get $3
-  call $~lib/rt/itcms/Object#get:color
-  global.get $~lib/rt/itcms/white
-  i32.eq
-  if
-   local.get $0
-   i32.const 20
-   i32.sub
-   local.set $4
-   local.get $4
-   call $~lib/rt/itcms/Object#get:color
-   local.set $5
-   local.get $5
-   global.get $~lib/rt/itcms/white
-   i32.eqz
-   i32.eq
-   if
-    local.get $2
-    if
-     local.get $4
-     call $~lib/rt/itcms/Object#makeGray
-    else
-     local.get $3
-     call $~lib/rt/itcms/Object#makeGray
-    end
-   else
-    local.get $5
-    i32.const 3
-    i32.eq
-    if (result i32)
-     global.get $~lib/rt/itcms/state
-     i32.const 1
-     i32.eq
-    else
-     i32.const 0
-    end
-    if
-     local.get $3
-     call $~lib/rt/itcms/Object#makeGray
-    end
-   end
-  end
- )
- (func $assembly/index/ContractResult#set:state (param $0 i32) (param $1 i32)
-  local.get $0
-  local.get $1
-  i32.store
-  local.get $0
-  local.get $1
-  i32.const 0
-  call $~lib/rt/itcms/__link
- )
- (func $~lib/rt/itcms/visitRoots (param $0 i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  local.get $0
-  call $~lib/rt/__visit_globals
-  global.get $~lib/rt/itcms/pinSpace
-  local.set $1
-  local.get $1
-  call $~lib/rt/itcms/Object#get:next
-  local.set $2
-  loop $while-continue|0
-   local.get $2
-   local.get $1
-   i32.ne
-   local.set $3
-   local.get $3
-   if
-    i32.const 1
-    drop
-    local.get $2
-    call $~lib/rt/itcms/Object#get:color
-    i32.const 3
-    i32.eq
-    i32.eqz
-    if
-     i32.const 0
-     i32.const 144
-     i32.const 159
-     i32.const 16
-     call $~lib/builtins/abort
-     unreachable
-    end
-    local.get $2
-    i32.const 20
-    i32.add
-    local.get $0
-    call $~lib/rt/__visit_members
-    local.get $2
-    call $~lib/rt/itcms/Object#get:next
-    local.set $2
-    br $while-continue|0
-   end
-  end
- )
- (func $~lib/rt/itcms/Object#set:color (param $0 i32) (param $1 i32)
-  local.get $0
-  local.get $0
-  i32.load offset=4
-  i32.const 3
-  i32.const -1
-  i32.xor
-  i32.and
-  local.get $1
-  i32.or
-  call $~lib/rt/itcms/Object#set:nextWithColor
  )
  (func $~lib/rt/itcms/__visit (param $0 i32) (param $1 i32)
   (local $2 i32)
@@ -480,7 +420,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 268
    i32.const 14
    call $~lib/builtins/abort
@@ -500,7 +440,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 270
    i32.const 14
    call $~lib/builtins/abort
@@ -563,7 +503,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 284
    i32.const 14
    call $~lib/builtins/abort
@@ -695,7 +635,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 201
    i32.const 14
    call $~lib/builtins/abort
@@ -712,7 +652,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 203
    i32.const 14
    call $~lib/builtins/abort
@@ -792,7 +732,7 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 480
+    i32.const 432
     i32.const 221
     i32.const 16
     call $~lib/builtins/abort
@@ -835,7 +775,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 233
    i32.const 14
    call $~lib/builtins/abort
@@ -853,7 +793,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 234
    i32.const 14
    call $~lib/builtins/abort
@@ -921,7 +861,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 251
    i32.const 14
    call $~lib/builtins/abort
@@ -1026,7 +966,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 377
    i32.const 14
    call $~lib/builtins/abort
@@ -1069,7 +1009,7 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 480
+    i32.const 432
     i32.const 384
     i32.const 16
     call $~lib/builtins/abort
@@ -1102,7 +1042,7 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 480
+    i32.const 432
     i32.const 397
     i32.const 5
     call $~lib/builtins/abort
@@ -1345,7 +1285,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 559
    i32.const 3
    call $~lib/builtins/abort
@@ -1567,7 +1507,7 @@
     i32.eqz
     if
      i32.const 0
-     i32.const 144
+     i32.const 160
      i32.const 228
      i32.const 20
      call $~lib/builtins/abort
@@ -1672,8 +1612,8 @@
   i32.const 1073741820
   i32.gt_u
   if
-   i32.const 352
-   i32.const 480
+   i32.const 96
+   i32.const 432
    i32.const 458
    i32.const 29
    call $~lib/builtins/abort
@@ -1757,7 +1697,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 330
    i32.const 14
    call $~lib/builtins/abort
@@ -1822,7 +1762,7 @@
     i32.eqz
     if
      i32.const 0
-     i32.const 480
+     i32.const 432
      i32.const 343
      i32.const 18
      call $~lib/builtins/abort
@@ -1973,7 +1913,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 357
    i32.const 14
    call $~lib/builtins/abort
@@ -2082,7 +2022,7 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 480
+    i32.const 432
     i32.const 496
     i32.const 16
     call $~lib/builtins/abort
@@ -2102,7 +2042,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 480
+   i32.const 432
    i32.const 498
    i32.const 14
    call $~lib/builtins/abort
@@ -2379,8 +2319,8 @@
   i32.const 1073741804
   i32.ge_u
   if
-   i32.const 352
-   i32.const 144
+   i32.const 96
+   i32.const 160
    i32.const 260
    i32.const 31
    call $~lib/builtins/abort
@@ -2424,12 +2364,36 @@
   call $~lib/memory/memory.fill
   local.get $3
  )
+ (func $assembly/class/Car#set:doorsOpen (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store8 offset=4
+ )
+ (func $assembly/class/Car#get:numDoors (param $0 i32) (result i32)
+  local.get $0
+  i32.load
+ )
+ (func $assembly/class/Car#get:doorsOpen (param $0 i32) (result i32)
+  local.get $0
+  i32.load8_u offset=4
+ )
+ (func $assembly/class/Car#get:isDoorsOpen (param $0 i32) (result i32)
+  local.get $0
+  i32.load8_u offset=4
+  i32.const 0
+  i32.ne
+ )
+ (func $assembly/class/Car#set:isDoorsOpen (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  call $assembly/class/Car#set:doorsOpen
+ )
  (func $~lib/rt/__visit_globals (param $0 i32)
   (local $1 i32)
-  i32.const 240
+  i32.const 288
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 352
+  i32.const 96
   local.get $0
   call $~lib/rt/itcms/__visit
  )
@@ -2444,125 +2408,32 @@
    call $~lib/rt/itcms/__visit
   end
  )
- (func $assembly/index/ContractsRegistryState~visit (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  local.get $0
-  i32.load
-  local.tee $2
-  if
-   local.get $2
-   local.get $1
-   call $~lib/rt/itcms/__visit
-  end
- )
- (func $~lib/array/Array<~lib/string/String>#__visit (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  i32.const 1
-  drop
-  local.get $0
-  i32.load offset=4
-  local.set $2
-  local.get $2
-  local.get $0
-  i32.load offset=12
-  i32.const 2
-  i32.shl
-  i32.add
-  local.set $3
-  loop $while-continue|0
-   local.get $2
-   local.get $3
-   i32.lt_u
-   local.set $4
-   local.get $4
-   if
-    local.get $2
-    i32.load
-    local.set $5
-    local.get $5
-    if
-     local.get $5
-     local.get $1
-     call $~lib/rt/itcms/__visit
-    end
-    local.get $2
-    i32.const 4
-    i32.add
-    local.set $2
-    br $while-continue|0
-   end
-  end
-  local.get $0
-  i32.load
-  local.get $1
-  call $~lib/rt/itcms/__visit
- )
- (func $~lib/array/Array<~lib/string/String>~visit (param $0 i32) (param $1 i32)
-  local.get $0
-  local.get $1
-  call $~lib/array/Array<~lib/string/String>#__visit
- )
- (func $assembly/index/ContractResult~visit (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  local.get $0
-  i32.load
-  local.tee $2
-  if
-   local.get $2
-   local.get $1
-   call $~lib/rt/itcms/__visit
-  end
- )
  (func $~lib/rt/__visit_members (param $0 i32) (param $1 i32)
   block $invalid
-   block $assembly/index/ContractResult
-    block $assembly/index/ContractsRegistryAction
-     block $~lib/array/Array<~lib/string/String>
-      block $assembly/index/ContractsRegistryState
-       block $~lib/arraybuffer/ArrayBufferView
-        block $~lib/string/String
-         block $~lib/arraybuffer/ArrayBuffer
-          local.get $0
-          i32.const 8
-          i32.sub
-          i32.load
-          br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/index/ContractsRegistryState $~lib/array/Array<~lib/string/String> $assembly/index/ContractsRegistryAction $assembly/index/ContractResult $invalid
-         end
-         return
-        end
-        return
-       end
+   block $assembly/class/Car
+    block $~lib/arraybuffer/ArrayBufferView
+     block $~lib/string/String
+      block $~lib/arraybuffer/ArrayBuffer
        local.get $0
-       local.get $1
-       call $~lib/arraybuffer/ArrayBufferView~visit
-       return
+       i32.const 8
+       i32.sub
+       i32.load
+       br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/class/Car $invalid
       end
-      local.get $0
-      local.get $1
-      call $assembly/index/ContractsRegistryState~visit
       return
      end
-     local.get $0
-     local.get $1
-     call $~lib/array/Array<~lib/string/String>~visit
      return
     end
+    local.get $0
+    local.get $1
+    call $~lib/arraybuffer/ArrayBufferView~visit
     return
    end
-   local.get $0
-   local.get $1
-   call $assembly/index/ContractResult~visit
    return
   end
   unreachable
  )
  (func $~start
-  i32.const 192
-  call $~lib/rt/itcms/initLazy
-  global.set $~lib/rt/itcms/toSpace
   memory.size
   i32.const 16
   i32.shl
@@ -2571,10 +2442,13 @@
   i32.const 1
   i32.shr_u
   global.set $~lib/rt/itcms/threshold
-  i32.const 400
+  i32.const 208
   call $~lib/rt/itcms/initLazy
   global.set $~lib/rt/itcms/pinSpace
-  i32.const 432
+  i32.const 240
+  call $~lib/rt/itcms/initLazy
+  global.set $~lib/rt/itcms/toSpace
+  i32.const 384
   call $~lib/rt/itcms/initLazy
   global.set $~lib/rt/itcms/fromSpace
  )
@@ -2583,82 +2457,242 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 16992
-   i32.const 17040
+   i32.const 17056
+   i32.const 17104
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
    unreachable
   end
  )
- (func $assembly/index/handle (param $0 i32) (param $1 i32) (result i32)
+ (func $assembly/class/Car#constructor (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   global.get $~lib/memory/__stack_pointer
-  i32.const 4
+  i32.const 8
   i32.sub
   global.set $~lib/memory/__stack_pointer
   call $~stack_check
   global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  i32.const 32
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store
-  local.get $2
-  i32.const 2
-  local.get $0
-  f64.load offset=8
-  f64.const 2
-  f64.const 0
-  f64.const 0
-  f64.const 0
-  call $~lib/builtins/trace
-  i32.const 96
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store
-  local.get $2
-  call $assembly/foo/console.log
-  i32.const 0
-  local.get $0
-  call $assembly/index/ContractResult#constructor
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $2
- )
- (func $assembly/index/ContractResult#constructor (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
+  i64.const 0
+  i64.store
   local.get $0
   i32.eqz
   if
    global.get $~lib/memory/__stack_pointer
-   i32.const 4
-   i32.const 6
+   i32.const 5
+   i32.const 3
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
   end
   local.get $0
   i32.const 0
-  call $assembly/index/ContractResult#set:state
+  call $assembly/class/Car#set:numDoors
+  local.get $0
+  i32.const 0
+  call $assembly/class/Car#set:doorsOpen
+  i32.const 32
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store offset=4
+  local.get $2
+  i32.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  call $~lib/builtins/trace
   local.get $0
   local.get $1
-  call $assembly/index/ContractResult#set:state
+  call $assembly/class/Car#set:numDoors
   local.get $0
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $2
+ )
+ (func $assembly/class/Car#openDoors (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  i32.const 496
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  i32.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  call $~lib/builtins/trace
+  local.get $0
+  i32.load8_u offset=4
+  if
+   i32.const 0
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   i32.const 4
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $1
+   return
+  end
+  local.get $0
+  i32.const 1
+  call $assembly/class/Car#set:doorsOpen
+  i32.const 1
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $assembly/class/Car#closeDoors (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  i32.const 560
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  i32.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  f64.const 0
+  call $~lib/builtins/trace
+  local.get $0
+  i32.load8_u offset=4
+  i32.eqz
+  if
+   i32.const 0
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   i32.const 4
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $1
+   return
+  end
+  local.get $0
+  i32.const 0
+  call $assembly/class/Car#set:doorsOpen
+  i32.const 1
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/class/Car#get:numDoors (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/class/Car#get:numDoors
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/class/Car#set:numDoors (param $0 i32) (param $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  local.get $1
+  call $assembly/class/Car#set:numDoors
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/class/Car#get:isDoorsOpen (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/class/Car#get:isDoorsOpen
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/class/Car#set:isDoorsOpen (param $0 i32) (param $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  local.get $1
+  call $assembly/class/Car#set:isDoorsOpen
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/class/Car#constructor (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  local.get $1
+  call $assembly/class/Car#constructor
   local.set $2
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -2666,27 +2700,42 @@
   global.set $~lib/memory/__stack_pointer
   local.get $2
  )
- (func $export:assembly/index/handle (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
+ (func $export:assembly/class/Car#openDoors (param $0 i32) (result i32)
+  (local $1 i32)
   global.get $~lib/memory/__stack_pointer
-  i32.const 8
+  i32.const 4
   i32.sub
   global.set $~lib/memory/__stack_pointer
   call $~stack_check
   global.get $~lib/memory/__stack_pointer
   local.get $0
   i32.store
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
   local.get $0
-  local.get $1
-  call $assembly/index/handle
-  local.set $2
+  call $assembly/class/Car#openDoors
+  local.set $1
   global.get $~lib/memory/__stack_pointer
-  i32.const 8
+  i32.const 4
   i32.add
   global.set $~lib/memory/__stack_pointer
-  local.get $2
+  local.get $1
+ )
+ (func $export:assembly/class/Car#closeDoors (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/class/Car#closeDoors
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
  )
 )

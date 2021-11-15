@@ -2,65 +2,84 @@ const fs = require("fs");
 const loader = require("@assemblyscript/loader");
 
 // https://github.com/AssemblyScript/assemblyscript/issues/261
+// 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/optimized.wasm"),
-  {env: {
+  {
+    env: {
       memory: new WebAssembly.Memory({
-        initial: 10
-      })
-    }}
+        initial: 1,
+      }),
+    },
+  }
 );
 
 const wasmExports = wasmModule.exports;
 
-// using pointer to a class - as in https://www.assemblyscript.org/loader.html#custom-classes
+// 2. using pointer to a class - as in https://www.assemblyscript.org/loader.html#custom-classes
 const tokenPtr = wasmExports.getToken();
+console.log("tokenPtr: " + tokenPtr);
 const token = wasmExports.Token.wrap(tokenPtr);
-const { __getString, __newString } = wasmExports;
-
-console.log("token name", __getString(token.name));
-token.name = __newString("foobar from client");
-console.log("token name", __getString(token.name));
-console.log("token supply", BigInt(token.totalSupply).toString());
-console.log(JSON.stringify(token));
-
-// using class "directly" - as in
+token.name = wasmExports.__newString(
+  "[CLASS_FROM_POINTER:name]: RedStone Token 1"
+);
+token.symbol = wasmExports.__newString(
+  "[CLASS_FROM_POINTER:symbol]: RDST_FTW"
+);
+// 3. using class "directly" - as in
 // https://github.com/AssemblyScript/assemblyscript/blob/main/lib/loader/tests/index.js#L255
 const token2 = new wasmExports.Token(
-  __newString("RedStone Token 2"),
-  __newString("RDST2"),
+  wasmExports.__newString("RedStone Token 2"),
+  wasmExports.__newString("[CLASS_FROM_EXPORT:symbol]: RDST2"),
   BigInt(20001)
 );
-console.log("token name 2", __getString(token2.name));
-token2.name = __newString("foobar2");
-console.log("token name 2", __getString(token2.name));
-console.log("token supply 2", BigInt(token2.totalSupply).toString());
-console.log(JSON.stringify(token2));
+token2.name = wasmExports.__newString(
+  "[CLASS_FROM_EXPORT:name]: RedStone Token 2"
+);
+const tokenPtr2 = +token2; // https://github.com/AssemblyScript/assemblyscript/blob/main/lib/loader/tests/index.js#L262
+console.log("tokenPtr2: ", tokenPtr2);
 
-const memory = wasmExports.memory;
-console.log(memory.buffer);
-console.log(wasmExports.table.length);
+const oldMemory = wasmExports.memory;
+console.log("saving memory in file");
+// 4. dumping WASM module memory into a file (simulates writing to cache)
+fs.writeFileSync("contract_mem.dat", Buffer.from(oldMemory.buffer));
 
-// loading with existing memory (eg. loaded from cache)
+// 5. loading memory content from file (simulates reading from cache)
+const bufferFromFile = fs.readFileSync("contract_mem.dat"); //that's Uint8Array by default.
+console.log("From file@token pointer 1:", bufferFromFile[tokenPtr]);
+console.log("From file@token pointer 2:", bufferFromFile[tokenPtr2]);
+
+// 6. creating new WASM memory instance and loading its buffer with data loaded from file
+const newMemory = new WebAssembly.Memory({
+  initial: 1,
+});
+const newHeap = new Uint8Array(newMemory.buffer);
+// 7. copying memory content - there's probably some better way.
+for (let i = 0; i < bufferFromFile.length; i++) {
+  newHeap[i] = bufferFromFile[i];
+}
+console.log("New memory@token pointer 1:", newHeap[tokenPtr]);
+console.log("New memory@token pointer 2:", newHeap[tokenPtr2]);
+
+// 8. creating new wasm module with the new memory instance with buffer filled with data from file
 const wasmModuleMem = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/optimized.wasm"),
-  {env: {
-      memory: memory
-    }}
+  {
+    env: {
+      memory: newMemory,
+    },
+  }
 );
 
 const wasmExportsMem = wasmModuleMem.exports;
-// a pointer to the object should be also saved...
+// note: we will probably also need to write a pointer to the contract object.
 const token3 = wasmExportsMem.Token.wrap(tokenPtr);
+const token4 = wasmExportsMem.Token.wrap(tokenPtr2);
 
-// this one should be the same as in line 23.
-console.log("token name", __getString(token3.name));
+console.log("\nloaded token 1 name:", wasmExportsMem.__getString(token3.name));
+console.log("loaded token 1 symbol:", wasmExportsMem.__getString(token3.symbol));
+console.log("loaded token 1 totalSupply:", BigInt(token3.totalSupply).toString());
 
-
-
-
-
-
-
-
-
+console.log("\nloaded token 2 name:", wasmExportsMem.__getString(token4.name));
+console.log("loaded token 2 symbol:", wasmExportsMem.__getString(token4.symbol));
+console.log("loaded token 2 totalSupply token 2", BigInt(token4.totalSupply).toString());

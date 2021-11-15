@@ -1,7 +1,7 @@
 export class Token {
   private _name: string;
 
-  _symbol: string;
+  private _symbol: string;
 
   _totalSupply: u64;
 
@@ -22,6 +22,14 @@ export class Token {
 
   set name(value: string) {
     this._name = value;
+  }
+
+  get symbol(): string {
+    return this._symbol;
+  }
+
+  set symbol(value: string) {
+    this._symbol = value;
   }
 
   get totalSupply(): u64 {

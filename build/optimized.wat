@@ -50,8 +50,6 @@
  (export "__rtti_base" (global $~lib/rt/__rtti_base))
  (export "memory" (memory $0))
  (export "table" (table $0))
- (export "Token#get:_symbol" (func $export:assembly/class/Token#get:_symbol))
- (export "Token#set:_symbol" (func $export:assembly/class/Token#set:_symbol))
  (export "Token#get:_totalSupply" (func $export:assembly/class/Token#get:_totalSupply))
  (export "Token#set:_totalSupply" (func $export:assembly/class/Token#set:_totalSupply))
  (export "Token#get:_balances" (func $export:assembly/class/Token#get:_balances))
@@ -61,6 +59,8 @@
  (export "Token#constructor" (func $export:assembly/class/Token#constructor))
  (export "Token#get:name" (func $export:assembly/class/Token#get:name))
  (export "Token#set:name" (func $export:assembly/class/Token#set:name))
+ (export "Token#get:symbol" (func $export:assembly/class/Token#get:symbol))
+ (export "Token#set:symbol" (func $export:assembly/class/Token#set:symbol))
  (export "Token#get:totalSupply" (func $export:assembly/class/Token#get:_totalSupply))
  (start $~start)
  (func $~lib/rt/itcms/Object#unlink (param $0 i32)
@@ -2307,69 +2307,6 @@
   global.set $~lib/memory/__stack_pointer
   local.get $0
  )
- (func $export:assembly/class/Token#get:_symbol (param $0 i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  global.get $~lib/memory/__stack_pointer
-  i32.const 1804
-  i32.lt_s
-  if
-   i32.const 18208
-   i32.const 18256
-   i32.const 1
-   i32.const 1
-   call $~lib/builtins/abort
-   unreachable
-  end
-  global.get $~lib/memory/__stack_pointer
-  local.tee $1
-  local.get $0
-  i32.store
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $export:assembly/class/Token#set:_symbol (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  global.get $~lib/memory/__stack_pointer
-  i32.const 1804
-  i32.lt_s
-  if
-   i32.const 18208
-   i32.const 18256
-   i32.const 1
-   i32.const 1
-   call $~lib/builtins/abort
-   unreachable
-  end
-  global.get $~lib/memory/__stack_pointer
-  local.tee $2
-  local.get $0
-  i32.store
-  local.get $2
-  local.get $1
-  i32.store offset=4
-  local.get $0
-  local.get $1
-  i32.store offset=4
-  local.get $0
-  local.get $1
-  call $~lib/rt/itcms/__link
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
  (func $export:assembly/class/Token#get:_totalSupply (param $0 i32) (result i64)
   (local $1 i32)
   (local $2 i64)
@@ -2646,6 +2583,69 @@
   local.get $0
   local.get $1
   i32.store
+  local.get $0
+  local.get $1
+  call $~lib/rt/itcms/__link
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/class/Token#get:symbol (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  global.get $~lib/memory/__stack_pointer
+  i32.const 1804
+  i32.lt_s
+  if
+   i32.const 18208
+   i32.const 18256
+   i32.const 1
+   i32.const 1
+   call $~lib/builtins/abort
+   unreachable
+  end
+  global.get $~lib/memory/__stack_pointer
+  local.tee $1
+  local.get $0
+  i32.store
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/class/Token#set:symbol (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  global.get $~lib/memory/__stack_pointer
+  i32.const 1804
+  i32.lt_s
+  if
+   i32.const 18208
+   i32.const 18256
+   i32.const 1
+   i32.const 1
+   call $~lib/builtins/abort
+   unreachable
+  end
+  global.get $~lib/memory/__stack_pointer
+  local.tee $2
+  local.get $0
+  i32.store
+  local.get $2
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  i32.store offset=4
   local.get $0
   local.get $1
   call $~lib/rt/itcms/__link

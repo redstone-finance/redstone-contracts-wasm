@@ -1,29 +1,35 @@
-export class Car {
-  static readonly MAX_DOORS: i32 = 5;
-  static readonly usualDoors: i32 = 3;
+export class Token {
+  private _name: string;
 
-  numDoors: i32;
-  private doorsOpen: bool = false;
+  _symbol: string;
 
-  get isDoorsOpen(): bool { return this.doorsOpen; }
-  set isDoorsOpen(value: bool) { this.doorsOpen = value; }
+  _totalSupply: u64;
 
-  constructor(numDoors: i32) {
-    trace("WASM: car constructor");
-    this.numDoors = numDoors;
+  _balances: Map<string, u64> = new Map<string, u64>();
+
+  _allowances: Map<string, u64> = new Map<string, u64>();
+
+  constructor(name_: string, symbol_: string, totalSupply_: u64) {
+    this._name = name_;
+    this._symbol = symbol_;
+    this._totalSupply = totalSupply_;
   }
 
-  openDoors(): bool {
-    trace("WASM: openDoors");
-    if (this.doorsOpen) return false;
-    this.doorsOpen = true;
-    return true;
+
+  get name(): string {
+    return this._name;
   }
 
-  closeDoors(): bool {
-    trace("WASM: closeDoors");
-    if (!this.doorsOpen) return false;
-    this.doorsOpen = false;
-    return true;
+  set name(value: string) {
+    this._name = value;
   }
+
+  get totalSupply(): u64 {
+    return this._totalSupply;
+  }
+
+}
+
+export function getToken(): Token {
+  return new Token("RedStone", "RDST", 30000);
 }

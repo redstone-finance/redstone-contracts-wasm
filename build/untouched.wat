@@ -2,15 +2,18 @@
  (type $i32_i32_=>_none (func (param i32 i32)))
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_=>_none (func (param i32)))
+ (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
  (type $none_=>_none (func))
  (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
- (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
- (type $i32_=>_i64 (func (param i32) (result i64)))
- (type $i32_i64_=>_none (func (param i32 i64)))
- (type $none_=>_i32 (func (result i32)))
- (type $i32_i32_i32_i64_=>_i32 (func (param i32 i32 i32 i64) (result i32)))
- (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
+ (type $i32_i32_i64_=>_none (func (param i32 i32 i64)))
+ (type $i32_=>_i64 (func (param i32) (result i64)))
+ (type $none_=>_i32 (func (result i32)))
+ (type $i32_i64_=>_none (func (param i32 i64)))
+ (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
+ (type $i32_i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32 i32) (result i32)))
+ (type $i32_i32_=>_i64 (func (param i32 i32) (result i64)))
+ (type $i32_i32_i64_=>_i32 (func (param i32 i32 i64) (result i32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (global $~lib/rt/itcms/white (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/iter (mut i32) (i32.const 0))
@@ -24,11 +27,11 @@
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
  (global $~lib/ASC_SHRINK_LEVEL i32 (i32.const 0))
- (global $assembly/class/Token i32 (i32.const 3))
- (global $~lib/rt/__rtti_base i32 (i32.const 736))
- (global $~lib/memory/__data_end i32 (i32.const 780))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17164))
- (global $~lib/memory/__heap_base i32 (i32.const 17164))
+ (global $assembly/RedStoneToken/RedStoneToken i32 (i32.const 3))
+ (global $~lib/rt/__rtti_base i32 (i32.const 1072))
+ (global $~lib/memory/__data_end i32 (i32.const 1124))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17508))
+ (global $~lib/memory/__heap_base i32 (i32.const 17508))
  (memory $0 1)
  (data (i32.const 12) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00~\00l\00i\00b\00/\00r\00t\00/\00i\00t\00c\00m\00s\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 80) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
@@ -40,33 +43,34 @@
  (data (i32.const 348) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 412) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h\00")
  (data (i32.const 460) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
- (data (i32.const 524) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 572) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
- (data (i32.const 604) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
- (data (i32.const 668) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
- (data (i32.const 736) "\05\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\10\02\82\00\00\00\00\00")
+ (data (i32.const 524) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00K\00e\00y\00 \00d\00o\00e\00s\00 \00n\00o\00t\00 \00e\00x\00i\00s\00t\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 588) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\16\00\00\00~\00l\00i\00b\00/\00m\00a\00p\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 636) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00 \00b\00a\00l\00a\00n\00c\00e\00")
+ (data (i32.const 700) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\002\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00R\00e\00d\00S\00t\00o\00n\00e\00T\00o\00k\00e\00n\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 780) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00<\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00t\00 \00e\00n\00o\00u\00g\00h\00 \00b\00a\00l\00a\00n\00c\00e\00")
+ (data (i32.const 860) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 908) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
+ (data (i32.const 940) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
+ (data (i32.const 1004) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
+ (data (i32.const 1072) "\06\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\10\02\82\00\00\00\00\00")
  (table $0 1 funcref)
  (elem $0 (i32.const 1))
- (export "Token" (global $assembly/class/Token))
- (export "getToken" (func $assembly/class/getToken))
+ (export "RedStoneToken" (global $assembly/RedStoneToken/RedStoneToken))
+ (export "getToken" (func $assembly/RedStoneToken/getToken))
  (export "__new" (func $~lib/rt/itcms/__new))
  (export "__pin" (func $~lib/rt/itcms/__pin))
  (export "__unpin" (func $~lib/rt/itcms/__unpin))
  (export "__collect" (func $~lib/rt/itcms/__collect))
  (export "__rtti_base" (global $~lib/rt/__rtti_base))
  (export "memory" (memory $0))
- (export "Token#get:_totalSupply" (func $export:assembly/class/Token#get:_totalSupply))
- (export "Token#set:_totalSupply" (func $export:assembly/class/Token#set:_totalSupply))
- (export "Token#get:_balances" (func $export:assembly/class/Token#get:_balances))
- (export "Token#set:_balances" (func $export:assembly/class/Token#set:_balances))
- (export "Token#get:_allowances" (func $export:assembly/class/Token#get:_allowances))
- (export "Token#set:_allowances" (func $export:assembly/class/Token#set:_allowances))
- (export "Token#constructor" (func $export:assembly/class/Token#constructor))
- (export "Token#get:name" (func $export:assembly/class/Token#get:name))
- (export "Token#set:name" (func $export:assembly/class/Token#set:name))
- (export "Token#get:symbol" (func $export:assembly/class/Token#get:symbol))
- (export "Token#set:symbol" (func $export:assembly/class/Token#set:symbol))
- (export "Token#get:totalSupply" (func $export:assembly/class/Token#get:totalSupply))
+ (export "RedStoneToken#mint" (func $export:assembly/RedStoneToken/RedStoneToken#mint))
+ (export "RedStoneToken#burn" (func $export:assembly/RedStoneToken/RedStoneToken#burn))
+ (export "RedStoneToken#constructor" (func $export:assembly/RedStoneToken/RedStoneToken#constructor))
+ (export "RedStoneToken#get:name" (func $export:assembly/RedStoneToken/RedStoneToken#get:name))
+ (export "RedStoneToken#set:name" (func $export:assembly/RedStoneToken/RedStoneToken#set:name))
+ (export "RedStoneToken#get:symbol" (func $export:assembly/RedStoneToken/RedStoneToken#get:symbol))
+ (export "RedStoneToken#set:symbol" (func $export:assembly/RedStoneToken/RedStoneToken#set:symbol))
+ (export "RedStoneToken#get:totalSupply" (func $export:assembly/RedStoneToken/RedStoneToken#get:totalSupply))
  (start $~start)
  (func $~lib/rt/itcms/Object#get:color (param $0 i32) (result i32)
   local.get $0
@@ -335,7 +339,7 @@
    end
   end
  )
- (func $assembly/class/Token#set:_name (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:_name (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store
@@ -344,7 +348,7 @@
   i32.const 0
   call $~lib/rt/itcms/__link
  )
- (func $assembly/class/Token#set:_symbol (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:_symbol (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store offset=4
@@ -352,11 +356,6 @@
   local.get $1
   i32.const 0
   call $~lib/rt/itcms/__link
- )
- (func $assembly/class/Token#set:_totalSupply (param $0 i32) (param $1 i64)
-  local.get $0
-  local.get $1
-  i64.store offset=8
  )
  (func $~lib/rt/itcms/visitRoots (param $0 i32)
   (local $1 i32)
@@ -2461,7 +2460,12 @@
   call $~lib/memory/memory.fill
   local.get $3
  )
- (func $assembly/class/Token#set:_balances (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:_totalSupply (param $0 i32) (param $1 i64)
+  local.get $0
+  local.get $1
+  i64.store offset=8
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#set:_balances (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store offset=16
@@ -2508,7 +2512,7 @@
   local.get $1
   i32.store offset=20
  )
- (func $assembly/class/Token#set:_allowances (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:_allowances (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store offset=20
@@ -2517,45 +2521,642 @@
   i32.const 0
   call $~lib/rt/itcms/__link
  )
- (func $assembly/class/Token#get:_name (param $0 i32) (result i32)
+ (func $~lib/string/String#get:length (param $0 i32) (result i32)
+  local.get $0
+  i32.const 20
+  i32.sub
+  i32.load offset=16
+  i32.const 1
+  i32.shr_u
+ )
+ (func $~lib/util/hash/HASH<~lib/string/String> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i32)
+  (local $11 i32)
+  (local $12 i32)
+  i32.const 1
+  drop
+  block $~lib/util/hash/hashStr|inlined.0 (result i32)
+   local.get $0
+   local.set $1
+   local.get $1
+   i32.const 0
+   i32.eq
+   if
+    i32.const 0
+    br $~lib/util/hash/hashStr|inlined.0
+   end
+   local.get $1
+   call $~lib/string/String#get:length
+   i32.const 1
+   i32.shl
+   local.set $2
+   local.get $2
+   local.set $3
+   local.get $1
+   local.set $4
+   local.get $3
+   i32.const 16
+   i32.ge_u
+   if
+    i32.const 0
+    i32.const -1640531535
+    i32.add
+    i32.const -2048144777
+    i32.add
+    local.set $5
+    i32.const 0
+    i32.const -2048144777
+    i32.add
+    local.set $6
+    i32.const 0
+    local.set $7
+    i32.const 0
+    i32.const -1640531535
+    i32.sub
+    local.set $8
+    local.get $3
+    local.get $4
+    i32.add
+    i32.const 16
+    i32.sub
+    local.set $9
+    loop $while-continue|0
+     local.get $4
+     local.get $9
+     i32.le_u
+     local.set $10
+     local.get $10
+     if
+      local.get $5
+      local.set $12
+      local.get $4
+      i32.load
+      local.set $11
+      local.get $12
+      local.get $11
+      i32.const -2048144777
+      i32.mul
+      i32.add
+      i32.const 13
+      i32.rotl
+      i32.const -1640531535
+      i32.mul
+      local.set $5
+      local.get $6
+      local.set $12
+      local.get $4
+      i32.load offset=4
+      local.set $11
+      local.get $12
+      local.get $11
+      i32.const -2048144777
+      i32.mul
+      i32.add
+      i32.const 13
+      i32.rotl
+      i32.const -1640531535
+      i32.mul
+      local.set $6
+      local.get $7
+      local.set $12
+      local.get $4
+      i32.load offset=8
+      local.set $11
+      local.get $12
+      local.get $11
+      i32.const -2048144777
+      i32.mul
+      i32.add
+      i32.const 13
+      i32.rotl
+      i32.const -1640531535
+      i32.mul
+      local.set $7
+      local.get $8
+      local.set $12
+      local.get $4
+      i32.load offset=12
+      local.set $11
+      local.get $12
+      local.get $11
+      i32.const -2048144777
+      i32.mul
+      i32.add
+      i32.const 13
+      i32.rotl
+      i32.const -1640531535
+      i32.mul
+      local.set $8
+      local.get $4
+      i32.const 16
+      i32.add
+      local.set $4
+      br $while-continue|0
+     end
+    end
+    local.get $2
+    local.get $5
+    i32.const 1
+    i32.rotl
+    local.get $6
+    i32.const 7
+    i32.rotl
+    i32.add
+    local.get $7
+    i32.const 12
+    i32.rotl
+    i32.add
+    local.get $8
+    i32.const 18
+    i32.rotl
+    i32.add
+    i32.add
+    local.set $2
+   else
+    local.get $2
+    i32.const 0
+    i32.const 374761393
+    i32.add
+    i32.add
+    local.set $2
+   end
+   local.get $1
+   local.get $3
+   i32.add
+   i32.const 4
+   i32.sub
+   local.set $9
+   loop $while-continue|1
+    local.get $4
+    local.get $9
+    i32.le_u
+    local.set $8
+    local.get $8
+    if
+     local.get $2
+     local.get $4
+     i32.load
+     i32.const -1028477379
+     i32.mul
+     i32.add
+     local.set $2
+     local.get $2
+     i32.const 17
+     i32.rotl
+     i32.const 668265263
+     i32.mul
+     local.set $2
+     local.get $4
+     i32.const 4
+     i32.add
+     local.set $4
+     br $while-continue|1
+    end
+   end
+   local.get $1
+   local.get $3
+   i32.add
+   local.set $9
+   loop $while-continue|2
+    local.get $4
+    local.get $9
+    i32.lt_u
+    local.set $8
+    local.get $8
+    if
+     local.get $2
+     local.get $4
+     i32.load8_u
+     i32.const 374761393
+     i32.mul
+     i32.add
+     local.set $2
+     local.get $2
+     i32.const 11
+     i32.rotl
+     i32.const -1640531535
+     i32.mul
+     local.set $2
+     local.get $4
+     i32.const 1
+     i32.add
+     local.set $4
+     br $while-continue|2
+    end
+   end
+   local.get $2
+   local.get $2
+   i32.const 15
+   i32.shr_u
+   i32.xor
+   local.set $2
+   local.get $2
+   i32.const -2048144777
+   i32.mul
+   local.set $2
+   local.get $2
+   local.get $2
+   i32.const 13
+   i32.shr_u
+   i32.xor
+   local.set $2
+   local.get $2
+   i32.const -1028477379
+   i32.mul
+   local.set $2
+   local.get $2
+   local.get $2
+   i32.const 16
+   i32.shr_u
+   i32.xor
+   local.set $2
+   local.get $2
+  end
+  return
+ )
+ (func $~lib/util/string/compareImpl (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (result i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  local.get $0
+  local.get $1
+  i32.const 1
+  i32.shl
+  i32.add
+  local.set $5
+  local.get $2
+  local.get $3
+  i32.const 1
+  i32.shl
+  i32.add
+  local.set $6
+  i32.const 0
+  i32.const 2
+  i32.lt_s
+  drop
+  local.get $4
+  i32.const 4
+  i32.ge_u
+  if (result i32)
+   local.get $5
+   i32.const 7
+   i32.and
+   local.get $6
+   i32.const 7
+   i32.and
+   i32.or
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $do-break|0
+    loop $do-loop|0
+     local.get $5
+     i64.load
+     local.get $6
+     i64.load
+     i64.ne
+     if
+      br $do-break|0
+     end
+     local.get $5
+     i32.const 8
+     i32.add
+     local.set $5
+     local.get $6
+     i32.const 8
+     i32.add
+     local.set $6
+     local.get $4
+     i32.const 4
+     i32.sub
+     local.set $4
+     local.get $4
+     i32.const 4
+     i32.ge_u
+     br_if $do-loop|0
+    end
+   end
+  end
+  loop $while-continue|1
+   local.get $4
+   local.tee $7
+   i32.const 1
+   i32.sub
+   local.set $4
+   local.get $7
+   local.set $7
+   local.get $7
+   if
+    local.get $5
+    i32.load16_u
+    local.set $8
+    local.get $6
+    i32.load16_u
+    local.set $9
+    local.get $8
+    local.get $9
+    i32.ne
+    if
+     local.get $8
+     local.get $9
+     i32.sub
+     return
+    end
+    local.get $5
+    i32.const 2
+    i32.add
+    local.set $5
+    local.get $6
+    i32.const 2
+    i32.add
+    local.set $6
+    br $while-continue|1
+   end
+  end
+  i32.const 0
+ )
+ (func $~lib/string/String.__eq (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  local.get $0
+  local.get $1
+  i32.eq
+  if
+   i32.const 1
+   return
+  end
+  local.get $0
+  i32.const 0
+  i32.eq
+  if (result i32)
+   i32.const 1
+  else
+   local.get $1
+   i32.const 0
+   i32.eq
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  call $~lib/string/String#get:length
+  local.set $2
+  local.get $2
+  local.get $1
+  call $~lib/string/String#get:length
+  i32.ne
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  i32.const 0
+  local.get $1
+  i32.const 0
+  local.get $2
+  call $~lib/util/string/compareImpl
+  i32.eqz
+ )
+ (func $~lib/map/Map<~lib/string/String,u64>#has (param $0 i32) (param $1 i32) (result i32)
+  local.get $0
+  local.get $1
+  local.get $1
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,u64>#find
+  i32.const 0
+  i32.ne
+ )
+ (func $~lib/map/Map<~lib/string/String,u64>#get (param $0 i32) (param $1 i32) (result i64)
+  (local $2 i32)
+  local.get $0
+  local.get $1
+  local.get $1
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,u64>#find
+  local.set $2
+  local.get $2
+  i32.eqz
+  if
+   i32.const 544
+   i32.const 608
+   i32.const 105
+   i32.const 17
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $2
+  i64.load offset=8
+ )
+ (func $~lib/map/MapEntry<~lib/string/String,u64>#set:value (param $0 i32) (param $1 i64)
+  local.get $0
+  local.get $1
+  i64.store offset=8
+ )
+ (func $~lib/map/MapEntry<~lib/string/String,u64>#set:key (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store
+ )
+ (func $~lib/map/MapEntry<~lib/string/String,u64>#set:taggedNext (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=16
+ )
+ (func $~lib/map/Map<~lib/string/String,u64>#rehash (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i32)
+  (local $11 i32)
+  (local $12 i32)
+  (local $13 i32)
+  (local $14 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  local.get $1
+  i32.const 1
+  i32.add
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  local.get $2
+  i32.const 4
+  i32.mul
+  call $~lib/arraybuffer/ArrayBuffer#constructor
+  local.tee $3
+  i32.store
+  local.get $2
+  i32.const 8
+  i32.mul
+  i32.const 3
+  i32.div_s
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  local.get $4
+  i32.const 24
+  i32.mul
+  call $~lib/arraybuffer/ArrayBuffer#constructor
+  local.tee $5
+  i32.store offset=4
+  local.get $0
+  i32.load offset=8
+  local.set $6
+  local.get $6
+  local.get $0
+  i32.load offset=16
+  i32.const 24
+  i32.mul
+  i32.add
+  local.set $7
+  local.get $5
+  local.set $8
+  loop $while-continue|0
+   local.get $6
+   local.get $7
+   i32.ne
+   local.set $9
+   local.get $9
+   if
+    local.get $6
+    local.set $10
+    local.get $10
+    i32.load offset=16
+    i32.const 1
+    i32.and
+    i32.eqz
+    if
+     local.get $8
+     local.set $11
+     global.get $~lib/memory/__stack_pointer
+     local.get $10
+     i32.load
+     local.tee $12
+     i32.store offset=8
+     local.get $11
+     local.get $12
+     call $~lib/map/MapEntry<~lib/string/String,u64>#set:key
+     local.get $11
+     local.get $10
+     i64.load offset=8
+     call $~lib/map/MapEntry<~lib/string/String,u64>#set:value
+     local.get $12
+     call $~lib/util/hash/HASH<~lib/string/String>
+     local.get $1
+     i32.and
+     local.set $13
+     local.get $3
+     local.get $13
+     i32.const 4
+     i32.mul
+     i32.add
+     local.set $14
+     local.get $11
+     local.get $14
+     i32.load
+     call $~lib/map/MapEntry<~lib/string/String,u64>#set:taggedNext
+     local.get $14
+     local.get $8
+     i32.store
+     local.get $8
+     i32.const 24
+     i32.add
+     local.set $8
+    end
+    local.get $6
+    i32.const 24
+    i32.add
+    local.set $6
+    br $while-continue|0
+   end
+  end
+  local.get $0
+  local.get $3
+  call $~lib/map/Map<~lib/string/String,u64>#set:buckets
+  local.get $0
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,u64>#set:bucketsMask
+  local.get $0
+  local.get $5
+  call $~lib/map/Map<~lib/string/String,u64>#set:entries
+  local.get $0
+  local.get $4
+  call $~lib/map/Map<~lib/string/String,u64>#set:entriesCapacity
+  local.get $0
+  local.get $0
+  i32.load offset=20
+  call $~lib/map/Map<~lib/string/String,u64>#set:entriesOffset
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#get:_name (param $0 i32) (result i32)
   local.get $0
   i32.load
  )
- (func $assembly/class/Token#get:_symbol (param $0 i32) (result i32)
+ (func $assembly/RedStoneToken/RedStoneToken#get:_symbol (param $0 i32) (result i32)
   local.get $0
   i32.load offset=4
  )
- (func $assembly/class/Token#get:_totalSupply (param $0 i32) (result i64)
+ (func $assembly/RedStoneToken/RedStoneToken#get:_totalSupply (param $0 i32) (result i64)
   local.get $0
   i64.load offset=8
  )
- (func $assembly/class/Token#get:_balances (param $0 i32) (result i32)
+ (func $assembly/RedStoneToken/RedStoneToken#get:_balances (param $0 i32) (result i32)
   local.get $0
   i32.load offset=16
  )
- (func $assembly/class/Token#get:_allowances (param $0 i32) (result i32)
+ (func $assembly/RedStoneToken/RedStoneToken#get:_allowances (param $0 i32) (result i32)
   local.get $0
   i32.load offset=20
  )
- (func $assembly/class/Token#get:name (param $0 i32) (result i32)
+ (func $assembly/RedStoneToken/RedStoneToken#get:name (param $0 i32) (result i32)
   local.get $0
   i32.load
  )
- (func $assembly/class/Token#set:name (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:name (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
-  call $assembly/class/Token#set:_name
+  call $assembly/RedStoneToken/RedStoneToken#set:_name
  )
- (func $assembly/class/Token#get:symbol (param $0 i32) (result i32)
+ (func $assembly/RedStoneToken/RedStoneToken#get:symbol (param $0 i32) (result i32)
   local.get $0
   i32.load offset=4
  )
- (func $assembly/class/Token#set:symbol (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#set:symbol (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
-  call $assembly/class/Token#set:_symbol
+  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
  )
- (func $assembly/class/Token#get:totalSupply (param $0 i32) (result i64)
+ (func $assembly/RedStoneToken/RedStoneToken#get:totalSupply (param $0 i32) (result i64)
   local.get $0
   i64.load offset=8
  )
@@ -2572,7 +3173,7 @@
    i32.const 3
    i32.eq
    if
-    i32.const 624
+    i32.const 960
     i32.const 32
     i32.const 337
     i32.const 7
@@ -2604,7 +3205,7 @@
   i32.const 3
   i32.ne
   if
-   i32.const 688
+   i32.const 1024
    i32.const 32
    i32.const 351
    i32.const 5
@@ -2684,13 +3285,16 @@
   i32.const 432
   local.get $0
   call $~lib/rt/itcms/__visit
+  i32.const 544
+  local.get $0
+  call $~lib/rt/itcms/__visit
   i32.const 240
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 624
+  i32.const 960
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 688
+  i32.const 1024
   local.get $0
   call $~lib/rt/itcms/__visit
  )
@@ -2705,7 +3309,7 @@
    call $~lib/rt/itcms/__visit
   end
  )
- (func $assembly/class/Token~visit (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/RedStoneToken~visit (param $0 i32) (param $1 i32)
   (local $2 i32)
   local.get $0
   i32.load
@@ -2812,28 +3416,31 @@
  (func $~lib/rt/__visit_members (param $0 i32) (param $1 i32)
   block $invalid
    block $~lib/map/Map<~lib/string/String,u64>
-    block $assembly/class/Token
-     block $~lib/arraybuffer/ArrayBufferView
-      block $~lib/string/String
-       block $~lib/arraybuffer/ArrayBuffer
-        local.get $0
-        i32.const 8
-        i32.sub
-        i32.load
-        br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/class/Token $~lib/map/Map<~lib/string/String,u64> $invalid
+    block $assembly/ERC20/ERC20
+     block $assembly/RedStoneToken/RedStoneToken
+      block $~lib/arraybuffer/ArrayBufferView
+       block $~lib/string/String
+        block $~lib/arraybuffer/ArrayBuffer
+         local.get $0
+         i32.const 8
+         i32.sub
+         i32.load
+         br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/RedStoneToken/RedStoneToken $assembly/ERC20/ERC20 $~lib/map/Map<~lib/string/String,u64> $invalid
+        end
+        return
        end
        return
       end
+      local.get $0
+      local.get $1
+      call $~lib/arraybuffer/ArrayBufferView~visit
       return
      end
      local.get $0
      local.get $1
-     call $~lib/arraybuffer/ArrayBufferView~visit
+     call $assembly/RedStoneToken/RedStoneToken~visit
      return
     end
-    local.get $0
-    local.get $1
-    call $assembly/class/Token~visit
     return
    end
    local.get $0
@@ -2867,15 +3474,241 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 17184
-   i32.const 17232
+   i32.const 17536
+   i32.const 17584
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
    unreachable
   end
  )
- (func $assembly/class/getToken (result i32)
+ (func $~lib/map/Map<~lib/string/String,u64>#find (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $0
+  i32.load
+  local.get $2
+  local.get $0
+  i32.load offset=4
+  i32.and
+  i32.const 4
+  i32.mul
+  i32.add
+  i32.load
+  local.set $3
+  loop $while-continue|0
+   local.get $3
+   local.set $4
+   local.get $4
+   if
+    local.get $3
+    i32.load offset=16
+    local.set $5
+    local.get $5
+    i32.const 1
+    i32.and
+    i32.eqz
+    if (result i32)
+     local.get $3
+     i32.load
+     local.set $6
+     global.get $~lib/memory/__stack_pointer
+     local.get $6
+     i32.store
+     local.get $6
+     local.get $1
+     call $~lib/string/String.__eq
+    else
+     i32.const 0
+    end
+    if
+     local.get $3
+     local.set $6
+     global.get $~lib/memory/__stack_pointer
+     i32.const 4
+     i32.add
+     global.set $~lib/memory/__stack_pointer
+     local.get $6
+     return
+    end
+    local.get $5
+    i32.const 1
+    i32.const -1
+    i32.xor
+    i32.and
+    local.set $3
+    br $while-continue|0
+   end
+  end
+  i32.const 0
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $6
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#mint (param $0 i32) (param $1 i32) (param $2 i64)
+  (local $3 i64)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $0
+  i32.load offset=16
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,u64>#has
+  if
+   local.get $0
+   i32.load offset=16
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   local.get $1
+   call $~lib/map/Map<~lib/string/String,u64>#get
+   local.set $3
+   local.get $0
+   i32.load offset=16
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   local.get $1
+   local.get $3
+   local.get $2
+   i64.add
+   call $~lib/map/Map<~lib/string/String,u64>#set
+   drop
+  else
+   local.get $0
+   i32.load offset=16
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   local.get $1
+   local.get $2
+   call $~lib/map/Map<~lib/string/String,u64>#set
+   drop
+  end
+  local.get $0
+  local.get $0
+  i64.load offset=8
+  local.get $2
+  i64.add
+  call $assembly/RedStoneToken/RedStoneToken#set:_totalSupply
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#burn (param $0 i32) (param $1 i32) (param $2 i64)
+  (local $3 i64)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $0
+  i32.load offset=16
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,u64>#has
+  i32.eqz
+  if
+   i32.const 656
+   i32.const 720
+   i32.const 31
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=16
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,u64>#get
+  local.get $2
+  i64.lt_u
+  if
+   i32.const 800
+   i32.const 720
+   i32.const 35
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=16
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,u64>#get
+  local.set $3
+  local.get $0
+  i32.load offset=16
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $1
+  local.get $3
+  local.get $2
+  i64.sub
+  call $~lib/map/Map<~lib/string/String,u64>#set
+  drop
+  local.get $0
+  local.get $0
+  i64.load offset=8
+  local.get $2
+  i64.sub
+  call $assembly/RedStoneToken/RedStoneToken#set:_totalSupply
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $assembly/RedStoneToken/getToken (result i32)
   (local $0 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 8
@@ -2886,20 +3719,19 @@
   i64.const 0
   i64.store
   i32.const 0
-  i32.const 544
+  i32.const 880
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0
   i32.store
   local.get $0
-  i32.const 592
+  i32.const 928
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0
   i32.store offset=4
   local.get $0
-  i64.const 30000
-  call $assembly/class/Token#constructor
+  call $assembly/RedStoneToken/RedStoneToken#constructor
   local.set $0
   global.get $~lib/memory/__stack_pointer
   i32.const 8
@@ -2962,7 +3794,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 24
-   i32.const 4
+   i32.const 5
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -3003,8 +3835,8 @@
   global.set $~lib/memory/__stack_pointer
   local.get $1
  )
- (func $assembly/class/Token#constructor (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i64) (result i32)
-  (local $4 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
   i32.sub
@@ -3025,154 +3857,202 @@
   end
   local.get $0
   i32.const 0
-  call $assembly/class/Token#set:_name
+  call $assembly/RedStoneToken/RedStoneToken#set:_name
   local.get $0
   i32.const 0
-  call $assembly/class/Token#set:_symbol
+  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
   local.get $0
   i64.const 0
-  call $assembly/class/Token#set:_totalSupply
+  call $assembly/RedStoneToken/RedStoneToken#set:_totalSupply
   local.get $0
   i32.const 0
   call $~lib/map/Map<~lib/string/String,u64>#constructor
-  call $assembly/class/Token#set:_balances
+  call $assembly/RedStoneToken/RedStoneToken#set:_balances
   local.get $0
   i32.const 0
   call $~lib/map/Map<~lib/string/String,u64>#constructor
-  call $assembly/class/Token#set:_allowances
+  call $assembly/RedStoneToken/RedStoneToken#set:_allowances
   local.get $0
   local.get $1
-  call $assembly/class/Token#set:_name
+  call $assembly/RedStoneToken/RedStoneToken#set:_name
   local.get $0
   local.get $2
-  call $assembly/class/Token#set:_symbol
+  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
   local.get $0
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
   local.get $3
-  call $assembly/class/Token#set:_totalSupply
-  local.get $0
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $4
  )
- (func $export:assembly/class/Token#get:_totalSupply (param $0 i32) (result i64)
-  (local $1 i64)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  local.get $0
-  call $assembly/class/Token#get:_totalSupply
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
- )
- (func $export:assembly/class/Token#set:_totalSupply (param $0 i32) (param $1 i64)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  local.get $0
-  local.get $1
-  call $assembly/class/Token#set:_totalSupply
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $export:assembly/class/Token#get:_balances (param $0 i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  local.get $0
-  call $assembly/class/Token#get:_balances
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
- )
- (func $export:assembly/class/Token#set:_balances (param $0 i32) (param $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $0
-  local.get $1
-  call $assembly/class/Token#set:_balances
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $export:assembly/class/Token#get:_allowances (param $0 i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  local.get $0
-  call $assembly/class/Token#get:_allowances
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
- )
- (func $export:assembly/class/Token#set:_allowances (param $0 i32) (param $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  local.get $0
-  i32.store
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $0
-  local.get $1
-  call $assembly/class/Token#set:_allowances
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $export:assembly/class/Token#constructor (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i64) (result i32)
+ (func $~lib/map/Map<~lib/string/String,u64>#set (param $0 i32) (param $1 i32) (param $2 i64) (result i32)
+  (local $3 i32)
   (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $1
+  call $~lib/util/hash/HASH<~lib/string/String>
+  local.set $3
+  local.get $0
+  local.get $1
+  local.get $3
+  call $~lib/map/Map<~lib/string/String,u64>#find
+  local.set $4
+  local.get $4
+  if
+   local.get $4
+   local.get $2
+   call $~lib/map/MapEntry<~lib/string/String,u64>#set:value
+   i32.const 0
+   drop
+  else
+   local.get $0
+   i32.load offset=16
+   local.get $0
+   i32.load offset=12
+   i32.eq
+   if
+    local.get $0
+    local.get $0
+    i32.load offset=20
+    local.get $0
+    i32.load offset=12
+    i32.const 3
+    i32.mul
+    i32.const 4
+    i32.div_s
+    i32.lt_s
+    if (result i32)
+     local.get $0
+     i32.load offset=4
+    else
+     local.get $0
+     i32.load offset=4
+     i32.const 1
+     i32.shl
+     i32.const 1
+     i32.or
+    end
+    call $~lib/map/Map<~lib/string/String,u64>#rehash
+   end
+   global.get $~lib/memory/__stack_pointer
+   local.get $0
+   i32.load offset=8
+   local.tee $5
+   i32.store
+   local.get $5
+   local.get $0
+   local.get $0
+   i32.load offset=16
+   local.tee $6
+   i32.const 1
+   i32.add
+   call $~lib/map/Map<~lib/string/String,u64>#set:entriesOffset
+   local.get $6
+   i32.const 24
+   i32.mul
+   i32.add
+   local.set $4
+   local.get $4
+   local.get $1
+   call $~lib/map/MapEntry<~lib/string/String,u64>#set:key
+   i32.const 1
+   drop
+   local.get $0
+   local.get $1
+   i32.const 1
+   call $~lib/rt/itcms/__link
+   local.get $4
+   local.get $2
+   call $~lib/map/MapEntry<~lib/string/String,u64>#set:value
+   i32.const 0
+   drop
+   local.get $0
+   local.get $0
+   i32.load offset=20
+   i32.const 1
+   i32.add
+   call $~lib/map/Map<~lib/string/String,u64>#set:entriesCount
+   local.get $0
+   i32.load
+   local.get $3
+   local.get $0
+   i32.load offset=4
+   i32.and
+   i32.const 4
+   i32.mul
+   i32.add
+   local.set $6
+   local.get $4
+   local.get $6
+   i32.load
+   call $~lib/map/MapEntry<~lib/string/String,u64>#set:taggedNext
+   local.get $6
+   local.get $4
+   i32.store
+  end
+  local.get $0
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $7
+ )
+ (func $export:assembly/RedStoneToken/RedStoneToken#mint (param $0 i32) (param $1 i32) (param $2 i64)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  local.get $2
+  call $assembly/RedStoneToken/RedStoneToken#mint
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/RedStoneToken/RedStoneToken#burn (param $0 i32) (param $1 i32) (param $2 i64)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  local.get $2
+  call $assembly/RedStoneToken/RedStoneToken#burn
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/RedStoneToken/RedStoneToken#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 12
   i32.sub
@@ -3190,16 +4070,15 @@
   local.get $0
   local.get $1
   local.get $2
-  local.get $3
-  call $assembly/class/Token#constructor
-  local.set $4
+  call $assembly/RedStoneToken/RedStoneToken#constructor
+  local.set $3
   global.get $~lib/memory/__stack_pointer
   i32.const 12
   i32.add
   global.set $~lib/memory/__stack_pointer
-  local.get $4
+  local.get $3
  )
- (func $export:assembly/class/Token#get:name (param $0 i32) (result i32)
+ (func $export:assembly/RedStoneToken/RedStoneToken#get:name (param $0 i32) (result i32)
   (local $1 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -3210,7 +4089,7 @@
   local.get $0
   i32.store
   local.get $0
-  call $assembly/class/Token#get:name
+  call $assembly/RedStoneToken/RedStoneToken#get:name
   local.set $1
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -3218,7 +4097,7 @@
   global.set $~lib/memory/__stack_pointer
   local.get $1
  )
- (func $export:assembly/class/Token#set:name (param $0 i32) (param $1 i32)
+ (func $export:assembly/RedStoneToken/RedStoneToken#set:name (param $0 i32) (param $1 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 8
   i32.sub
@@ -3232,13 +4111,13 @@
   i32.store offset=4
   local.get $0
   local.get $1
-  call $assembly/class/Token#set:name
+  call $assembly/RedStoneToken/RedStoneToken#set:name
   global.get $~lib/memory/__stack_pointer
   i32.const 8
   i32.add
   global.set $~lib/memory/__stack_pointer
  )
- (func $export:assembly/class/Token#get:symbol (param $0 i32) (result i32)
+ (func $export:assembly/RedStoneToken/RedStoneToken#get:symbol (param $0 i32) (result i32)
   (local $1 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -3249,7 +4128,7 @@
   local.get $0
   i32.store
   local.get $0
-  call $assembly/class/Token#get:symbol
+  call $assembly/RedStoneToken/RedStoneToken#get:symbol
   local.set $1
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -3257,7 +4136,7 @@
   global.set $~lib/memory/__stack_pointer
   local.get $1
  )
- (func $export:assembly/class/Token#set:symbol (param $0 i32) (param $1 i32)
+ (func $export:assembly/RedStoneToken/RedStoneToken#set:symbol (param $0 i32) (param $1 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 8
   i32.sub
@@ -3271,13 +4150,13 @@
   i32.store offset=4
   local.get $0
   local.get $1
-  call $assembly/class/Token#set:symbol
+  call $assembly/RedStoneToken/RedStoneToken#set:symbol
   global.get $~lib/memory/__stack_pointer
   i32.const 8
   i32.add
   global.set $~lib/memory/__stack_pointer
  )
- (func $export:assembly/class/Token#get:totalSupply (param $0 i32) (result i64)
+ (func $export:assembly/RedStoneToken/RedStoneToken#get:totalSupply (param $0 i32) (result i64)
   (local $1 i64)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -3288,7 +4167,7 @@
   local.get $0
   i32.store
   local.get $0
-  call $assembly/class/Token#get:totalSupply
+  call $assembly/RedStoneToken/RedStoneToken#get:totalSupply
   local.set $1
   global.get $~lib/memory/__stack_pointer
   i32.const 4

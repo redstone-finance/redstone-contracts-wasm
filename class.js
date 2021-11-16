@@ -4,7 +4,7 @@ const loader = require("@assemblyscript/loader");
 // https://github.com/AssemblyScript/assemblyscript/issues/261
 // 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
-  fs.readFileSync(__dirname + "/build/optimized.wasm"),
+  fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
     env: {
       memory: new WebAssembly.Memory({
@@ -19,19 +19,31 @@ const wasmExports = wasmModule.exports;
 // 2. using pointer to a class - as in https://www.assemblyscript.org/loader.html#custom-classes
 const tokenPtr = wasmExports.getToken();
 console.log("tokenPtr: " + tokenPtr);
-const token = wasmExports.Token.wrap(tokenPtr);
+const token = wasmExports.RedStoneToken.wrap(tokenPtr);
 token.name = wasmExports.__newString(
   "[CLASS_FROM_POINTER:name]: RedStone Token 1"
 );
 token.symbol = wasmExports.__newString(
   "[CLASS_FROM_POINTER:symbol]: RDST_FTW"
 );
+token.mint(wasmExports.__newString("walletId1"), BigInt(500));
+token.mint(wasmExports.__newString("walletId1"), BigInt(1000));
+token.mint(wasmExports.__newString("walletId1"), BigInt(666));
+
+try {
+  token.burn(wasmExports.__newString("walletId2"), BigInt(666));
+} catch (e) {
+  // name is 'Error', even though ContractError is being thrown in WASM:
+  // https://www.assemblyscript.org/status.html#exceptions
+  // - throwing any exception effectively calls "abort"
+  console.error(e);
+  console.error(e.name);
+}
 // 3. using class "directly" - as in
 // https://github.com/AssemblyScript/assemblyscript/blob/main/lib/loader/tests/index.js#L255
-const token2 = new wasmExports.Token(
+const token2 = new wasmExports.RedStoneToken(
   wasmExports.__newString("RedStone Token 2"),
-  wasmExports.__newString("[CLASS_FROM_EXPORT:symbol]: RDST2"),
-  BigInt(20001)
+  wasmExports.__newString("[CLASS_FROM_EXPORT:symbol]: RDST2")
 );
 token2.name = wasmExports.__newString(
   "[CLASS_FROM_EXPORT:name]: RedStone Token 2"
@@ -63,7 +75,7 @@ console.log("New memory@token pointer 2:", newHeap[tokenPtr2]);
 
 // 8. creating new wasm module with the new memory instance with buffer filled with data from file
 const wasmModuleMem = loader.instantiateSync(
-  fs.readFileSync(__dirname + "/build/optimized.wasm"),
+  fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
     env: {
       memory: newMemory,
@@ -73,8 +85,8 @@ const wasmModuleMem = loader.instantiateSync(
 
 const wasmExportsMem = wasmModuleMem.exports;
 // note: we will probably also need to write a pointer to the contract object.
-const token3 = wasmExportsMem.Token.wrap(tokenPtr);
-const token4 = wasmExportsMem.Token.wrap(tokenPtr2);
+const token3 = wasmExportsMem.RedStoneToken.wrap(tokenPtr);
+const token4 = wasmExportsMem.RedStoneToken.wrap(tokenPtr2);
 
 console.log("\nloaded token 1 name:", wasmExportsMem.__getString(token3.name));
 console.log("loaded token 1 symbol:", wasmExportsMem.__getString(token3.symbol));

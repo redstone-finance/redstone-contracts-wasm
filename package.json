@@ -17,7 +17,7 @@
     "asbuild:untouched": "asc assembly/handle.ts --exportRuntime --enable reference-types --target debug",
     "asbuild:optimized": "asc assembly/handle.ts --exportRuntime --enable reference-types --target release",
     "asbuild": "yarn asbuild:untouched && yarn asbuild:optimized",
-    "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --target debug",
+    "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target debug",
     "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
     "test": "node tests"

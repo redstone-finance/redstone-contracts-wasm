@@ -7,6 +7,7 @@ const wasmModule = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
     env: {
+      // note: --importMemory flag must be switched on for ASC
       memory: new WebAssembly.Memory({
         initial: 1,
       }),
@@ -48,6 +49,9 @@ const token2 = new wasmExports.RedStoneToken(
 token2.name = wasmExports.__newString(
   "[CLASS_FROM_EXPORT:name]: RedStone Token 2"
 );
+const structField1 = wasmExports.ProviderData.wrap(token2.structField);
+structField1.name = wasmExports.__newString("Provider From Host");
+
 const tokenPtr2 = +token2; // https://github.com/AssemblyScript/assemblyscript/blob/main/lib/loader/tests/index.js#L262
 console.log("tokenPtr2: ", tokenPtr2);
 
@@ -94,4 +98,10 @@ console.log("loaded token 1 totalSupply:", BigInt(token3.totalSupply).toString()
 
 console.log("\nloaded token 2 name:", wasmExportsMem.__getString(token4.name));
 console.log("loaded token 2 symbol:", wasmExportsMem.__getString(token4.symbol));
-console.log("loaded token 2 totalSupply token 2", BigInt(token4.totalSupply).toString());
+console.log("loaded token 2 totalSupply", BigInt(token4.totalSupply).toString());
+
+// accessing internal struct in contract
+const structField = wasmExportsMem.ProviderData.wrap(token4.structField);
+console.log("\nloaded token 2 structField", wasmExportsMem.__getString(structField.name));
+console.log("loaded token 2 structField", wasmExportsMem.__getString(structField.description));
+console.log("loaded token 2 structField", wasmExportsMem.__getString(structField.manifestTxId));

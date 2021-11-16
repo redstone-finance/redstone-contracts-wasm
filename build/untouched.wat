@@ -10,10 +10,35 @@
  (type $i32_=>_i64 (func (param i32) (result i64)))
  (type $none_=>_i32 (func (result i32)))
  (type $i32_i64_=>_none (func (param i32 i64)))
+ (type $i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32) (result i32)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32 i32) (result i32)))
  (type $i32_i32_=>_i64 (func (param i32 i32) (result i64)))
  (type $i32_i32_i64_=>_i32 (func (param i32 i32 i64) (result i32)))
+ (import "env" "memory" (memory $0 1))
+ (data (i32.const 12) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00~\00l\00i\00b\00/\00r\00t\00/\00i\00t\00c\00m\00s\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 80) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 108) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 172) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\14\00\00\00~\00l\00i\00b\00/\00r\00t\00.\00t\00s\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 220) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00\00\00\00\00")
+ (data (i32.const 288) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 320) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 348) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 412) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h\00")
+ (data (i32.const 460) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 524) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00 \00P\00r\00o\00v\00i\00d\00e\00r\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 588) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00 \00P\00r\00o\00v\00i\00d\00e\00r\00 \00d\00e\00s\00c\00")
+ (data (i32.const 652) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\004\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00 \00P\00r\00o\00v\00i\00d\00e\00r\00 \00m\00a\00n\00i\00f\00e\00s\00t\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 732) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00K\00e\00y\00 \00d\00o\00e\00s\00 \00n\00o\00t\00 \00e\00x\00i\00s\00t\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 796) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\16\00\00\00~\00l\00i\00b\00/\00m\00a\00p\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 844) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00 \00b\00a\00l\00a\00n\00c\00e\00")
+ (data (i32.const 908) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\002\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00R\00e\00d\00S\00t\00o\00n\00e\00T\00o\00k\00e\00n\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 988) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00<\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00t\00 \00e\00n\00o\00u\00g\00h\00 \00b\00a\00l\00a\00n\00c\00e\00")
+ (data (i32.const 1068) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 1116) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
+ (data (i32.const 1148) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
+ (data (i32.const 1212) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
+ (data (i32.const 1280) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\10\02\82\00\00\00\00\00")
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (global $~lib/rt/itcms/white (mut i32) (i32.const 0))
  (global $~lib/rt/itcms/iter (mut i32) (i32.const 0))
@@ -27,34 +52,15 @@
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
  (global $~lib/ASC_SHRINK_LEVEL i32 (i32.const 0))
- (global $assembly/RedStoneToken/RedStoneToken i32 (i32.const 3))
- (global $~lib/rt/__rtti_base i32 (i32.const 1072))
- (global $~lib/memory/__data_end i32 (i32.const 1124))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17508))
- (global $~lib/memory/__heap_base i32 (i32.const 17508))
- (memory $0 1)
- (data (i32.const 12) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00 \00\00\00~\00l\00i\00b\00/\00r\00t\00/\00i\00t\00c\00m\00s\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 80) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 108) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
- (data (i32.const 172) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\14\00\00\00~\00l\00i\00b\00/\00r\00t\00.\00t\00s\00\00\00\00\00\00\00\00\00")
- (data (i32.const 220) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00\00\00\00\00")
- (data (i32.const 288) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 320) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 348) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 412) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h\00")
- (data (i32.const 460) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
- (data (i32.const 524) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00K\00e\00y\00 \00d\00o\00e\00s\00 \00n\00o\00t\00 \00e\00x\00i\00s\00t\00\00\00\00\00\00\00\00\00")
- (data (i32.const 588) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\16\00\00\00~\00l\00i\00b\00/\00m\00a\00p\00.\00t\00s\00\00\00\00\00\00\00")
- (data (i32.const 636) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00 \00b\00a\00l\00a\00n\00c\00e\00")
- (data (i32.const 700) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\002\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00R\00e\00d\00S\00t\00o\00n\00e\00T\00o\00k\00e\00n\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 780) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00<\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00t\00 \00e\00n\00o\00u\00g\00h\00 \00b\00a\00l\00a\00n\00c\00e\00")
- (data (i32.const 860) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 908) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
- (data (i32.const 940) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
- (data (i32.const 1004) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
- (data (i32.const 1072) "\06\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\10\02\82\00\00\00\00\00")
+ (global $assembly/RedStoneToken/ProviderData i32 (i32.const 3))
+ (global $assembly/RedStoneToken/RedStoneToken i32 (i32.const 4))
+ (global $~lib/rt/__rtti_base i32 (i32.const 1280))
+ (global $~lib/memory/__data_end i32 (i32.const 1340))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17724))
+ (global $~lib/memory/__heap_base i32 (i32.const 17724))
  (table $0 1 funcref)
  (elem $0 (i32.const 1))
+ (export "ProviderData" (global $assembly/RedStoneToken/ProviderData))
  (export "RedStoneToken" (global $assembly/RedStoneToken/RedStoneToken))
  (export "getToken" (func $assembly/RedStoneToken/getToken))
  (export "__new" (func $~lib/rt/itcms/__new))
@@ -63,6 +69,14 @@
  (export "__collect" (func $~lib/rt/itcms/__collect))
  (export "__rtti_base" (global $~lib/rt/__rtti_base))
  (export "memory" (memory $0))
+ (export "table" (table $0))
+ (export "ProviderData#get:name" (func $export:assembly/RedStoneToken/ProviderData#get:name))
+ (export "ProviderData#set:name" (func $export:assembly/RedStoneToken/ProviderData#set:name))
+ (export "ProviderData#get:description" (func $export:assembly/RedStoneToken/ProviderData#get:description))
+ (export "ProviderData#set:description" (func $export:assembly/RedStoneToken/ProviderData#set:description))
+ (export "ProviderData#get:manifestTxId" (func $export:assembly/RedStoneToken/ProviderData#get:manifestTxId))
+ (export "ProviderData#set:manifestTxId" (func $export:assembly/RedStoneToken/ProviderData#set:manifestTxId))
+ (export "ProviderData#constructor" (func $export:assembly/RedStoneToken/ProviderData#constructor))
  (export "RedStoneToken#mint" (func $export:assembly/RedStoneToken/RedStoneToken#mint))
  (export "RedStoneToken#burn" (func $export:assembly/RedStoneToken/RedStoneToken#burn))
  (export "RedStoneToken#constructor" (func $export:assembly/RedStoneToken/RedStoneToken#constructor))
@@ -71,6 +85,7 @@
  (export "RedStoneToken#get:symbol" (func $export:assembly/RedStoneToken/RedStoneToken#get:symbol))
  (export "RedStoneToken#set:symbol" (func $export:assembly/RedStoneToken/RedStoneToken#set:symbol))
  (export "RedStoneToken#get:totalSupply" (func $export:assembly/RedStoneToken/RedStoneToken#get:totalSupply))
+ (export "RedStoneToken#get:structField" (func $export:assembly/RedStoneToken/RedStoneToken#get:structField))
  (start $~start)
  (func $~lib/rt/itcms/Object#get:color (param $0 i32) (result i32)
   local.get $0
@@ -339,7 +354,7 @@
    end
   end
  )
- (func $assembly/RedStoneToken/RedStoneToken#set:_name (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/ProviderData#set:name (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store
@@ -348,10 +363,19 @@
   i32.const 0
   call $~lib/rt/itcms/__link
  )
- (func $assembly/RedStoneToken/RedStoneToken#set:_symbol (param $0 i32) (param $1 i32)
+ (func $assembly/RedStoneToken/ProviderData#set:description (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
   i32.store offset=4
+  local.get $0
+  local.get $1
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $assembly/RedStoneToken/ProviderData#set:manifestTxId (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=8
   local.get $0
   local.get $1
   i32.const 0
@@ -2460,6 +2484,36 @@
   call $~lib/memory/memory.fill
   local.get $3
  )
+ (func $assembly/RedStoneToken/ProviderData#get:name (param $0 i32) (result i32)
+  local.get $0
+  i32.load
+ )
+ (func $assembly/RedStoneToken/ProviderData#get:description (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=4
+ )
+ (func $assembly/RedStoneToken/ProviderData#get:manifestTxId (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=8
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#set:_name (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store
+  local.get $0
+  local.get $1
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#set:_symbol (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
  (func $assembly/RedStoneToken/RedStoneToken#set:_totalSupply (param $0 i32) (param $1 i64)
   local.get $0
   local.get $1
@@ -2516,6 +2570,15 @@
   local.get $0
   local.get $1
   i32.store offset=20
+  local.get $0
+  local.get $1
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#set:_structField (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  i32.store offset=24
   local.get $0
   local.get $1
   i32.const 0
@@ -2950,8 +3013,8 @@
   local.get $2
   i32.eqz
   if
-   i32.const 544
-   i32.const 608
+   i32.const 752
+   i32.const 816
    i32.const 105
    i32.const 17
    call $~lib/builtins/abort
@@ -3138,6 +3201,10 @@
   local.get $0
   i32.load offset=20
  )
+ (func $assembly/RedStoneToken/RedStoneToken#get:_structField (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=24
+ )
  (func $assembly/RedStoneToken/RedStoneToken#get:name (param $0 i32) (result i32)
   local.get $0
   i32.load
@@ -3160,6 +3227,10 @@
   local.get $0
   i64.load offset=8
  )
+ (func $assembly/RedStoneToken/RedStoneToken#get:structField (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=24
+ )
  (func $~lib/rt/itcms/__pin (param $0 i32) (result i32)
   (local $1 i32)
   local.get $0
@@ -3173,7 +3244,7 @@
    i32.const 3
    i32.eq
    if
-    i32.const 960
+    i32.const 1168
     i32.const 32
     i32.const 337
     i32.const 7
@@ -3205,7 +3276,7 @@
   i32.const 3
   i32.ne
   if
-   i32.const 1024
+   i32.const 1232
    i32.const 32
    i32.const 351
    i32.const 5
@@ -3285,16 +3356,16 @@
   i32.const 432
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 544
+  i32.const 752
   local.get $0
   call $~lib/rt/itcms/__visit
   i32.const 240
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 960
+  i32.const 1168
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 1024
+  i32.const 1232
   local.get $0
   call $~lib/rt/itcms/__visit
  )
@@ -3302,6 +3373,33 @@
   (local $2 i32)
   local.get $0
   i32.load
+  local.tee $2
+  if
+   local.get $2
+   local.get $1
+   call $~lib/rt/itcms/__visit
+  end
+ )
+ (func $assembly/RedStoneToken/ProviderData~visit (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  local.get $0
+  i32.load
+  local.tee $2
+  if
+   local.get $2
+   local.get $1
+   call $~lib/rt/itcms/__visit
+  end
+  local.get $0
+  i32.load offset=4
+  local.tee $2
+  if
+   local.get $2
+   local.get $1
+   call $~lib/rt/itcms/__visit
+  end
+  local.get $0
+  i32.load offset=8
   local.tee $2
   if
    local.get $2
@@ -3337,6 +3435,14 @@
   end
   local.get $0
   i32.load offset=20
+  local.tee $2
+  if
+   local.get $2
+   local.get $1
+   call $~lib/rt/itcms/__visit
+  end
+  local.get $0
+  i32.load offset=24
   local.tee $2
   if
    local.get $2
@@ -3418,22 +3524,28 @@
    block $~lib/map/Map<~lib/string/String,u64>
     block $assembly/ERC20/ERC20
      block $assembly/RedStoneToken/RedStoneToken
-      block $~lib/arraybuffer/ArrayBufferView
-       block $~lib/string/String
-        block $~lib/arraybuffer/ArrayBuffer
-         local.get $0
-         i32.const 8
-         i32.sub
-         i32.load
-         br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/RedStoneToken/RedStoneToken $assembly/ERC20/ERC20 $~lib/map/Map<~lib/string/String,u64> $invalid
+      block $assembly/RedStoneToken/ProviderData
+       block $~lib/arraybuffer/ArrayBufferView
+        block $~lib/string/String
+         block $~lib/arraybuffer/ArrayBuffer
+          local.get $0
+          i32.const 8
+          i32.sub
+          i32.load
+          br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/RedStoneToken/ProviderData $assembly/RedStoneToken/RedStoneToken $assembly/ERC20/ERC20 $~lib/map/Map<~lib/string/String,u64> $invalid
+         end
+         return
         end
         return
        end
+       local.get $0
+       local.get $1
+       call $~lib/arraybuffer/ArrayBufferView~visit
        return
       end
       local.get $0
       local.get $1
-      call $~lib/arraybuffer/ArrayBufferView~visit
+      call $assembly/RedStoneToken/ProviderData~visit
       return
      end
      local.get $0
@@ -3474,13 +3586,89 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 17536
-   i32.const 17584
+   i32.const 17744
+   i32.const 17792
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
    unreachable
   end
+ )
+ (func $assembly/RedStoneToken/RedStoneToken#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store offset=8
+  local.get $0
+  i32.eqz
+  if
+   global.get $~lib/memory/__stack_pointer
+   i32.const 28
+   i32.const 4
+   call $~lib/rt/itcms/__new
+   local.tee $0
+   i32.store
+  end
+  local.get $0
+  i32.const 0
+  call $assembly/RedStoneToken/RedStoneToken#set:_name
+  local.get $0
+  i32.const 0
+  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
+  local.get $0
+  i64.const 0
+  call $assembly/RedStoneToken/RedStoneToken#set:_totalSupply
+  local.get $0
+  i32.const 0
+  call $~lib/map/Map<~lib/string/String,u64>#constructor
+  call $assembly/RedStoneToken/RedStoneToken#set:_balances
+  local.get $0
+  i32.const 0
+  call $~lib/map/Map<~lib/string/String,u64>#constructor
+  call $assembly/RedStoneToken/RedStoneToken#set:_allowances
+  local.get $0
+  i32.const 0
+  i32.const 544
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  i32.const 608
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=8
+  local.get $3
+  i32.const 672
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=12
+  local.get $3
+  call $assembly/RedStoneToken/ProviderData#constructor
+  call $assembly/RedStoneToken/RedStoneToken#set:_structField
+  local.get $0
+  local.get $1
+  call $assembly/RedStoneToken/RedStoneToken#set:_name
+  local.get $0
+  local.get $2
+  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
+  local.get $0
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $3
  )
  (func $~lib/map/Map<~lib/string/String,u64>#find (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
@@ -3648,9 +3836,9 @@
   call $~lib/map/Map<~lib/string/String,u64>#has
   i32.eqz
   if
-   i32.const 656
-   i32.const 720
-   i32.const 31
+   i32.const 864
+   i32.const 928
+   i32.const 49
    i32.const 7
    call $~lib/builtins/abort
    unreachable
@@ -3667,9 +3855,9 @@
   local.get $2
   i64.lt_u
   if
-   i32.const 800
-   i32.const 720
-   i32.const 35
+   i32.const 1008
+   i32.const 928
+   i32.const 53
    i32.const 7
    call $~lib/builtins/abort
    unreachable
@@ -3719,13 +3907,13 @@
   i64.const 0
   i64.store
   i32.const 0
-  i32.const 880
+  i32.const 1088
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0
   i32.store
   local.get $0
-  i32.const 928
+  i32.const 1136
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0
@@ -3738,6 +3926,52 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $0
+ )
+ (func $assembly/RedStoneToken/ProviderData#constructor (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $0
+  i32.eqz
+  if
+   global.get $~lib/memory/__stack_pointer
+   i32.const 12
+   i32.const 3
+   call $~lib/rt/itcms/__new
+   local.tee $0
+   i32.store
+  end
+  local.get $0
+  i32.const 0
+  call $assembly/RedStoneToken/ProviderData#set:name
+  local.get $0
+  i32.const 0
+  call $assembly/RedStoneToken/ProviderData#set:description
+  local.get $0
+  i32.const 0
+  call $assembly/RedStoneToken/ProviderData#set:manifestTxId
+  local.get $0
+  local.get $1
+  call $assembly/RedStoneToken/ProviderData#set:name
+  local.get $0
+  local.get $2
+  call $assembly/RedStoneToken/ProviderData#set:description
+  local.get $0
+  local.get $3
+  call $assembly/RedStoneToken/ProviderData#set:manifestTxId
+  local.get $0
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $4
  )
  (func $~lib/arraybuffer/ArrayBuffer#constructor (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
@@ -3794,7 +4028,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 24
-   i32.const 5
+   i32.const 6
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -3834,57 +4068,6 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $1
- )
- (func $assembly/RedStoneToken/RedStoneToken#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
-  (local $3 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  local.get $0
-  i32.eqz
-  if
-   global.get $~lib/memory/__stack_pointer
-   i32.const 24
-   i32.const 3
-   call $~lib/rt/itcms/__new
-   local.tee $0
-   i32.store
-  end
-  local.get $0
-  i32.const 0
-  call $assembly/RedStoneToken/RedStoneToken#set:_name
-  local.get $0
-  i32.const 0
-  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
-  local.get $0
-  i64.const 0
-  call $assembly/RedStoneToken/RedStoneToken#set:_totalSupply
-  local.get $0
-  i32.const 0
-  call $~lib/map/Map<~lib/string/String,u64>#constructor
-  call $assembly/RedStoneToken/RedStoneToken#set:_balances
-  local.get $0
-  i32.const 0
-  call $~lib/map/Map<~lib/string/String,u64>#constructor
-  call $assembly/RedStoneToken/RedStoneToken#set:_allowances
-  local.get $0
-  local.get $1
-  call $assembly/RedStoneToken/RedStoneToken#set:_name
-  local.get $0
-  local.get $2
-  call $assembly/RedStoneToken/RedStoneToken#set:_symbol
-  local.get $0
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $3
  )
  (func $~lib/map/Map<~lib/string/String,u64>#set (param $0 i32) (param $1 i32) (param $2 i64) (result i32)
   (local $3 i32)
@@ -4008,6 +4191,154 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $7
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#get:name (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/RedStoneToken/ProviderData#get:name
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#set:name (param $0 i32) (param $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  call $assembly/RedStoneToken/ProviderData#set:name
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#get:description (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/RedStoneToken/ProviderData#get:description
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#set:description (param $0 i32) (param $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  call $assembly/RedStoneToken/ProviderData#set:description
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#get:manifestTxId (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/RedStoneToken/ProviderData#get:manifestTxId
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#set:manifestTxId (param $0 i32) (param $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  call $assembly/RedStoneToken/ProviderData#set:manifestTxId
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $export:assembly/RedStoneToken/ProviderData#constructor (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store offset=8
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=12
+  local.get $0
+  local.get $1
+  local.get $2
+  local.get $3
+  call $assembly/RedStoneToken/ProviderData#constructor
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $4
  )
  (func $export:assembly/RedStoneToken/RedStoneToken#mint (param $0 i32) (param $1 i32) (param $2 i64)
   global.get $~lib/memory/__stack_pointer
@@ -4168,6 +4499,25 @@
   i32.store
   local.get $0
   call $assembly/RedStoneToken/RedStoneToken#get:totalSupply
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
+ (func $export:assembly/RedStoneToken/RedStoneToken#get:structField (param $0 i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store
+  local.get $0
+  call $assembly/RedStoneToken/RedStoneToken#get:structField
   local.set $1
   global.get $~lib/memory/__stack_pointer
   i32.const 4

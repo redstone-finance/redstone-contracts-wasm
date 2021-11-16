@@ -1,5 +1,17 @@
 import { ERC20, ContractError } from "./ERC20";
 
+export class ProviderData {
+  name: string;
+  description: string;
+  manifestTxId: string;
+
+  constructor(name: string, description: string, manifestTxId: string) {
+    this.name = name;
+    this.description = description;
+    this.manifestTxId = manifestTxId;
+  }
+}
+
 export class RedStoneToken implements ERC20 {
   private _name: string;
 
@@ -10,6 +22,12 @@ export class RedStoneToken implements ERC20 {
   private _balances: Map<string, u64> = new Map<string, u64>();
 
   private _allowances: Map<string, u64> = new Map<string, u64>();
+
+  private _structField: ProviderData = new ProviderData(
+    "RedStone Provider",
+    "RedStone Provider desc",
+    "RedStone Provider manifest"
+  );
 
   constructor(name_: string, symbol_: string) {
     this._name = name_;
@@ -58,6 +76,10 @@ export class RedStoneToken implements ERC20 {
 
   get totalSupply(): u64 {
     return this._totalSupply;
+  }
+
+  get structField(): ProviderData {
+    return this._structField;
   }
 }
 

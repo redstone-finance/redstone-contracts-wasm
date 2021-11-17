@@ -1,4 +1,7 @@
 import { ERC20, ContractError } from "./ERC20";
+import { console } from "./console";
+
+export const UINT16ARRAY_ID = idof<Uint16Array>();
 
 export class ProviderData {
   name: string;
@@ -9,6 +12,15 @@ export class ProviderData {
     this.name = name;
     this.description = description;
     this.manifestTxId = manifestTxId;
+  }
+
+  toString(): string {
+    return `
+    ProviderData
+      #name: ${this.name}
+      #description: ${this.description}
+      #manifestTxId: ${this.manifestTxId}
+    `
   }
 }
 
@@ -29,12 +41,18 @@ export class RedStoneToken implements ERC20 {
     "RedStone Provider manifest"
   );
 
+  private _arrayField: Uint16Array = new Uint16Array(10);
+
   constructor(name_: string, symbol_: string) {
     this._name = name_;
     this._symbol = symbol_;
+
+    console.log(`Constructor: ${this._structField.toString()}`);
   }
 
   mint(account: string, amount: u64): void {
+    console.log(`mint called ${account}: ${amount}`);
+    
     if (this._balances.has(account)) {
       const currentBalance = this._balances.get(account);
       this._balances.set(account, currentBalance + amount);
@@ -80,6 +98,15 @@ export class RedStoneToken implements ERC20 {
 
   get structField(): ProviderData {
     return this._structField;
+  }
+
+  get arrayField(): Uint16Array {
+    return this._arrayField;
+  }
+
+  set arrayField(value: Uint16Array) {
+    console.log(`arrayField called ${value}`);
+    this._arrayField = value;
   }
 }
 

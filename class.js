@@ -6,6 +6,11 @@ const loader = require("@assemblyscript/loader");
 const wasmModule = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
+    console: {
+      'console.log': function (msg) {
+        console.log(`WASM: ${wasmExports.__getString(msg)}`);
+      },
+    },
     env: {
       // note: --importMemory flag must be switched on for ASC
       memory: new WebAssembly.Memory({
@@ -24,12 +29,16 @@ const token = wasmExports.RedStoneToken.wrap(tokenPtr);
 token.name = wasmExports.__newString(
   "[CLASS_FROM_POINTER:name]: RedStone Token 1"
 );
-token.symbol = wasmExports.__newString(
-  "[CLASS_FROM_POINTER:symbol]: RDST_FTW"
-);
+token.symbol = wasmExports.__newString("[CLASS_FROM_POINTER:symbol]: RDST_FTW");
 token.mint(wasmExports.__newString("walletId1"), BigInt(500));
 token.mint(wasmExports.__newString("walletId1"), BigInt(1000));
 token.mint(wasmExports.__newString("walletId1"), BigInt(666));
+
+const arrPtr = token.arrayField;
+const array = wasmExports.__getArray(arrPtr);
+console.log("Array", array);
+array[0] = 20;
+token.arrayField = wasmExports.__newArray(wasmExports.UINT16ARRAY_ID, array);
 
 try {
   token.burn(wasmExports.__newString("walletId2"), BigInt(666));
@@ -78,9 +87,14 @@ console.log("New memory@token pointer 1:", newHeap[tokenPtr]);
 console.log("New memory@token pointer 2:", newHeap[tokenPtr2]);
 
 // 8. creating new wasm module with the new memory instance with buffer filled with data from file
-const wasmModuleMem = loader.instantiateSync(
+/*const wasmModuleMem = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
+    console: {
+      'console.log': function (msg, ...args) {
+        console.log(`WASM: ${msg}`, args );
+      },
+    },
     env: {
       memory: newMemory,
     },
@@ -93,15 +107,41 @@ const token3 = wasmExportsMem.RedStoneToken.wrap(tokenPtr);
 const token4 = wasmExportsMem.RedStoneToken.wrap(tokenPtr2);
 
 console.log("\nloaded token 1 name:", wasmExportsMem.__getString(token3.name));
-console.log("loaded token 1 symbol:", wasmExportsMem.__getString(token3.symbol));
-console.log("loaded token 1 totalSupply:", BigInt(token3.totalSupply).toString());
+console.log(
+  "loaded token 1 symbol:",
+  wasmExportsMem.__getString(token3.symbol)
+);
+console.log(
+  "loaded token 1 totalSupply:",
+  BigInt(token3.totalSupply).toString()
+);
 
 console.log("\nloaded token 2 name:", wasmExportsMem.__getString(token4.name));
-console.log("loaded token 2 symbol:", wasmExportsMem.__getString(token4.symbol));
-console.log("loaded token 2 totalSupply", BigInt(token4.totalSupply).toString());
+console.log(
+  "loaded token 2 symbol:",
+  wasmExportsMem.__getString(token4.symbol)
+);
+console.log(
+  "loaded token 2 totalSupply",
+  BigInt(token4.totalSupply).toString()
+);
 
 // accessing internal struct in contract
 const structField = wasmExportsMem.ProviderData.wrap(token4.structField);
-console.log("\nloaded token 2 structField", wasmExportsMem.__getString(structField.name));
-console.log("loaded token 2 structField", wasmExportsMem.__getString(structField.description));
-console.log("loaded token 2 structField", wasmExportsMem.__getString(structField.manifestTxId));
+console.log(
+  "\nloaded token 2 structField",
+  wasmExportsMem.__getString(structField.name)
+);
+console.log(
+  "loaded token 2 structField",
+  wasmExportsMem.__getString(structField.description)
+);
+console.log(
+  "loaded token 2 structField",
+  wasmExportsMem.__getString(structField.manifestTxId)
+);
+
+// accessing internal array in contract
+const arrPtr2 = token3.arrayField;
+const array2 = wasmExportsMem.__getArray(arrPtr2);
+console.log("\n token 1 array", array2);*/

@@ -1,7 +1,13 @@
 import { ERC20, ContractError } from "./ERC20";
-import { console } from "./console";
+import { console } from "./imports/console";
+import { Block } from "./imports/smartweave/block";
+import { Transaction } from "./imports/smartweave/transaction";
+import { Contract } from "./imports/smartweave/contract";
+import { msg } from "./imports/smartweave/msg";
+import { setTimeout } from "./imports/api";
 
 export const UINT16ARRAY_ID = idof<Uint16Array>();
+export const ProviderData_ID = idof<string[]>();
 
 export class ProviderData {
   name: string;
@@ -20,7 +26,7 @@ export class ProviderData {
       #name: ${this.name}
       #description: ${this.description}
       #manifestTxId: ${this.manifestTxId}
-    `
+    `;
   }
 }
 
@@ -48,11 +54,29 @@ export class RedStoneToken implements ERC20 {
     this._symbol = symbol_;
 
     console.log(`Constructor: ${this._structField.toString()}`);
+    console.log(`Block#height: ${Block.height()}`);
+    console.log(`Block#indep_hash: ${Block.indep_hash()}`);
+    console.log(`Block#timestamp: ${Block.timestamp()}`);
+
+    console.log(`Transaction#id: ${Transaction.id()}`);
+    console.log(`Transaction#owner: ${Transaction.owner()}`);
+    console.log(`Transaction#target: ${Transaction.target()}`);
+
+    console.log(`Contract#id: ${Contract.id()}`);
+    console.log(`Contract#owner: ${Contract.owner()}`);
+
+    console.log(`msg#sender: ${msg.sender()}`);
+  }
+  
+  testTimeout(milliseconds: f32): void {
+    setTimeout(() => {
+      console.log("After timeout");
+    }, milliseconds);
   }
 
   mint(account: string, amount: u64): void {
     console.log(`mint called ${account}: ${amount}`);
-    
+
     if (this._balances.has(account)) {
       const currentBalance = this._balances.get(account);
       this._balances.set(account, currentBalance + amount);
@@ -107,6 +131,14 @@ export class RedStoneToken implements ERC20 {
   set arrayField(value: Uint16Array) {
     console.log(`arrayField called ${value}`);
     this._arrayField = value;
+  }
+
+  modifyProviderDataArray(data: ProviderData[]): ProviderData[] {
+    console.log("modifyProviderDataArray");
+    return data.map<ProviderData>((pd) => {
+      pd.name += " WASM";
+      return pd;
+    });
   }
 }
 

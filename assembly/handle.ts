@@ -1,5 +1,3 @@
-
-
 export function handle(state: i32): i32 {
   // const state = a as State;
   // const state = a as unknown as State;

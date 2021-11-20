@@ -1,26 +1,101 @@
 const fs = require("fs");
 const loader = require("@assemblyscript/loader");
+const Sw = require("redstone-smartweave/lib/cjs/legacy/smartweave-global");
+const Arweave = require("arweave");
+
+const arweave = Arweave.init({
+  host: "arweave.net",
+  port: 443,
+  protocol: "https",
+});
+
+const SwGlobal = new Sw.SmartWeaveGlobal(arweave, {
+  id: "contractDefinition.txId",
+  owner: "contractDefinition.owner",
+});
+
+const imports = {
+  block: {
+    "Block.height": function () {
+      return 878333;
+    },
+    "Block.indep_hash": function () {
+      return wasmExports.__newString("Block.indep_hash");
+    },
+    "Block.timestamp": function () {
+      return 123123123;
+    },
+  },
+  transaction: {
+    "Transaction.id": function () {
+      return wasmExports.__newString("Transaction.id");
+    },
+    "Transaction.owner": function () {
+      return wasmExports.__newString("Transaction.owner");
+    },
+    "Transaction.target": function () {
+      return wasmExports.__newString("Transaction.target");
+    },
+  },
+  contract: {
+    "Contract.id": function () {
+      return wasmExports.__newString("Contract.id");
+    },
+    "Contract.owner": function () {
+      return wasmExports.__newString("Contract.owner");
+    },
+  },
+  msg: {
+    "msg.sender": function () {
+      return wasmExports.__newString("msg.sender");
+    },
+  },
+  console: {
+    "console.log": function (msg) {
+      console.log(`WASM: ${wasmExports.__getString(msg)}`);
+    },
+  },
+  api: {
+    _setTimeout: (fnIndex, ms) => {
+      return setTimeout(getFn(fnIndex), ms);
+    },
+    clearTimeout,
+  },
+  env: {
+    // note: --importMemory flag must be switched on for ASC
+    memory: new WebAssembly.Memory({
+      initial: 1,
+    }),
+    memoryBase: 0,
+    abort(message, fileName, line, column) {
+      console.error("--------- Error message from AssemblyScript ---------");
+      console.error("  " + wasmModule.exports.__getString(message));
+      console.error(
+        '    In file "' + wasmModule.exports.__getString(fileName) + '"'
+      );
+      console.error(`    on line ${line}, column ${column}.`);
+      console.error("-----------------------------------------------------");
+    },
+    /* table: new WebAssembly.Table({
+       element: "anyfunc",
+       initial: 256,
+     }),
+     tableBase: 0,*/
+  },
+};
 
 // https://github.com/AssemblyScript/assemblyscript/issues/261
 // 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/untouched.wasm"),
-  {
-    console: {
-      'console.log': function (msg) {
-        console.log(`WASM: ${wasmExports.__getString(msg)}`);
-      },
-    },
-    env: {
-      // note: --importMemory flag must be switched on for ASC
-      memory: new WebAssembly.Memory({
-        initial: 1,
-      }),
-    },
-  }
+  imports
 );
 
 const wasmExports = wasmModule.exports;
+
+function getFn(idx) {
+  return wasmExports.table.get(idx);
+}
 
 // 2. using pointer to a class - as in https://www.assemblyscript.org/loader.html#custom-classes
 const tokenPtr = wasmExports.getToken();
@@ -34,11 +109,38 @@ token.mint(wasmExports.__newString("walletId1"), BigInt(500));
 token.mint(wasmExports.__newString("walletId1"), BigInt(1000));
 token.mint(wasmExports.__newString("walletId1"), BigInt(666));
 
+token.testTimeout(4000);
+
 const arrPtr = token.arrayField;
 const array = wasmExports.__getArray(arrPtr);
 console.log("Array", array);
 array[0] = 20;
 token.arrayField = wasmExports.__newArray(wasmExports.UINT16ARRAY_ID, array);
+
+// based on https://github.com/AssemblyScript/examples/blob/main/loader/tests/index.js#L84
+const elemPtrs = ["provider_1", "provider_2", "provider_3"].map((v) => {
+  // note: using __pin here throws
+  // "Error: abort: Object already pinned at ~lib/rt/itcms.ts:337:7"
+  const sf = new wasmExports.ProviderData();
+  sf.name = wasmExports.__newString(v);
+
+  return sf;
+});
+
+const inPtr = wasmExports.__pin(
+  wasmExports.__newArray(wasmExports.ProviderData_ID, elemPtrs)
+);
+
+const outPtr = wasmExports.__pin(token.modifyProviderDataArray(inPtr));
+
+console.log(
+  "PD Array",
+  wasmExports.__getArray(outPtr).map((p) => {
+    const pd = wasmExports.ProviderData.wrap(p);
+
+    return wasmExports.__getString(pd.name);
+  })
+);
 
 try {
   token.burn(wasmExports.__newString("walletId2"), BigInt(666));
@@ -87,16 +189,15 @@ console.log("New memory@token pointer 1:", newHeap[tokenPtr]);
 console.log("New memory@token pointer 2:", newHeap[tokenPtr2]);
 
 // 8. creating new wasm module with the new memory instance with buffer filled with data from file
-/*const wasmModuleMem = loader.instantiateSync(
+const wasmModuleMem = loader.instantiateSync(
   fs.readFileSync(__dirname + "/build/untouched.wasm"),
   {
-    console: {
-      'console.log': function (msg, ...args) {
-        console.log(`WASM: ${msg}`, args );
+    ...imports,
+    ...{
+      ...imports.env,
+      env: {
+        memory: newMemory,
       },
-    },
-    env: {
-      memory: newMemory,
     },
   }
 );
@@ -144,4 +245,4 @@ console.log(
 // accessing internal array in contract
 const arrPtr2 = token3.arrayField;
 const array2 = wasmExportsMem.__getArray(arrPtr2);
-console.log("\n token 1 array", array2);*/
+console.log("\n token 1 array", array2);

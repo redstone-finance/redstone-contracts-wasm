@@ -65,7 +65,7 @@
  (data (i32.const 3660) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00 \00b\00a\00l\00a\00n\00c\00e\00")
  (data (i32.const 3724) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\002\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00R\00e\00d\00S\00t\00o\00n\00e\00T\00o\00k\00e\00n\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 3804) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00<\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00t\00 \00e\00n\00o\00u\00g\00h\00 \00b\00a\00l\00a\00n\00c\00e\00")
- (data (i32.const 3884) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1a\00\00\00A\00f\00t\00e\00r\00 \00t\00i\00m\00e\00o\00u\00t\00\00\00")
+ (data (i32.const 3884) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00A\00f\00t\00e\00r\00 \00t\00i\00m\00e\00o\00u\00t\00 \00")
  (data (i32.const 3932) "\1c\00\00\00\00\00\00\00\00\00\00\00\n\00\00\00\08\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 3964) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\02\00\00\00,\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 3996) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00a\00r\00r\00a\00y\00F\00i\00e\00l\00d\00 \00c\00a\00l\00l\00e\00d\00 \00\00\00\00\00\00\00\00\00")
@@ -5199,13 +5199,18 @@
   local.get $0
   i32.load offset=28
  )
- (func $~lib/function/Function<%28%29=>void>#get:index (param $0 i32) (result i32)
+ (func $~lib/string/String.__concat (param $0 i32) (param $1 i32) (result i32)
+  local.get $0
+  local.get $1
+  call $~lib/string/String#concat
+ )
+ (func $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>#get:index (param $0 i32) (result i32)
   local.get $0
   i32.load
  )
- (func $assembly/imports/api/setTimeout (param $0 i32) (param $1 f32) (result i32)
+ (func $assembly/imports/api/setTimeout<assembly/RedStoneToken/ProviderData> (param $0 i32) (param $1 f32) (result i32)
   local.get $0
-  call $~lib/function/Function<%28%29=>void>#get:index
+  call $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>#get:index
   local.get $1
   call $assembly/imports/api/_setTimeout
  )
@@ -5315,11 +5320,6 @@
   call $~lib/typedarray/Uint16Array#get:length
   local.get $1
   call $~lib/util/string/joinIntegerArray<u16>
- )
- (func $~lib/string/String.__concat (param $0 i32) (param $1 i32) (result i32)
-  local.get $0
-  local.get $1
-  call $~lib/string/String#concat
  )
  (func $~lib/rt/__newBuffer (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
@@ -5738,16 +5738,16 @@
   local.get $1
   call $~lib/map/Map<~lib/string/String,u64>#__visit
  )
- (func $~lib/function/Function<%28%29=>void>#__visit (param $0 i32) (param $1 i32)
+ (func $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>#__visit (param $0 i32) (param $1 i32)
   local.get $0
   i32.load offset=4
   local.get $1
   call $~lib/rt/itcms/__visit
  )
- (func $~lib/function/Function<%28%29=>void>~visit (param $0 i32) (param $1 i32)
+ (func $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>~visit (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
-  call $~lib/function/Function<%28%29=>void>#__visit
+  call $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>#__visit
  )
  (func $~lib/array/Array<assembly/RedStoneToken/ProviderData>#__visit (param $0 i32) (param $1 i32)
   (local $2 i32)
@@ -5828,7 +5828,7 @@
    block $~lib/array/Array<i32>
     block $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%2Ci32%2C~lib/array/Array<assembly/RedStoneToken/ProviderData>%29=>assembly/RedStoneToken/ProviderData>
      block $~lib/array/Array<assembly/RedStoneToken/ProviderData>
-      block $~lib/function/Function<%28%29=>void>
+      block $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>
        block $~lib/map/Map<~lib/string/String,u64>
         block $assembly/ERC20/ERC20
          block $assembly/RedStoneToken/RedStoneToken
@@ -5843,7 +5843,7 @@
                  i32.const 8
                  i32.sub
                  i32.load
-                 br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $~lib/typedarray/Uint16Array $~lib/array/Array<~lib/string/String> $assembly/RedStoneToken/ProviderData $~lib/staticarray/StaticArray<~lib/string/String> $assembly/RedStoneToken/RedStoneToken $assembly/ERC20/ERC20 $~lib/map/Map<~lib/string/String,u64> $~lib/function/Function<%28%29=>void> $~lib/array/Array<assembly/RedStoneToken/ProviderData> $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%2Ci32%2C~lib/array/Array<assembly/RedStoneToken/ProviderData>%29=>assembly/RedStoneToken/ProviderData> $~lib/array/Array<i32> $invalid
+                 br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $~lib/typedarray/Uint16Array $~lib/array/Array<~lib/string/String> $assembly/RedStoneToken/ProviderData $~lib/staticarray/StaticArray<~lib/string/String> $assembly/RedStoneToken/RedStoneToken $assembly/ERC20/ERC20 $~lib/map/Map<~lib/string/String,u64> $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void> $~lib/array/Array<assembly/RedStoneToken/ProviderData> $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%2Ci32%2C~lib/array/Array<assembly/RedStoneToken/ProviderData>%29=>assembly/RedStoneToken/ProviderData> $~lib/array/Array<i32> $invalid
                 end
                 return
                end
@@ -5888,7 +5888,7 @@
       end
       local.get $0
       local.get $1
-      call $~lib/function/Function<%28%29=>void>~visit
+      call $~lib/function/Function<%28assembly/RedStoneToken/ProviderData%29=>void>~visit
       return
      end
      local.get $0
@@ -6582,25 +6582,41 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
  )
- (func $assembly/RedStoneToken/RedStoneToken#testTimeout~anonymous|0
-  (local $0 i32)
+ (func $assembly/RedStoneToken/RedStoneToken#testTimeout~anonymous|0 (param $0 i32)
+  (local $1 i32)
   global.get $~lib/memory/__stack_pointer
-  i32.const 4
+  i32.const 12
   i32.sub
   global.set $~lib/memory/__stack_pointer
   call $~stack_check
   global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  i32.const 3904
-  local.set $0
+  i64.const 0
+  i64.store
   global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  i32.const 3904
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
   local.get $0
+  i32.load
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=8
+  local.get $1
+  call $~lib/string/String.__concat
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
   i32.store
-  local.get $0
+  local.get $1
   call $assembly/imports/console/console.log
   global.get $~lib/memory/__stack_pointer
-  i32.const 4
+  i32.const 12
   i32.add
   global.set $~lib/memory/__stack_pointer
  )
@@ -6621,7 +6637,7 @@
   i32.store
   local.get $2
   local.get $1
-  call $assembly/imports/api/setTimeout
+  call $assembly/imports/api/setTimeout<assembly/RedStoneToken/ProviderData>
   drop
   global.get $~lib/memory/__stack_pointer
   i32.const 4

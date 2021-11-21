@@ -69,8 +69,8 @@ export class RedStoneToken implements ERC20 {
   }
   
   testTimeout(milliseconds: f32): void {
-    setTimeout(() => {
-      console.log("After timeout");
+    setTimeout<ProviderData>((providerData: ProviderData) => {
+      console.log("After timeout: " + providerData.name);
     }, milliseconds);
   }
 

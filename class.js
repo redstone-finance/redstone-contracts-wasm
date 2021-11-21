@@ -57,7 +57,12 @@ const imports = {
   },
   api: {
     _setTimeout: (fnIndex, ms) => {
-      return setTimeout(getFn(fnIndex), ms);
+      return setTimeout(() => {
+        const fn = getFn(fnIndex);
+        const pd = new wasmExports.ProviderData();
+        pd.name = wasmExports.__newString("Timeout provider");
+        fn(pd);
+      }, ms);
     },
     clearTimeout,
   },

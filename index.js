@@ -3,14 +3,17 @@ const loader = require("@assemblyscript/loader");
 const Arweave = require("arweave");
 const metering = require('wasm-metering')
 
-const wasm = fs.readFileSync(__dirname + "/build/untouched.wasm");
-const meteredWasm = metering.meterWASM(wasm, {
+const wasmBinary = fs.readFileSync(__dirname + "/build/untouched.wasm");
+const meteredWasmBinary = metering.meterWASM(wasmBinary, {
   meterType: "i32",
 });
 
+const wasm2json = require('wasm-json-toolkit').wasm2json
+const json = wasm2json(wasmBinary);
+fs.writeFileSync("wasm_module.json", JSON.stringify(json, null, 2))
+
 const limit = 90000000;
 let gasUsed = 0;
-
 
 const imports = {
   metering: {
@@ -98,7 +101,7 @@ const imports = {
 // https://github.com/AssemblyScript/assemblyscript/issues/261
 // 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
-  meteredWasm,
+  meteredWasmBinary,
   imports
 );
 

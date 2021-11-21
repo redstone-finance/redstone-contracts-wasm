@@ -4,7 +4,7 @@ import { Block } from "./imports/smartweave/block";
 import { Transaction } from "./imports/smartweave/transaction";
 import { Contract } from "./imports/smartweave/contract";
 import { msg } from "./imports/smartweave/msg";
-import { setTimeout } from "./imports/api";
+import { setTimeout, clearTimeout } from "./imports/api";
 
 export const UINT16ARRAY_ID = idof<Uint16Array>();
 export const ProviderData_ID = idof<string[]>();
@@ -69,8 +69,12 @@ export class RedStoneToken implements ERC20 {
   }
   
   testTimeout(milliseconds: f32): void {
-    setTimeout<ProviderData>((providerData: ProviderData) => {
+    let timeout: i32 = 0
+
+    timeout = setTimeout<ProviderData>((providerData: ProviderData) => {
       console.log("After timeout: " + providerData.name);
+      // no closures support
+      // clearTimeout(timeout);
     }, milliseconds);
   }
 

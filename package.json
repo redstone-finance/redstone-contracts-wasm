@@ -9,19 +9,21 @@
   "private": false,
   "devDependencies": {
     "@assemblyscript/loader": "^0.19.17",
-    "assemblyscript": "^0.19.18",
-    "json-as": "^0.2.6",
-    "visitor-as": "^0.6.0",
-    "redstone-smartweave": "0.3.10-alpha.19",
     "arweave": "^1.10.18",
-    "asyncify-wasm": "^1.2.1"
+    "assemblyscript": "^0.19.18",
+    "asyncify-wasm": "^1.2.1",
+    "json-as": "^0.2.6",
+    "redstone-smartweave": "0.3.10-alpha.19",
+    "visitor-as": "^0.6.0",
+    "wasm-json-toolkit": "^0.2.6",
+    "wasm-metering": "^0.2.1"
   },
   "scripts": {
     "asbuild:untouched": "asc assembly/handle.ts --exportRuntime --enable reference-types --target debug",
     "asbuild:optimized": "asc assembly/handle.ts --exportRuntime --enable reference-types --target release",
     "asbuild": "yarn asbuild:untouched && yarn asbuild:optimized",
-    "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --exportTable --target debug",
-    "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --exportTable --target release",
+    "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target debug",
+    "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
     "test": "node tests"
   }

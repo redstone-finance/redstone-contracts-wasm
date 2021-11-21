@@ -65,18 +65,18 @@
  (data (i32.const 3660) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00,\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00 \00b\00a\00l\00a\00n\00c\00e\00")
  (data (i32.const 3724) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\002\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00R\00e\00d\00S\00t\00o\00n\00e\00T\00o\00k\00e\00n\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 3804) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00<\00\00\00A\00c\00c\00o\00u\00n\00t\00 \00h\00a\00s\00 \00n\00o\00t\00 \00e\00n\00o\00u\00g\00h\00 \00b\00a\00l\00a\00n\00c\00e\00")
- (data (i32.const 3884) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00A\00f\00t\00e\00r\00 \00t\00i\00m\00e\00o\00u\00t\00 \00")
- (data (i32.const 3932) "\1c\00\00\00\00\00\00\00\00\00\00\00\n\00\00\00\08\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 3964) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\02\00\00\00,\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 3996) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00a\00r\00r\00a\00y\00F\00i\00e\00l\00d\00 \00c\00a\00l\00l\00e\00d\00 \00\00\00\00\00\00\00\00\00")
- (data (i32.const 4060) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00.\00\00\00m\00o\00d\00i\00f\00y\00P\00r\00o\00v\00i\00d\00e\00r\00D\00a\00t\00a\00A\00r\00r\00a\00y\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 4140) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\n\00\00\00 \00W\00A\00S\00M\00\00\00")
- (data (i32.const 4172) "\1c\00\00\00\00\00\00\00\00\00\00\00\0c\00\00\00\08\00\00\00\02\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 4204) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 4252) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
- (data (i32.const 4284) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
- (data (i32.const 4348) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
- (data (i32.const 4416) "\0e\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\81\00\00\00\02\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\04A\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\10\02\82\00\00\00\00\00\00\00\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02\t\00\00\00\00\00\00")
+ (data (i32.const 3884) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00A\00f\00t\00e\00r\00 \00t\00i\00m\00e\00o\00u\00t\00:\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 3948) "\1c\00\00\00\00\00\00\00\00\00\00\00\n\00\00\00\08\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 3980) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\02\00\00\00,\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 4012) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00a\00r\00r\00a\00y\00F\00i\00e\00l\00d\00 \00c\00a\00l\00l\00e\00d\00 \00\00\00\00\00\00\00\00\00")
+ (data (i32.const 4076) "L\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00.\00\00\00m\00o\00d\00i\00f\00y\00P\00r\00o\00v\00i\00d\00e\00r\00D\00a\00t\00a\00A\00r\00r\00a\00y\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 4156) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\n\00\00\00 \00W\00A\00S\00M\00\00\00")
+ (data (i32.const 4188) "\1c\00\00\00\00\00\00\00\00\00\00\00\0c\00\00\00\08\00\00\00\02\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 4220) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\10\00\00\00R\00e\00d\00S\00t\00o\00n\00e\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 4268) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\08\00\00\00R\00D\00S\00T\00\00\00\00\00")
+ (data (i32.const 4300) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
+ (data (i32.const 4364) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
+ (data (i32.const 4432) "\0e\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\81\00\00\00\02\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\04A\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\10\02\82\00\00\00\00\00\00\00\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02\t\00\00\00\00\00\00")
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (import "console" "console.log" (func $assembly/imports/console/console.log (param i32)))
  (import "block" "Block.height" (func $assembly/imports/smartweave/block/Block.height (result i32)))
@@ -107,10 +107,10 @@
  (global $~argumentsLength (mut i32) (i32.const 0))
  (global $assembly/RedStoneToken/ProviderData i32 (i32.const 5))
  (global $assembly/RedStoneToken/RedStoneToken i32 (i32.const 7))
- (global $~lib/rt/__rtti_base i32 (i32.const 4416))
- (global $~lib/memory/__data_end i32 (i32.const 4532))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 20916))
- (global $~lib/memory/__heap_base i32 (i32.const 20916))
+ (global $~lib/rt/__rtti_base i32 (i32.const 4432))
+ (global $~lib/memory/__data_end i32 (i32.const 4548))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 20932))
+ (global $~lib/memory/__heap_base i32 (i32.const 20932))
  (table $0 3 funcref)
  (elem $0 (i32.const 1) $assembly/RedStoneToken/RedStoneToken#testTimeout~anonymous|0 $assembly/RedStoneToken/RedStoneToken#modifyProviderDataArray~anonymous|0)
  (export "UINT16ARRAY_ID" (global $assembly/RedStoneToken/UINT16ARRAY_ID))
@@ -5349,7 +5349,7 @@
    i32.const 3
    i32.eq
    if
-    i32.const 4304
+    i32.const 4320
     i32.const 32
     i32.const 337
     i32.const 7
@@ -5381,7 +5381,7 @@
   i32.const 3
   i32.ne
   if
-   i32.const 4368
+   i32.const 4384
    i32.const 32
    i32.const 351
    i32.const 5
@@ -5467,10 +5467,10 @@
   i32.const 240
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 4304
+  i32.const 4320
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 4368
+  i32.const 4384
   local.get $0
   call $~lib/rt/itcms/__visit
   i32.const 1440
@@ -5932,8 +5932,8 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 20944
-   i32.const 20992
+   i32.const 20960
+   i32.const 21008
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
@@ -6524,7 +6524,7 @@
   if
    i32.const 3680
    i32.const 3744
-   i32.const 91
+   i32.const 95
    i32.const 7
    call $~lib/builtins/abort
    unreachable
@@ -6543,7 +6543,7 @@
   if
    i32.const 3824
    i32.const 3744
-   i32.const 95
+   i32.const 99
    i32.const 7
    call $~lib/builtins/abort
    unreachable
@@ -6622,6 +6622,7 @@
  )
  (func $assembly/RedStoneToken/RedStoneToken#testTimeout (param $0 i32) (param $1 f32)
   (local $2 i32)
+  (local $3 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
   i32.sub
@@ -6630,15 +6631,17 @@
   global.get $~lib/memory/__stack_pointer
   i32.const 0
   i32.store
-  i32.const 3952
+  i32.const 0
   local.set $2
+  i32.const 3968
+  local.set $3
   global.get $~lib/memory/__stack_pointer
-  local.get $2
+  local.get $3
   i32.store
-  local.get $2
+  local.get $3
   local.get $1
   call $assembly/imports/api/setTimeout<assembly/RedStoneToken/ProviderData>
-  drop
+  local.set $2
   global.get $~lib/memory/__stack_pointer
   i32.const 4
   i32.add
@@ -6655,7 +6658,7 @@
   i32.const 0
   i32.store
   local.get $0
-  i32.const 3984
+  i32.const 4000
   local.set $1
   global.get $~lib/memory/__stack_pointer
   local.get $1
@@ -6682,7 +6685,7 @@
   global.get $~lib/memory/__stack_pointer
   i32.const 0
   i32.store offset=8
-  i32.const 4016
+  i32.const 4032
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -6728,7 +6731,7 @@
   local.get $3
   i32.store
   local.get $3
-  i32.const 4160
+  i32.const 4176
   local.set $3
   global.get $~lib/memory/__stack_pointer
   local.get $3
@@ -6854,7 +6857,7 @@
   global.get $~lib/memory/__stack_pointer
   i64.const 0
   i64.store
-  i32.const 4080
+  i32.const 4096
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -6862,7 +6865,7 @@
   local.get $2
   call $assembly/imports/console/console.log
   local.get $1
-  i32.const 4192
+  i32.const 4208
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -6887,13 +6890,13 @@
   i64.const 0
   i64.store
   i32.const 0
-  i32.const 4224
+  i32.const 4240
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0
   i32.store
   local.get $0
-  i32.const 4272
+  i32.const 4288
   local.set $0
   global.get $~lib/memory/__stack_pointer
   local.get $0

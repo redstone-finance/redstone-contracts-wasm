@@ -1,20 +1,26 @@
 const fs = require("fs");
 const loader = require("@assemblyscript/loader");
-const Sw = require("redstone-smartweave/lib/cjs/legacy/smartweave-global");
 const Arweave = require("arweave");
+const metering = require('wasm-metering')
 
-const arweave = Arweave.init({
-  host: "arweave.net",
-  port: 443,
-  protocol: "https",
+const wasm = fs.readFileSync(__dirname + "/build/untouched.wasm");
+const meteredWasm = metering.meterWASM(wasm, {
+  meterType: "i32",
 });
 
-const SwGlobal = new Sw.SmartWeaveGlobal(arweave, {
-  id: "contractDefinition.txId",
-  owner: "contractDefinition.owner",
-});
+const limit = 90000000;
+let gasUsed = 0;
+
 
 const imports = {
+  metering: {
+    usegas: (gas) => {
+      gasUsed += gas;
+      if (gasUsed > limit) {
+        throw new Error("out of gas!");
+      }
+    }
+  },
   block: {
     "Block.height": function () {
       return 878333;
@@ -92,7 +98,7 @@ const imports = {
 // https://github.com/AssemblyScript/assemblyscript/issues/261
 // 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
-  fs.readFileSync(__dirname + "/build/untouched.wasm"),
+  meteredWasm,
   imports
 );
 
@@ -156,6 +162,9 @@ try {
   console.error(e);
   console.error(e.name);
 }
+
+console.log(`gas used ${gasUsed * 1e-4}`);
+
 // 3. using class "directly" - as in
 // https://github.com/AssemblyScript/assemblyscript/blob/main/lib/loader/tests/index.js#L255
 const token2 = new wasmExports.RedStoneToken(

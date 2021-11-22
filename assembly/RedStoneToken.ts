@@ -1,96 +1,20 @@
-import { ERC20, ContractError } from "./ERC20";
+import { AbstractERC20 } from "./AbstractERC20";
 import { console } from "./imports/console";
-import { Block } from "./imports/smartweave/block";
-import { Transaction } from "./imports/smartweave/transaction";
-import { Contract } from "./imports/smartweave/contract";
+import { ContractError } from "./ERC20";
+import { setTimeout } from "./imports/api";
 import { msg } from "./imports/smartweave/msg";
-import { setTimeout, clearTimeout } from "./imports/api";
 
-export const UINT16ARRAY_ID = idof<Uint16Array>();
-export const ProviderData_ID = idof<string[]>();
-
-export class ProviderData {
-  name: string;
-  description: string;
-  manifestTxId: string;
-
-  constructor(name: string, description: string, manifestTxId: string) {
-    this.name = name;
-    this.description = description;
-    this.manifestTxId = manifestTxId;
-  }
-
-  toString(): string {
-    return `
-    ProviderData
-      #name: ${this.name}
-      #description: ${this.description}
-      #manifestTxId: ${this.manifestTxId}
-    `;
-  }
-}
-
-export class RedStoneToken implements ERC20 {
-  private _name: string;
-
-  private _symbol: string;
-
-  private _totalSupply: u64 = 0;
-
-  private _balances: Map<string, u64> = new Map<string, u64>();
-
-  private _allowances: Map<string, u64> = new Map<string, u64>();
-
-  private _structField: ProviderData = new ProviderData(
-    "RedStone Provider",
-    "RedStone Provider desc",
-    "RedStone Provider manifest"
-  );
-
-  private _arrayField: Uint16Array = new Uint16Array(10);
-
+export class RedStoneToken extends AbstractERC20 {
   constructor(name_: string, symbol_: string) {
-    this._name = name_;
-    this._symbol = symbol_;
-
-    console.log(`Constructor: ${this._structField.toString()}`);
-    console.log(`Block#height: ${Block.height()}`);
-    console.log(`Block#indep_hash: ${Block.indep_hash()}`);
-    console.log(`Block#timestamp: ${Block.timestamp()}`);
-
-    console.log(`Transaction#id: ${Transaction.id()}`);
-    console.log(`Transaction#owner: ${Transaction.owner()}`);
-    console.log(`Transaction#target: ${Transaction.target()}`);
-
-    console.log(`Contract#id: ${Contract.id()}`);
-    console.log(`Contract#owner: ${Contract.owner()}`);
-
-    console.log(`msg#sender: ${msg.sender()}`);
-  }
-  
-  testTimeout(milliseconds: f32): void {
-    let timeout: i32 = 0
-
-    timeout = setTimeout<ProviderData>((providerData: ProviderData) => {
-      console.log("After timeout: " + providerData.name);
-      // no closures support
-      // clearTimeout(timeout);
-    }, milliseconds);
-  }
-
-  mint(account: string, amount: u64): void {
-    console.log(`mint called ${account}: ${amount}`);
-
-    if (this._balances.has(account)) {
-      const currentBalance = this._balances.get(account);
-      this._balances.set(account, currentBalance + amount);
-    } else {
-      this._balances.set(account, amount);
-    }
-    this._totalSupply += amount;
+    super(name_, symbol_);
   }
 
   burn(account: string, amount: u64): void {
+    console.log(`burn called ${account}: ${amount}`);
+    const msgSender = msg.sender();
+    if (account != msgSender) {
+      throw new ContractError("Only account owner can burn his tokens");
+    }
     if (!this._balances.has(account)) {
       throw new ContractError("Account has no balance");
     }
@@ -104,24 +28,39 @@ export class RedStoneToken implements ERC20 {
     this._totalSupply -= amount;
   }
 
-  get name(): string {
-    return this._name;
+  // TODO: verify contract ownership
+  mint(account: string, amount: u64): void {
+    console.log(`mint called ${account}: ${amount}`);
+
+    if (this._balances.has(account)) {
+      const currentBalance = this._balances.get(account);
+      this._balances.set(account, currentBalance + amount);
+    } else {
+      this._balances.set(account, amount);
+    }
+    this._totalSupply += amount;
   }
 
-  set name(value: string) {
-    this._name = value;
-  }
+  // just for tests.
+  private _structField: ProviderData = new ProviderData(
+    "RedStone Provider",
+    "RedStone Provider desc",
+    "RedStone Provider manifest"
+  );
 
-  get symbol(): string {
-    return this._symbol;
-  }
+  private _arrayField: Uint16Array = new Uint16Array(10);
 
-  set symbol(value: string) {
-    this._symbol = value;
-  }
+  /**
+   * WASM testing BEGIN
+   */
+  testTimeout(milliseconds: f32): void {
+    let timeout: i32 = 0;
 
-  get totalSupply(): u64 {
-    return this._totalSupply;
+    timeout = setTimeout<ProviderData>((providerData: ProviderData) => {
+      console.log("After timeout: " + providerData.name);
+      // no closures support
+      // clearTimeout(timeout);
+    }, milliseconds);
   }
 
   get structField(): ProviderData {
@@ -144,8 +83,44 @@ export class RedStoneToken implements ERC20 {
       return pd;
     });
   }
+
+  /**
+   * WASM testing END
+   */
 }
 
+export const UINT16ARRAY_ID = idof<Uint16Array>();
+export const ProviderData_ID = idof<string[]>();
+/**
+ * WASM testing BEGIN
+ */
 export function getToken(): RedStoneToken {
   return new RedStoneToken("RedStone", "RDST");
 }
+
+/**
+ * Some test class to verify wasm-js interoperability
+ */
+export class ProviderData {
+  name: string;
+  description: string;
+  manifestTxId: string;
+
+  constructor(name: string, description: string, manifestTxId: string) {
+    this.name = name;
+    this.description = description;
+    this.manifestTxId = manifestTxId;
+  }
+
+  toString(): string {
+    return `
+    ProviderData
+      #name: ${this.name}
+      #description: ${this.description}
+      #manifestTxId: ${this.manifestTxId}
+    `;
+  }
+}
+/**
+ * WASM testing END
+ */

@@ -111,8 +111,10 @@ function getFn(idx) {
   return wasmExports.table.get(idx);
 }
 
-// 2. using pointer to a class - as in https://www.assemblyscript.org/loader.html#custom-classes
-const tokenPtr = wasmExports.getToken();
+const tokenPtr = new wasmExports.RedStoneToken(
+  wasmExports.__newString("RedStone Token 2"),
+  wasmExports.__newString("[CLASS_FROM_EXPORT:symbol]: RDST2")
+);
 console.log("tokenPtr: " + tokenPtr);
 const token = wasmExports.RedStoneToken.wrap(tokenPtr);
 token.name = wasmExports.__newString(

@@ -1,7 +1,7 @@
 {
   "name": "redstone-contracts-wasm",
   "version": "0.0.1",
-  "description": "WASM contracts for SmartWeave protocol",
+  "description": "WASM RedStone contracts for SmartWeave protocol",
   "main": "index.js",
   "repository": "git@github.com:redstone-finance/redstone-contracts-wasm.git",
   "author": "ppedziwiatr <peter@redstone.finance>",
@@ -26,5 +26,8 @@
     "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
     "test": "node tests"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

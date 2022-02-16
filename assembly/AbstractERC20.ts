@@ -18,15 +18,6 @@ export abstract class AbstractERC20 implements ERC20 {
   abstract mint(account: string, amount: u64): void;
   abstract burn(account: string, amount: u64): void;
 
-  balanceOf(account: string): u64 {
-    console.log(`balanceOf called ${account}`);
-    if (this._balances.has(account)) {
-      return this._balances.get(account);
-    } else {
-      return 0;
-    }
-  }
-
   transfer(recipient: string, amount: u64): void {
     console.log(`transfer called ${recipient}: ${amount}`);
     this._transfer(msg.sender(), recipient, amount);
@@ -64,6 +55,15 @@ export abstract class AbstractERC20 implements ERC20 {
       let recipientBalance = this._balances.get(sender);
       recipientBalance += amount;
       this._balances.set(recipient, recipientBalance);
+    }
+  }
+
+  balanceOf(account: string): u64 {
+    console.log(`balanceOf called ${account}`);
+    if (this._balances.has(account)) {
+      return this._balances.get(account);
+    } else {
+      return 0;
     }
   }
 

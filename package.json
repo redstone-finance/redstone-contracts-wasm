@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "@assemblyscript/loader": "^0.19.17",
+    "@assemblyscript/loader": "^0.19.23",
     "arweave": "^1.10.18",
-    "assemblyscript": "^0.19.18",
+    "assemblyscript": "^0.19.23",
     "asyncify-wasm": "^1.2.1",
     "json-as": "^0.2.6",
     "redstone-smartweave": "0.3.10-alpha.19",
@@ -25,6 +25,7 @@
     "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target debug",
     "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
+    "asbuild:handle": "asc assembly/handle.ts --exportRuntime --transform json-as/transform --target release",
     "test": "node tests"
   },
   "engines": {

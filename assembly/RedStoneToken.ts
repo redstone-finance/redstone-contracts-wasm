@@ -28,7 +28,6 @@ export class RedStoneToken extends AbstractERC20 {
     this._totalSupply -= amount;
   }
 
-  // TODO: verify contract ownership
   mint(account: string, amount: u64): void {
     console.log(`mint called ${account}: ${amount}`);
 

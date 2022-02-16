@@ -13,7 +13,7 @@
     "assemblyscript": "^0.19.23",
     "asyncify-wasm": "^1.2.1",
     "redstone-smartweave": "0.3.10-alpha.19",
-    "visitor-as": "^0.6.0",
+    "visitor-as": "^0.8.0",
     "wasm-json-toolkit": "^0.2.6",
     "wasm-metering": "^0.2.1"
   },
@@ -24,7 +24,7 @@
     "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target debug",
     "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
-    "asbuild:handle": "asc assembly/handle.ts --runtime minimal --exportRuntime --transform @serial-as/transform --exportTable --target release",
+    "asbuild:handle": "asc assembly/handle.ts --runtime minimal --exportRuntime --transform ./ContractTransform --exportTable --target release",
     "test": "node tests"
   },
   "engines": {

@@ -84,7 +84,7 @@ const state =
 
 const action =
   {
-    functionName: 'increment'
+    function: 'increment'
   }
 
 

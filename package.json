@@ -24,7 +24,7 @@
     "asbuild2:untouched": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target debug",
     "asbuild2:optimized": "asc assembly/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
-    "asbuild:handle": "asc assembly/handle.ts --exportRuntime --transform @serial-as/transform --exportTable --target release",
+    "asbuild:handle": "asc assembly/handle.ts --runtime minimal --exportRuntime --transform @serial-as/transform --exportTable --target release",
     "test": "node tests"
   },
   "engines": {

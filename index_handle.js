@@ -53,8 +53,6 @@ function getFn(idx) {
   return wasmExports.table.get(idx);
 }
 
-// https://github.com/AssemblyScript/assemblyscript/issues/261
-// 1. creating new module with new memory instance.
 const wasmModule = loader.instantiateSync(
   meteredWasmBinary,
   imports
@@ -63,13 +61,15 @@ const wasmModule = loader.instantiateSync(
 const wasmExports = wasmModule.exports;
 
 const {handle} = wasmModule.exports;
-const {__newString, __getString} = wasmModule.exports;
+const {__newString, __getString, __collect} = wasmModule.exports;
 
 function doHandle(state, action) {
   let statePtr = __newString(JSON.stringify(state));
   let actionPtr = __newString(JSON.stringify(action));
   let resultPtr = handle(statePtr, actionPtr);
   let result = __getString(resultPtr);
+
+  __collect();
 
   return JSON.parse(result);
 }

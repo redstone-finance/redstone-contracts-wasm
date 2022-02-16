@@ -1,6 +1,7 @@
 {
   "extends": "assemblyscript/std/assembly.json",
   "include": [
-    "./**/*.ts"
+    "./**/*.ts",
+    "../node_modules/@serial-as/core/assembly/as_types.d.ts"
   ]
 }

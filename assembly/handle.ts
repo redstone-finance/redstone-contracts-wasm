@@ -1,15 +1,13 @@
-import { JSON } from 'json-as'
+import {parse, stringify} from "@serial-as/json"
 
-// @ts-ignore
-@json
+@serializable
 class StateSchema {
   firstName: string
   lastName: string
   counter: i32
 }
 
-// @ts-ignore
-@json
+@serializable
 class ActionSchema {
   // note: cannot be named "function", as it causes the json-as transform to explode...
   functionName: string
@@ -24,12 +22,12 @@ class ActionSchema {
  * @param _action
  */
 export function handle(_state: string, _action: string): string {
-  const state = JSON.parse<StateSchema>(_state);
-  const action = JSON.parse<ActionSchema>(_action);
+  const state = parse<StateSchema>(_state);
+  const action = parse<ActionSchema>(_action);
 
   const result = _handle(state, action);
 
-  return JSON.stringify(result);
+  return stringify(result);
 }
 
 

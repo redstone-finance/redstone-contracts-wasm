@@ -1,4 +1,5 @@
 import {parse, stringify} from "@serial-as/json"
+import { console } from "./imports/console";
 
 @serializable
 class StateSchema {
@@ -22,6 +23,7 @@ class ActionSchema {
  * @param _action
  */
 export function handle(_state: string, _action: string): string {
+  console.log(`Action called ${_action}`);
   const state = parse<StateSchema>(_state);
   const action = parse<ActionSchema>(_action);
 

@@ -5,7 +5,7 @@ import {msg} from "./imports/smartweave/msg";
 import {Block} from "./imports/smartweave/block";
 import {Transaction} from "./imports/smartweave/transaction";
 import {Contract} from "./imports/smartweave/contract";
-import {ActionSchema, HandlerResultSchema, SmartweaveSchema, StateSchema} from "./schemas";
+import {ActionSchema, HandlerResultSchema, ResultSchema, SmartweaveSchema, StateSchema} from "./schemas";
 import {increment} from "./actions/increment";
 import {decrement} from "./actions/decrement";
 import {fullName} from "./actions/fullName";
@@ -18,12 +18,15 @@ functions.set("increment", increment);
 functions.set("decrement", decrement);
 functions.set("fullName", fullName);
 
-//TODO: perf: state probably doesn't have to be passed everytime.
-// it should be initialized with a separate function and saved
-// on some field - and then modified by handle function calls.
+let contractState: StateSchema = {
+  firstName: '',
+  lastName: '',
+  counter: 0
+};
+
 @contract
-function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
-  console.log(`Function called: "${action.function}"`);
+function handle(action: ActionSchema): ResultSchema | null {
+  /*console.log(`Function called: "${action.function}"`);
   console.logO(`Smartweave:`, stringify<SmartweaveSchema>({
     contract: {
       id: Contract.id(),
@@ -41,10 +44,14 @@ function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
       target: Transaction.target()
     }
   }));
-
+*/
   const fn = action.function;
   if (functions.has(fn)) {
-    return functions.get(fn)(state, action);
+    const handlerResult = functions.get(fn)(contractState, action);
+    if (handlerResult.state != null) {
+      contractState = handlerResult.state;
+    }
+    return handlerResult.result;
   } else {
     throw new Error(`[CE:WTF] Unknown function ${action.function}`);
   }

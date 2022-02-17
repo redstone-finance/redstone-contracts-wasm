@@ -57,13 +57,20 @@ module.exports = ContractTransform
 
 
 const handle_wrapper = `
-export function handle(_state: string, _action: string): string {
-  const state = parse<StateSchema>(_state);
+export function handle(_action: string): string {
   const action = parse<ActionSchema>(_action);
 
-  const result = __inner_handle(state, action);
+  const result = __inner_handle(action);
 
   return stringify(result);
+}
+
+export function initState(state: string): void {
+  contractState = parse<StateSchema>(state);
+}
+
+export function currentState(): string {
+  return stringify<StateSchema>(contractState);
 }
 
 export const lang = "assemblyscript";

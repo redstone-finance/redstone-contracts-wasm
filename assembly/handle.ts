@@ -30,9 +30,20 @@ class HandlerResultSchema {
 
 @contract
 function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
+  console.log(`Function called: "${action.function}"`);
+
 
   if (action.function == "increment") {
     state.counter += 666;
+
+    return {
+      state,
+      result: null
+    };
+  }
+
+  if (action.function == "increment") {
+    state.counter -= 555;
 
     return {
       state,
@@ -49,5 +60,6 @@ function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
     }
   }
 
-  throw new Error(`Unknown function ${action.function}`);
+  // TODO: add to commons library
+  throw new Error(`[CE:WTF] Unknown function ${action.function}`);
 }

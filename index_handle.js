@@ -74,30 +74,28 @@ function doHandle(state, action) {
   return JSON.parse(result);
 }
 
-const state =
+const initialState =
   {
     firstName: 'first_ppe',
     lastName: 'last_ppe',
     counter: 0
-  }
+  };
 
 
-const action =
-  {
-    function: 'increment'
-  }
+const actions = [
+  {function: 'increment'},
+  {function: 'increment'},
+  {function: 'increment'},
+  {function: 'fullName'},
+]
 
+let state = initialState;
 
-const result1 = doHandle(state, action);
-console.log(result1);
-
-console.log(`gas used ${gasUsed * 1e-4}`);
-
-const result2 = doHandle(result1, action);
-console.log(result2);
-
-console.log(`gas used ${gasUsed * 1e-4}`);
-
-
-
-
+for (const action of actions) {
+  const handlerResult = doHandle(state, action);
+  state = handlerResult.state;
+  console.log({
+    handlerResult,
+    gas: `${gasUsed * 1e-4}`
+  });
+}

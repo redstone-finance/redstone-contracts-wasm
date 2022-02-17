@@ -10,16 +10,46 @@ class StateSchema {
   counter: i32
 }
 
+
 @serializable
 class ActionSchema {
   function: string
 }
 
+
+@serializable
+class ResultSchema {
+  fullName: string
+}
+
+
+@serializable
+class HandlerResultSchema {
+  state: StateSchema
+  result: ResultSchema | null
+}
+
+
 @contract
-function handle(state: StateSchema, action: ActionSchema): StateSchema {
+function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
+
   if (action.function == "increment") {
     state.counter += 666;
+
+    return {
+      state,
+      result: null
+    };
   }
 
-  return state;
+  if (action.function == "fullName") {
+    return {
+      state,
+      result: {
+        fullName: `${state.firstName} ${state.lastName}`
+      }
+    }
+  }
+
+  throw new Error(`Unknown function ${action.function}`);
 }

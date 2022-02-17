@@ -10,6 +10,7 @@ class ContractTransform extends SerialAsTransformer {
   visitFunctionDeclaration(node) {
     if (utils.hasDecorator(node, "contract")) {
       node.name.text = "__inner_handle";
+      //console.log(node.body);
     }
 
     return super.visitFunctionDeclaration(node);
@@ -42,6 +43,7 @@ class ContractTransform extends SerialAsTransformer {
     );
 
     let entry = p.sources.pop();
+    //console.log(entry.text);
     this.program.sources.push(entry);
     this.parser.sources.push(entry);
     this.visit(sources);

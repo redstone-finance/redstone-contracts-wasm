@@ -2,6 +2,7 @@
   "extends": "assemblyscript/std/assembly.json",
   "include": [
     "./**/*.ts",
+    "./contract.d.ts",
     "../node_modules/@serial-as/core/assembly/as_types.d.ts"
   ]
 }

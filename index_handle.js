@@ -10,7 +10,7 @@ const wasm2json = require('wasm-json-toolkit').wasm2json
 const json = wasm2json(meteredWasmBinary);
 fs.writeFileSync("wasm_module.json", JSON.stringify(json, null, 2))
 
-const limit = 55000000;
+const limit = 140000000;
 let gasUsed = 0;
 
 const imports = {
@@ -23,11 +23,11 @@ const imports = {
     }
   },
   console: {
-    "console.log": function (msg) {
-      console.log(`Contract: ${wasmExports.__getString(msg)}`);
+    "console.log": function (msgPtr) {
+      console.log(`Contract: ${wasmExports.__getString(msgPtr)}`);
     },
-    "console.logO": function (msg, obj) {
-      console.log(`Contract: ${wasmExports.__getString(msg)}`, JSON.parse(wasmExports.__getString(obj)));
+    "console.logO": function (msgPtr, objPtr) {
+      console.log(`Contract: ${wasmExports.__getString(msgPtr)}`, JSON.parse(wasmExports.__getString(objPtr)));
     },
   },
   block: {
@@ -116,7 +116,7 @@ const initialState =
 
 const actions = [
   {function: 'increment'},
-  {function: 'increment'},
+  {function: 'decrement'},
   {function: 'increment'},
   {function: 'fullName'},
   {function: 'unknownFn'}, /* this one should throw unknown function */

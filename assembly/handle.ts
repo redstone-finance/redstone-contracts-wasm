@@ -5,64 +5,22 @@ import {msg} from "./imports/smartweave/msg";
 import {Block} from "./imports/smartweave/block";
 import {Transaction} from "./imports/smartweave/transaction";
 import {Contract} from "./imports/smartweave/contract";
+import {ActionSchema, HandlerResultSchema, SmartweaveSchema, StateSchema} from "./schemas";
+import {increment} from "./actions/increment";
+import {decrement} from "./actions/decrement";
+import {fullName} from "./actions/fullName";
 
+type ContractFn = (state: StateSchema, action: ActionSchema) => HandlerResultSchema;
 
-@serializable
-class StateSchema {
-  firstName: string
-  lastName: string
-  counter: i32
-}
+const functions: Map<string, ContractFn> = new Map();
+// note: inline "array" map initializer does not work in AS.
+functions.set("increment", increment);
+functions.set("decrement", decrement);
+functions.set("fullName", fullName);
 
-
-@serializable
-class ActionSchema {
-  function: string
-}
-
-
-@serializable
-class ResultSchema {
-  fullName: string
-}
-
-
-@serializable
-class SmartweaveSchema {
-  contract: ContractSchema
-  sender: string
-  block: BlockSchema
-  transaction: TransactionSchema
-}
-
-
-@serializable
-class BlockSchema {
-  height: i32
-  indep_hash: string
-  timestamp: i32
-}
-
-@serializable
-class TransactionSchema {
-  id: string
-  owner: string
-  target: string
-}
-
-@serializable
-class ContractSchema {
-  id: string
-  owner: string
-}
-
-
-@serializable
-class HandlerResultSchema {
-  state: StateSchema
-  result: ResultSchema | null
-}
-
+//TODO: perf: state probably doesn't have to be passed everytime.
+// it should be initialized with a separate function and saved
+// on some field - and then modified by handle function calls.
 @contract
 function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
   console.log(`Function called: "${action.function}"`);
@@ -84,34 +42,21 @@ function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {
     }
   }));
 
-
-  if (action.function == "increment") {
-    state.counter += 666;
-
-    return {
-      state,
-      result: null
-    };
+  const fn = action.function;
+  if (functions.has(fn)) {
+    return functions.get(fn)(state, action);
+  } else {
+    throw new Error(`[CE:WTF] Unknown function ${action.function}`);
   }
 
-  if (action.function == "increment") {
-    state.counter -= 555;
-
-    return {
-      state,
-      result: null
-    };
-  }
-
-  if (action.function == "fullName") {
-    return {
-      state,
-      result: {
-        fullName: `${state.firstName} ${state.lastName}`
-      }
-    }
-  }
-
-  // TODO: add to commons library
-  throw new Error(`[CE:WTF] Unknown function ${action.function}`);
+  // no switch on strings in AS https://github.com/AssemblyScript/assemblyscript/issues/1518
+  /*if (fn == "increment") {
+    return increment(state, action);
+  } else if (fn == "decrement") {
+    return decrement(state, action);
+  } else if (fn == "fullName") {
+    return fullName(state, action)
+  } else {
+    throw new Error(`[CE:WTF] Unknown function ${action.function}`);
+  }*/
 }

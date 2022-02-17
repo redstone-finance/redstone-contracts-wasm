@@ -1,5 +1,5 @@
 export declare namespace Block {
-  function height(): u16;
+  function height(): i32;
   function indep_hash(): string;
-  function timestamp(): u16;
+  function timestamp(): i32;
 }

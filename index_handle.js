@@ -26,15 +26,44 @@ const imports = {
     "console.log": function (msg) {
       console.log(`Contract: ${wasmExports.__getString(msg)}`);
     },
-  },
-  api: {
-    _setTimeout: (fnIndex, ms) => {
-      return setTimeout(() => {
-        const fn = getFn(fnIndex);
-        fn();
-      }, ms);
+    "console.logO": function (msg, obj) {
+      console.log(`Contract: ${wasmExports.__getString(msg)}`, JSON.parse(wasmExports.__getString(obj)));
     },
-    clearTimeout,
+  },
+  block: {
+    "Block.height": function () {
+      return 875290;
+    },
+    "Block.indep_hash": function () {
+      return wasmExports.__newString("iIMsQJ1819NtkEUEMBRl6-7I6xkeDipn1tK4w_cDFczRuD91oAZx5qlgSDcqq1J1");
+    },
+    "Block.timestamp": function () {
+      return 123123123;
+    },
+  },
+  transaction: {
+    "Transaction.id": function () {
+      return wasmExports.__newString("Transaction.id");
+    },
+    "Transaction.owner": function () {
+      return wasmExports.__newString("Transaction.owner");
+    },
+    "Transaction.target": function () {
+      return wasmExports.__newString("Transaction.target");
+    },
+  },
+  contract: {
+    "Contract.id": function () {
+      return wasmExports.__newString("Contract.id");
+    },
+    "Contract.owner": function () {
+      return wasmExports.__newString("Contract.owner");
+    },
+  },
+  msg: {
+    "msg.sender": function () {
+      return wasmExports.__newString("msg.sender");
+    },
   },
   env: {
     abort(message, fileName, line, column) {

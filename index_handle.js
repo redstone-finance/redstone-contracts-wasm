@@ -10,7 +10,7 @@ const wasm2json = require('wasm-json-toolkit').wasm2json
 const json = wasm2json(meteredWasmBinary);
 fs.writeFileSync("wasm_module.json", JSON.stringify(json, null, 2))
 
-const limit = 90000000;
+const limit = 50000000;
 let gasUsed = 0;
 
 const imports = {
@@ -18,7 +18,7 @@ const imports = {
     usegas: (gas) => {
       gasUsed += gas;
       if (gasUsed > limit) {
-        throw new Error("out of gas!");
+        throw new Error(`Out of gas! Limit: ${formatGas(limit)}, used: ${formatGas(gasUsed)}`);
       }
     }
   },
@@ -60,7 +60,7 @@ const wasmModule = loader.instantiateSync(
 
 const wasmExports = wasmModule.exports;
 
-const {handle} = wasmModule.exports;
+const {handle, language} = wasmModule.exports;
 const {__newString, __getString, __collect} = wasmModule.exports;
 
 function doHandle(state, action) {
@@ -87,15 +87,24 @@ const actions = [
   {function: 'increment'},
   {function: 'increment'},
   {function: 'fullName'},
+  {function: 'increment'} /*this one should throw out of gas*/
 ]
 
 let state = initialState;
+
+console.log(__getString(language));
 
 for (const action of actions) {
   const handlerResult = doHandle(state, action);
   state = handlerResult.state;
   console.log({
     handlerResult,
-    gas: `${gasUsed * 1e-4}`
+    gas: `${formatGas(gasUsed)}`,
+    gasLimit: `${formatGas(limit)}`
   });
+}
+
+
+function formatGas(gas) {
+  return `${gas * 1e-4}`;
 }

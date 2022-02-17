@@ -65,4 +65,6 @@ export function handle(_state: string, _action: string): string {
 
   return stringify(result);
 }
+
+export const lang = "assemblyscript";
 `;

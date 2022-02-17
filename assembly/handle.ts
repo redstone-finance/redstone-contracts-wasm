@@ -2,7 +2,6 @@
 import {parse, stringify} from "@serial-as/json";
 import { console } from "./imports/console";
 
-
 @serializable
 class StateSchema {
   firstName: string
@@ -28,7 +27,6 @@ class HandlerResultSchema {
   state: StateSchema
   result: ResultSchema | null
 }
-
 
 @contract
 function handle(state: StateSchema, action: ActionSchema): HandlerResultSchema {

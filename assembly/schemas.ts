@@ -9,6 +9,7 @@ export class StateSchema {
 @serializable
 export class ActionSchema {
   function: string
+  contractTxId: string | null
 }
 
 

@@ -9,6 +9,7 @@ import {ActionSchema, HandlerResultSchema, ResultSchema, SmartweaveSchema, State
 import {increment} from "./actions/increment";
 import {decrement} from "./actions/decrement";
 import {fullName} from "./actions/fullName";
+import {foreignRead} from "./actions/foreignRead";
 
 type ContractFn = (state: StateSchema, action: ActionSchema) => HandlerResultSchema;
 
@@ -17,6 +18,7 @@ const functions: Map<string, ContractFn> = new Map();
 functions.set("increment", increment);
 functions.set("decrement", decrement);
 functions.set("fullName", fullName);
+functions.set("foreignRead", foreignRead);
 
 let contractState: StateSchema = {
   firstName: '',
@@ -26,7 +28,8 @@ let contractState: StateSchema = {
 
 @contract
 function handle(action: ActionSchema): ResultSchema | null {
-  /*console.log(`Function called: "${action.function}"`);
+  console.log(`Function called: "${action.function}"`);
+  /*
   console.logO(`Smartweave:`, stringify<SmartweaveSchema>({
     contract: {
       id: Contract.id(),

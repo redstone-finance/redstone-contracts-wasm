@@ -11,7 +11,7 @@ const wasm2json = require('wasm-json-toolkit').wasm2json
 const json = wasm2json(meteredWasmBinary);
 fs.writeFileSync("wasm_module.json", JSON.stringify(json, null, 2))
 
-let limit = 51000000;
+let limit = 5100000000;
 let gasUsed = 0;
 
 const imports = {
@@ -66,12 +66,26 @@ const imports = {
       return wasmExports.__newString("msg.sender");
     },
   },
+  api: {
+    _readContractState: (fnIndex, contractTxIdPtr) => {
+      const contractTxId = wasmExports.__getString(contractTxIdPtr);
+      const callbackFn = getFn(fnIndex);
+      console.log("Simulating read state of", contractTxId);
+      return setTimeout(() => {
+        console.log('calling callback');
+        callbackFn(__newString(JSON.stringify({
+          contractTxId
+        })));
+      }, 1000);
+    },
+    clearTimeout,
+  },
   env: {
-    abort(message, fileName, line, column) {
+    abort(messagePtr, fileNamePtr, line, column) {
       console.error("--------------------- Error message from AssemblyScript ----------------------");
-      console.error("  " + wasmModule.exports.__getString(message));
+      console.error("  " + wasmExports.__getString(messagePtr));
       console.error(
-        '    In file "' + wasmModule.exports.__getString(fileName) + '"'
+        '    In file "' + wasmExports.__getString(fileNamePtr) + '"'
       );
       console.error(`    on line ${line}, column ${column}.`);
       console.error("------------------------------------------------------------------------------\n");
@@ -146,13 +160,14 @@ function doGetCurrentState() {
 
 
 const actions = [
-  {function: 'increment'},
+  {function: 'foreignRead', contractTxId: 'sdfsdf23423sdfsdfsdfsdfsdfsdfsdfsdf'}
+  /*{function: 'increment'},
   {function: 'decrement'},
   {function: 'increment'},
   {function: 'fullName'},
-  {function: 'unknownFn'}, /* this one should throw unknown function */
-  {function: 'increment'}, /* this one should throw out of gas */
-  {function: 'decrement'}  /* this one should not be called */
+  {function: 'unknownFn'}, /!* this one should throw unknown function *!/
+  {function: 'increment'}, /!* this one should throw out of gas *!/
+  {function: 'decrement'}  /!* this one should not be called *!/*/
 ]
 
 // note: this will be useful in SDK to prepare the wasm execution env. properly
@@ -161,7 +176,6 @@ const actions = [
 // in Rust or Go)
 console.log("Contract language:", __getString(lang));
 
-/*
 //(o) initialize the state in the wasm contract
 doInitState();
 
@@ -175,10 +189,10 @@ for (const action of actions) {
     gas: `${formatGas(gasUsed)}`,
     gasLimit: `${formatGas(limit)}`
   });
-}*/
+}
 
 // (o) re-init the state
-doInitState();
+/*doInitState();
 console.log("Current state", doGetCurrentState());
 limit = limit * 100000;
 
@@ -191,7 +205,7 @@ for (let i = 0; i < 1_000_000; i++) {
 }
 console.log("Computed 1M interactions in", benchmark.elapsed());
 console.log("Current state", doGetCurrentState());
-console.log("Gas used", formatGas(gasUsed));
+console.log("Gas used", formatGas(gasUsed));*/
 
 function formatGas(gas) {
   return gas * 1e-4;

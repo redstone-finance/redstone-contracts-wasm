@@ -12,6 +12,7 @@
     "arweave": "^1.10.18",
     "assemblyscript": "^0.19.23",
     "asyncify-wasm": "^1.2.1",
+    "binaryen": "^105.0.0",
     "redstone-smartweave": "0.3.10-alpha.19",
     "visitor-as": "^0.8.0",
     "wasm-json-toolkit": "^0.2.6",

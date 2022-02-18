@@ -25,6 +25,8 @@
     "asbuild2:optimized": "asc assembly/fancy/RedStoneToken.ts --exportRuntime --sourceMap --importMemory --exportTable --target release",
     "asbuild2": "yarn asbuild2:untouched && yarn asbuild2:optimized",
     "asbuild:handle": "asc assembly/handle.ts --sourceMap --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release",
+    "asbuild:pst": "asc pst/handle.ts --sourceMap --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release --binaryFile ./build/pst.wasm",
+    "run:pst": "yarn asbuild:pst && node index_pst",
     "test": "node tests"
   },
   "engines": {

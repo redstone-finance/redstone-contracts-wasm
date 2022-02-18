@@ -10,7 +10,7 @@ export function transfer(state: StateSchema, action: ActionSchema): HandlerResul
         throw new Error('[CE:ITT] Invalid token transfer');
     }
 
-    if (state.balances.has(caller) && state.balances.get(caller) < qty) {
+    if (!state.balances.has(caller) || state.balances.get(caller) < qty) {
         throw new Error(`[CE:NEB] Caller balance not high enough to send ${qty} token(s)!`);
     }
 

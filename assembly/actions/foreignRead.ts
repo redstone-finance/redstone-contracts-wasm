@@ -1,6 +1,7 @@
-import {ActionSchema, HandlerResultSchema, StateSchema} from "../schemas";
+import {ActionSchema, StateSchema} from "../schemas";
 import {readContractState} from "../imports/api";
 import {console} from "../imports/console";
+import {ContractResultSchema} from "../handle";
 
 @serializable
 class ForeignContract {
@@ -10,7 +11,7 @@ class ForeignContract {
 // closures in AS work only for top-level module variables
 let foreignState: string | null = null;
 
-export function foreignRead(state: StateSchema, action: ActionSchema): HandlerResultSchema {
+export function foreignRead(state: StateSchema, action: ActionSchema): ContractResultSchema {
   const contractTxId = action.contractTxId;
 
   readContractState((result: string) => {
@@ -29,7 +30,7 @@ export function foreignRead(state: StateSchema, action: ActionSchema): HandlerRe
   };
 }
 
-function wait(state: StateSchema): HandlerResultSchema {
+function wait(state: StateSchema): ContractResultSchema {
   if (foreignState == null) {
     return wait(state);
   } else {

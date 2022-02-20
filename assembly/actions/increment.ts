@@ -1,6 +1,7 @@
-import {ActionSchema, HandlerResultSchema, StateSchema} from "../schemas";
+import {ActionSchema, StateSchema} from "../schemas";
+import {ContractResultSchema} from "../handle";
 
-export function increment(state: StateSchema, action: ActionSchema): HandlerResultSchema {
+export function increment(state: StateSchema, action: ActionSchema): ContractResultSchema {
   state.counter++;
 
   return {

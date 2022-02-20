@@ -1,33 +1,32 @@
 const SerialAsTransformer = require("@serial-as/transform");
-console.log(SerialAsTransformer);
-
 const {Parser} = require("visitor-as/as");
 const {utils} = require("visitor-as");
 
 class ContractTransform extends SerialAsTransformer {
-  parser
-
   visitFunctionDeclaration(node) {
+
     if (utils.hasDecorator(node, "contract")) {
+      console.log('decorator');
+      //console.log(node.body);
       node.name.text = "__inner_handle";
+      //console.log(decorator.args)
       //console.log(node.body);
     }
 
     return super.visitFunctionDeclaration(node);
   }
 
-  // "inspired" by https://github.com/three-em/3em/blob/main/helpers/assemblyscript/transform.js ;-)
+// "inspired" by https://github.com/three-em/3em/blob/main/helpers/assemblyscript/transform.js ;-)
   afterParse(parser) {
-    this.parser = parser;
-    const p = new Parser(this.parser.diagnostics);
+    console.log('afterParse');
+    const p = new Parser(parser.diagnostics);
 
-    let sources = this.parser.sources.filter(utils.not(utils.isLibrary));
-    let contract = sources.find(
-      (source) =>
-        source.simplePath !== "index-stub" && utils.isUserEntry(source),
+    const sources = parser.sources.filter(utils.not(utils.isLibrary));
+    const contract = sources.find(
+      (source) => utils.isUserEntry(source)
     );
 
-    this.parser.sources = this.parser.sources.filter((s) =>
+    parser.sources = parser.sources.filter((s) =>
       !utils.isUserEntry(s)
     );
     this.program.sources = this.program.sources.filter((s) =>
@@ -42,10 +41,10 @@ class ContractTransform extends SerialAsTransformer {
       true,
     );
 
-    let entry = p.sources.pop();
+    const entry = p.sources.pop();
     //console.log(entry.text);
     this.program.sources.push(entry);
-    this.parser.sources.push(entry);
+    parser.sources.push(entry);
     this.visit(sources);
 
     super.afterParse(parser);
@@ -73,5 +72,5 @@ export function currentState(): string {
   return stringify<StateSchema>(contractState);
 }
 
-export const lang = "assemblyscript";
+export const lang = "assemblyscript/1.0";
 `;

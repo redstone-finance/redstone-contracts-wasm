@@ -17,9 +17,9 @@ import {increment} from "./actions/increment";
 import {decrement} from "./actions/decrement";
 import {fullName} from "./actions/fullName";
 import {foreignRead} from "./actions/foreignRead";
+import {infLoop} from "./actions/infLoop";
 
 import {ActionSchema, ResultSchema, StateSchema} from "./schemas";
-import {infLoop} from "./actions/infLoop";
 
 const functions: Map<string, ContractFn<StateSchema, ActionSchema, ResultSchema>> = new Map();
 functions.set("increment", increment);

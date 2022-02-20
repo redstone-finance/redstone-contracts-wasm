@@ -19,12 +19,14 @@ import {fullName} from "./actions/fullName";
 import {foreignRead} from "./actions/foreignRead";
 
 import {ActionSchema, ResultSchema, StateSchema} from "./schemas";
+import {infLoop} from "./actions/infLoop";
 
 const functions: Map<string, ContractFn<StateSchema, ActionSchema, ResultSchema>> = new Map();
 functions.set("increment", increment);
 functions.set("decrement", decrement);
 functions.set("fullName", fullName);
 functions.set("foreignRead", foreignRead);
+functions.set("infLoop", infLoop);
 
 export type ContractResultSchema = HandlerResultSchema<StateSchema, ResultSchema>;
 

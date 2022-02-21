@@ -104,12 +104,12 @@ const wasmModule = loader.instantiateSync(
 
 const wasmExports = wasmModule.exports;
 
-const {handle, lang, initState, currentState} = wasmModule.exports;
-const {__newString, __getString, __collect} = wasmModule.exports;
+const {handle, lang, initState, currentState, type} = wasmModule.exports;
+const {__newString, __getString} = wasmModule.exports;
 
 function safeHandle(action) {
   try {
-    doHandle(action)
+    return doHandle(action)
   } catch (e) {
     // note: as exceptions handling in WASM is currently somewhat non-existent
     // https://www.assemblyscript.org/status.html#exceptions
@@ -175,6 +175,7 @@ const actions = [
 // built-in @assemblyscript/loader to simplify the communication - but obv. it wont' be available
 // in Rust or Go)
 console.log("Contract language:", __getString(lang));
+console.log("Contract type:", type.value);
 
 //(o) initialize the state in the wasm contract
 doInitState();

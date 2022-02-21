@@ -26,7 +26,6 @@ export class HandlerResultSchema<S, R> {
 @serializable
 export class SmartweaveSchema {
   contract: ContractSchema
-  sender: string
   block: BlockSchema
   transaction: TransactionSchema
 }

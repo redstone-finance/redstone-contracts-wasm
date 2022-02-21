@@ -40,7 +40,6 @@ function handle(action: ActionSchema): ResultSchema | null {
       id: Contract.id(),
       owner: Contract.owner()
     },
-    sender: msg.sender(),
     block: {
       height: Block.height(),
       indep_hash: Block.indep_hash(),

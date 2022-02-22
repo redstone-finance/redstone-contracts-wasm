@@ -1,6 +1,10 @@
 @serializable
 export class StateSchema {
   balances: Map<string, i32> = new Map<string, i32>();
+  canEvolve: boolean;
+  name: string;
+  owner: string;
+  ticker: string;
 }
 
 

@@ -6,7 +6,7 @@ export function transfer(state: StateSchema, action: ActionSchema): HandlerResul
     const qty = action.qty;
     const caller = Transaction.owner();
 
-    if (qty <= 0 || caller === target) {
+    if (qty <= 0 || caller == target) {
         throw new Error('[CE:ITT] Invalid token transfer');
     }
 

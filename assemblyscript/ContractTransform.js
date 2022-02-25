@@ -72,7 +72,9 @@ export function currentState(): string {
   return stringify<StateSchema>(contractState);
 }
 
-export const lang = "assemblyscript/1.0";
+export function lang(): string {
+  return "assemblyscript/1.0";
+}
 
 // workaround for now to simplify type reading without as/loader
 // 1 = assemblyscript
@@ -80,5 +82,7 @@ export const lang = "assemblyscript/1.0";
 // 3 = go
 // 4 = swift
 // 5 = c
-export const type: i32 = 1;
+export function type(): i32 { 
+  return 1;
+};
 `;

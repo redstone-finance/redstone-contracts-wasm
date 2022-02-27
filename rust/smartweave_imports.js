@@ -15,6 +15,10 @@ module.exports = {
 
     indep_hash: function() {
       return 'sdfjskdjfhskdjfh20938420938420ksdjf';
+    },
+
+    timestamp: function() {
+      return '5555555555'
     }
   },
   "SmartWeave": {

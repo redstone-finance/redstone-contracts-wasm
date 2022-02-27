@@ -12,14 +12,14 @@ async function main() {
 
   console.log("Initial contract state:", smartweaveContract.currentState());
 
- /* await testInteraction({ Add: { number: 42 } });
+  await testInteraction({ Add: { number: 42 } });
   await testInteraction({ Subtract: { number: 43 } });
   await testInteraction({ Subtract: { number: 12 } });
   await testInteraction({ Add: { number: 9 } });
   await testInteraction({ Add: { number: 7 } });
   await testInteraction({ ForeignCall: { contract_tx_id: "bad_contract" } });
   await testInteraction({ ForeignCall: { contract_tx_id: "DAJ" } });
-  console.log("\n\nDone!", smartweaveContract.currentState());*/
+  console.log("\n\nDone!", smartweaveContract.currentState());
 }
 
 async function testInteraction(interaction) {

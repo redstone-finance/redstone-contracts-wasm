@@ -4,7 +4,7 @@ use wasm_bindgen::prelude::*;
 use crate::state::State;
 use crate::msg::Interaction;
 use crate::execute::handle_logic;
-use crate::js_imports::{block_height, block_indep_hash, log};
+use crate::js_imports::{Block, Contract, log, Transaction};
 
 // https://stackoverflow.com/questions/51216284/how-to-store-global-state-in-rust-when-using-wasm-bindgen
 
@@ -18,8 +18,17 @@ static mut STATE: State = State {
 
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> JsValue {
-    log(&format!("Block height {}", block_height()));
-    log(&format!("Block indep hash {}", block_indep_hash()));
+    log(&format!("Block indep_hash {}", Block::indep_hash()));
+    log(&format!("Block height {}", Block::height()));
+    log(&format!("Block timestamp {}", Block::timestamp()));
+
+    log(&format!("Contract id {}", Contract::id()));
+    log(&format!("Contract owner {}", Contract::owner()));
+
+    log(&format!("Transaction id {}", Transaction::tx_id()));
+    log(&format!("Transaction owner {}", Transaction::tx_owner()));
+    log(&format!("Transaction target {}", Transaction::target()));
+
 
     let interaction: Interaction = interaction.into_serde().unwrap();
 

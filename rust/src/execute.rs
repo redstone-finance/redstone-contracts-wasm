@@ -1,6 +1,6 @@
 use crate::msg::Interaction;
 use crate::error::ContractError;
-use crate::js_imports::{block_height, log, read_contract_state};
+use crate::js_imports::{log, read_contract_state};
 use crate::state::State;
 use serde::{Deserialize, Serialize};
 
@@ -14,8 +14,8 @@ pub async fn handle_logic(state: &State, interaction: &Interaction) -> Result<St
     match interaction {
         Interaction::Add { number } => {
             let bad_value: i32 = 9;
-            let height = block_height();
-            log(&format!("wasm: Add block_height: {}", height));
+            //let height = block_height();
+            //log(&format!("wasm: Add block_height: {}", height));
             if number == &bad_value {
                 Err(ContractError::IDontLikeAdd9Err)
             } else {

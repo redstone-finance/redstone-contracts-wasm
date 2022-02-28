@@ -104,6 +104,7 @@ name = "smartweave-contract"
 version = "0.1.0"
 dependencies = [
  "js-sys",
+ "lazy_static",
  "serde",
  "serde_json",
  "wasm-bindgen",

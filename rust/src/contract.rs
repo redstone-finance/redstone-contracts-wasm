@@ -1,9 +1,15 @@
+use lazy_static::lazy_static;
+use std::sync::{Mutex, MutexGuard};
 use wasm_bindgen::prelude::*;
 
 use crate::action::Action;
 use crate::actions::transfer::transfer;
 use crate::js_imports::{Block, Transaction, log};
 use crate::state::{HandlerResult, State};
+
+lazy_static! {
+    static ref STATE: Mutex<State> = Mutex::new(State::default());
+}
 
 #[wasm_bindgen]
 pub struct ContractHandle {
@@ -30,6 +36,15 @@ impl ContractHandle {
         if action.is_err() {
             log(&format!("Error {}", action.as_ref().err().unwrap()));
         }
+
+        let static_state: &Mutex<State> = &*STATE;
+        let mut mut_static_state: MutexGuard<State> = static_state.lock().unwrap();
+        let new_state = State::default();
+
+        mut_static_state.owner = "blabla".to_string();
+
+        // but how to assing the whole state? sth like:
+        // mut_static_state = new_state;
 
         log("Action parsed");
 

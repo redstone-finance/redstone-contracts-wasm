@@ -1,96 +1,84 @@
 use lazy_static::lazy_static;
-use std::sync::{Mutex, MutexGuard};
+use std::sync::{Mutex};
 use wasm_bindgen::prelude::*;
 
 use crate::action::Action;
+use crate::actions::balance::balance;
+use crate::actions::foreign_call::foreign_call;
 use crate::actions::transfer::transfer;
 use crate::js_imports::{Block, Transaction, log};
 use crate::state::{HandlerResult, State};
 
-lazy_static! {
-    static ref STATE: Mutex<State> = Mutex::new(State::default());
-}
 
 #[wasm_bindgen]
-pub struct ContractHandle {
+pub struct StateWrapper {
     state: State,
 }
 
-#[wasm_bindgen]
-impl ContractHandle {
-    #[wasm_bindgen(constructor)]
-    pub fn new() -> ContractHandle {
-        ContractHandle {
+lazy_static! {
+    static ref STATE: Mutex<StateWrapper> = Mutex::new(
+        StateWrapper {
             state: State::default()
-        }
+        });
+}
+
+#[wasm_bindgen()]
+pub async fn handle(interaction: JsValue) -> Option<JsValue> {
+    log(&format!("Block indep_hash {}", Block::indep_hash()));
+    log(&format!("Block height {}", Block::height()));
+    log(&format!("Block timestamp {}", Block::timestamp()));
+    log(&format!("Transaction owner {}", Transaction::owner()));
+
+    let action = interaction.into_serde();
+    if action.is_err() {
+        log(&format!("Error {}", action.as_ref().err().unwrap()));
     }
 
-    // TODO: perf: https://github.com/cloudflare/serde-wasm-bindgen
-    pub fn handle(&mut self, interaction: &JsValue) -> JsValue {
-        log(&format!("Block indep_hash {}", Block::indep_hash()));
-        log(&format!("Block height {}", Block::height()));
-        log(&format!("Block timestamp {}", Block::timestamp()));
-        log(&format!("Transaction owner {}", Transaction::owner()));
+    // not sure about clone here
+    let current_state = STATE.lock().unwrap().state.clone();
 
-        let action = interaction.into_serde();
-        if action.is_err() {
-            log(&format!("Error {}", action.as_ref().err().unwrap()));
-        }
+    let result = match action.unwrap() {
+        Action::Transfer { amount, target } => transfer(current_state, amount, target),
+        Action::Balance { target } => balance(current_state, target),
+        Action::ForeignCall { contract_tx_id } => foreign_call(current_state, contract_tx_id).await,
+    };
 
-        let static_state: &Mutex<State> = &*STATE;
-        let mut mut_static_state: MutexGuard<State> = static_state.lock().unwrap();
-        let new_state = State::default();
+    if result.is_ok() {
+        log("Result ok");
+        let handler_result = result.as_ref().ok().unwrap();
 
-        mut_static_state.owner = "blabla".to_string();
-
-        // but how to assing the whole state? sth like:
-        // mut_static_state = new_state;
-
-        log("Action parsed");
-
-        // not sure about clone here
-        let current_state = self.state.clone();
-
-        let result = match action.unwrap() {
-            Action::Transfer { amount, target } => transfer(current_state, amount, target),
-            /* Action::Balance { target } => balance(current_state, target),
-             Action::Evolve { value } => balance(current_state, value),*/
-        };
-
-        if result.is_ok() {
-            log("Result ok");
-            let handler_result = result.as_ref().ok().unwrap();
-
-            return if let HandlerResult::NewState(state) = handler_result {
-                log("Setting new state");
-                self.state = state.clone();
-                JsValue::from_serde(&result).unwrap()
-            } else {
-                JsValue::from_serde(&result).unwrap()
-            }
+        return if let HandlerResult::NewState(state) = handler_result {
+            log("Setting new state");
+            // not sure about clone here
+            STATE.lock().unwrap().state = state.clone();
+            None
+            //JsValue::from_serde(&result).unwrap()
         } else {
-            JsValue::from_serde(&result).unwrap()
-        }
-
-
+            Some(JsValue::from_serde(&result).unwrap())
+        };
+    } else {
+        Some(JsValue::from_serde(&result).unwrap())
     }
+}
 
-    #[wasm_bindgen(js_name = initState)]
-    pub fn init_state(&mut self, state: &JsValue) {
-        log(&format!("Calling init state"));
-        self.state = state.into_serde().unwrap();
-    }
 
-    #[wasm_bindgen(js_name = currentState)]
-    pub fn current_state(&self) -> JsValue {
-        log(&format!("Calling current state"));
+#[wasm_bindgen(js_name = initState)]
+pub fn init_state(state: &JsValue) {
+    log(&format!("Calling init state"));
+    STATE.lock().unwrap().state = state.into_serde().unwrap();
+}
 
-        // not sure if that's deterministic - which is very important for the execution network.
-        // TODO: perf - according to docs:
-        // "This is unlikely to be super speedy so it's not recommended for large payload"
-        // - we should minimize calls to from_serde
-        JsValue::from_serde(&self.state).unwrap()
-    }
+#[wasm_bindgen(js_name = currentState)]
+pub fn current_state() -> JsValue {
+    log(&format!("Calling current state"));
+
+    // not sure if that's deterministic - which is very important for the execution network.
+    // TODO: perf - according to docs:
+    // "This is unlikely to be super speedy so it's not recommended for large payload"
+    // - we should minimize calls to from_serde
+    let current_state = &STATE.lock().unwrap().state;
+
+    JsValue::from_serde(current_state).unwrap()
 }
 
 

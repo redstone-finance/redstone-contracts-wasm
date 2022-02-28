@@ -7,10 +7,13 @@ pub enum Action {
         amount: u64,
         target: String,
     },
-    /*Balance {
+    Balance {
         target: String
     },
-    Evolve {
+   /* Evolve {
         value: String
-    }*/
+    },*/
+    ForeignCall {
+        contract_tx_id: String
+    }
 }

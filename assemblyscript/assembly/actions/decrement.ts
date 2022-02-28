@@ -1,5 +1,5 @@
 import {ActionSchema, StateSchema} from "../schemas";
-import {ContractResultSchema} from "../handle";
+import {ContractResultSchema} from "../contract";
 
 export function decrement(state: StateSchema, action: ActionSchema): ContractResultSchema {
   state.counter -= 555;

@@ -1,72 +1,83 @@
-use std::borrow::{Borrow};
 use wasm_bindgen::prelude::*;
 
-use crate::state::State;
-use crate::msg::Interaction;
-use crate::execute::handle_logic;
-use crate::js_imports::{Block, Contract, log, Transaction};
+use crate::action::Action;
+use crate::actions::transfer::transfer;
+use crate::js_imports::{Block, Transaction, log};
+use crate::state::{HandlerResult, State};
 
-// https://stackoverflow.com/questions/51216284/how-to-store-global-state-in-rust-when-using-wasm-bindgen
+#[wasm_bindgen]
+pub struct ContractHandle {
+    state: State,
+}
 
-// this does not work
-// static mut STATE: State = State::default();
-
-// manual initialization sucks...
-static mut STATE: State = State {
-    counter: 0
-};
-
-#[wasm_bindgen()]
-pub async fn handle(interaction: JsValue) -> JsValue {
-    log(&format!("Block indep_hash {}", Block::indep_hash()));
-    log(&format!("Block height {}", Block::height()));
-    log(&format!("Block timestamp {}", Block::timestamp()));
-
-    log(&format!("Contract id {}", Contract::id()));
-    log(&format!("Contract owner {}", Contract::owner()));
-
-    log(&format!("Transaction id {}", Transaction::tx_id()));
-    log(&format!("Transaction owner {}", Transaction::tx_owner()));
-    log(&format!("Transaction target {}", Transaction::target()));
-
-
-    let interaction: Interaction = interaction.into_serde().unwrap();
-
-    let current_state = unsafe { STATE.borrow() };
-
-    let result_after_interaction= handle_logic(current_state, &interaction).await;
-
-    if result_after_interaction.is_ok() {
-        let state = result_after_interaction.ok();
-
-        unsafe {
-            STATE = state.as_ref().unwrap().clone();
+#[wasm_bindgen]
+impl ContractHandle {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> ContractHandle {
+        ContractHandle {
+            state: State::default()
         }
-        
-        return JsValue::from_serde(&state).unwrap();
     }
 
-    JsValue::from_serde(&result_after_interaction.err()).unwrap()
+    // TODO: perf: https://github.com/cloudflare/serde-wasm-bindgen
+    pub async fn handle(mut self, interaction: JsValue) -> Option<JsValue> {
+        log(&format!("Block indep_hash {}", Block::indep_hash()));
+        log(&format!("Block height {}", Block::height()));
+        log(&format!("Block timestamp {}", Block::timestamp()));
+        log(&format!("Transaction owner {}", Transaction::owner()));
+
+        let action = interaction.into_serde();
+        if action.is_err() {
+            log(&format!("Error {}", action.as_ref().err().unwrap()));
+        }
+
+        log("Action parsed");
+
+        // not sure about clone here
+        let current_state = self.state.clone();
+
+        let result = match action.unwrap() {
+            Action::Transfer { amount, target } => transfer(current_state, amount, target),
+            /* Action::Balance { target } => balance(current_state, target),
+             Action::Evolve { value } => balance(current_state, value),*/
+        };
+
+        if result.is_ok() {
+            log("Result ok");
+            let handler_result = result.as_ref().ok().unwrap();
+
+            return if let HandlerResult::NewState(state) = handler_result {
+                log("Setting new state");
+                self.state = state.clone();
+                None
+            } else {
+                Some(JsValue::from_serde(&result).unwrap())
+            }
+        } else {
+            Some(JsValue::from_serde(&result).unwrap())
+        }
+
+
+    }
+
+    #[wasm_bindgen(js_name = initState)]
+    pub fn init_state(&mut self, state: &JsValue) {
+        log(&format!("Calling init state"));
+        self.state = state.into_serde().unwrap();
+    }
+
+    #[wasm_bindgen(js_name = currentState)]
+    pub fn current_state(&self) -> JsValue {
+        log(&format!("Calling current state"));
+
+        // not sure if that's deterministic - which is very important for the execution network.
+        // TODO: perf - according to docs:
+        // "This is unlikely to be super speedy so it's not recommended for large payload"
+        // - we should minimize calls to from_serde
+        JsValue::from_serde(&self.state).unwrap()
+    }
 }
 
-
-#[wasm_bindgen(js_name = initState)]
-pub fn init_state(state: &JsValue) {
-    log(&format!("Calling init state"));
-
-    unsafe {
-        STATE = state.into_serde().unwrap();
-    };
-}
-
-
-#[wasm_bindgen(js_name = currentState)]
-pub fn current_state() -> JsValue {
-    log(&format!("Calling current state"));
-    let current_state = unsafe { STATE.borrow() };
-
-    JsValue::from_serde(&current_state).unwrap()
-}
 
 #[wasm_bindgen()]
 pub fn lang() -> String {

@@ -21,6 +21,11 @@ module.exports = {
       return '5555555555'
     }
   },
+  "Transaction": {
+    owner: function() {
+      return "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA";
+    }
+  },
   "SmartWeave": {
     readContractState: async function(contractTxId) {
       console.log('js: readContractState before timeout');

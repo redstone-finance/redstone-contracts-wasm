@@ -1,6 +1,6 @@
 mod state;
-mod msg;
+mod action;
 mod error;
-mod execute;
-pub mod js_imports;
+mod js_imports;
 pub mod contract;
+mod actions;

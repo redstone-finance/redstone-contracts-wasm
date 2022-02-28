@@ -1,7 +1,7 @@
 import {ActionSchema, StateSchema} from "../schemas";
 import {readContractState} from "../imports/api";
 import {console} from "../imports/console";
-import {ContractResultSchema} from "../handle";
+import {ContractResultSchema} from "../contract";
 
 @serializable
 class ForeignContract {

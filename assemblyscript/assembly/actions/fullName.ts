@@ -1,4 +1,4 @@
-import {ContractResultSchema} from "../handle";
+import {ContractResultSchema} from "../contract";
 import {ActionSchema, StateSchema} from "../schemas";
 
 export function fullName(state: StateSchema, action: ActionSchema): ContractResultSchema {

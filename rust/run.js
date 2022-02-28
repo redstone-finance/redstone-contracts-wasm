@@ -27,7 +27,7 @@ async function main() {
 
   await testInteraction({
     function: "transfer",
-    amount: 100,
+    amount: 133,
     target: "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M"
   }, contractHandler);
   /* await testInteraction({ Subtract: { number: 43 } });

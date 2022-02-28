@@ -20,7 +20,7 @@ impl ContractHandle {
     }
 
     // TODO: perf: https://github.com/cloudflare/serde-wasm-bindgen
-    pub async fn handle(mut self, interaction: JsValue) -> Option<JsValue> {
+    pub fn handle(&mut self, interaction: &JsValue) -> JsValue {
         log(&format!("Block indep_hash {}", Block::indep_hash()));
         log(&format!("Block height {}", Block::height()));
         log(&format!("Block timestamp {}", Block::timestamp()));
@@ -49,12 +49,12 @@ impl ContractHandle {
             return if let HandlerResult::NewState(state) = handler_result {
                 log("Setting new state");
                 self.state = state.clone();
-                None
+                JsValue::from_serde(&result).unwrap()
             } else {
-                Some(JsValue::from_serde(&result).unwrap())
+                JsValue::from_serde(&result).unwrap()
             }
         } else {
-            Some(JsValue::from_serde(&result).unwrap())
+            JsValue::from_serde(&result).unwrap()
         }
 
 

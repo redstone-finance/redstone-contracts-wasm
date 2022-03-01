@@ -1,10 +1,12 @@
 use crate::error::ContractError;
 use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustNotBeNegativeErr};
-use crate::js_imports::Transaction;
+use crate::js_imports::{log, Transaction};
 use crate::state::{HandlerResult, State};
 
-pub fn transfer(mut state: State, amount: u64, target: String) -> Result<HandlerResult, ContractError> {
-    if amount == 0 {
+pub fn transfer(mut state: State, qty: u64, target: String) -> Result<HandlerResult, ContractError> {
+    log(&format!("Transfer called: {}: {}", target, qty));
+
+    if qty == 0 {
         return Err(TransferAmountMustNotBeNegativeErr);
     }
 
@@ -13,17 +15,22 @@ pub fn transfer(mut state: State, amount: u64, target: String) -> Result<Handler
     let balances = &mut state.balances;
     let caller_balance = balances.get_mut(&caller).unwrap();
 
-    if *caller_balance < amount {
+    if *caller_balance < qty {
         return Err(CallerBalanceNotEnough(*caller_balance));
     }
 
-    *caller_balance -= amount;
+    *caller_balance -= qty;
 
     if balances.contains_key(&target) {
-        *balances.get_mut(&target).unwrap() += amount;
+        *balances.get_mut(&target).unwrap() += qty;
     } else {
-        balances.insert(target, amount);
+        balances.insert(target, qty);
     };
+
+    for (key, value) in &state.balances {
+        log(&format!("{}: {}", key, value));
+    }
+
 
     Ok(HandlerResult::NewState(state))
 }

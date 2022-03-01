@@ -37,7 +37,7 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     let current_state = STATE.lock().unwrap().state.clone();
 
     let result = match action.unwrap() {
-        Action::Transfer { amount, target } => transfer(current_state, amount, target),
+        Action::Transfer { qty, target } => transfer(current_state, qty, target),
         Action::Balance { target } => balance(current_state, target),
         Action::Evolve { value } => evolve(current_state, value),
         Action::ForeignCall { contract_tx_id } => foreign_call(current_state, contract_tx_id).await,

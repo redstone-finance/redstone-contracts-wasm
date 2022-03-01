@@ -4,7 +4,7 @@ use serde::Deserialize;
 #[serde(rename_all = "camelCase", tag = "function")]
 pub enum Action {
     Transfer {
-        amount: u64,
+        qty: u64,
         target: String,
     },
     Balance {

@@ -9,5 +9,4 @@ pub enum ContractError {
   OnlyOwnerCanEvolve,
   EvolveNotAllowed,
   WalletHasNoBalanceDefined(String)
-
 }

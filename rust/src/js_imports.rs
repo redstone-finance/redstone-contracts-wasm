@@ -17,7 +17,7 @@ extern "C" {
 }
 
 
-#[wasm_bindgen]
+#[wasm_bindgen(module = "/smartweave_imports.js")]
 extern "C" {
     #[wasm_bindgen]
     pub type Contract;
@@ -30,7 +30,7 @@ extern "C" {
 }
 
 
-#[wasm_bindgen]
+#[wasm_bindgen(module = "/smartweave_imports.js")]
 extern "C" {
     #[wasm_bindgen]
     pub type Transaction;
@@ -46,7 +46,7 @@ extern "C" {
 }
 
 
-#[wasm_bindgen]
+#[wasm_bindgen(module = "/smartweave_imports.js")]
 extern "C" {
     #[wasm_bindgen]
     pub type SmartWeave;
@@ -55,7 +55,7 @@ extern "C" {
     pub async fn read_contract_state(contract_id: &str) -> JsValue;
 }
 
-#[wasm_bindgen]
+#[wasm_bindgen(module = "/smartweave_imports.js")]
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     pub fn log(s: &str);

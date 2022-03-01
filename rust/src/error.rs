@@ -6,4 +6,8 @@ pub enum ContractError {
   TransferAmountMustNotBeNegativeErr,
   IDontLikeThisContract,
   CallerBalanceNotEnough(u64),
+  OnlyOwnerCanEvolve,
+  EvolveNotAllowed,
+  WalletHasNoBalanceDefined(String)
+
 }

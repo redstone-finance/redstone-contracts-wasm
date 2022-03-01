@@ -10,9 +10,9 @@ pub enum Action {
     Balance {
         target: String
     },
-   /* Evolve {
+    Evolve {
         value: String
-    },*/
+    },
     ForeignCall {
         contract_tx_id: String
     }

@@ -1,4 +1,4 @@
-const smartweaveContract = require("./smartweave_contract");
+const smartweaveContract = require("./pkg/smartweave_contract");
 
 let contractState = {
   "ticker": "EXAMPLE_PST_TOKEN",

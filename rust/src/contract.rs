@@ -4,9 +4,10 @@ use wasm_bindgen::prelude::*;
 
 use crate::action::Action;
 use crate::actions::balance::balance;
+use crate::actions::evolve::evolve;
 use crate::actions::foreign_call::foreign_call;
 use crate::actions::transfer::transfer;
-use crate::js_imports::{Block, Transaction, log};
+use crate::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{HandlerResult, State};
 
 
@@ -24,10 +25,8 @@ lazy_static! {
 
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
-    log(&format!("Block indep_hash {}", Block::indep_hash()));
-    log(&format!("Block height {}", Block::height()));
-    log(&format!("Block timestamp {}", Block::timestamp()));
-    log(&format!("Transaction owner {}", Transaction::owner()));
+    log(&format!("Calling handle"));
+    log_tx();
 
     let action = interaction.into_serde();
     if action.is_err() {
@@ -40,6 +39,7 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     let result = match action.unwrap() {
         Action::Transfer { amount, target } => transfer(current_state, amount, target),
         Action::Balance { target } => balance(current_state, target),
+        Action::Evolve { value } => evolve(current_state, value),
         Action::ForeignCall { contract_tx_id } => foreign_call(current_state, contract_tx_id).await,
     };
 
@@ -52,7 +52,6 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
             // not sure about clone here
             STATE.lock().unwrap().state = state.clone();
             None
-            //JsValue::from_serde(&result).unwrap()
         } else {
             Some(JsValue::from_serde(&result).unwrap())
         };
@@ -61,11 +60,29 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     }
 }
 
+fn log_tx() {
+    log(&format!("calling log_tx"));
+    log(&format!("Block indep_hash {}", Block::indep_hash()));
+    log(&format!("after indep_hash"));
+    log(&format!("Block height {}", Block::height()));
+    log(&format!("Block timestamp {}", Block::timestamp()));
+
+    log(&format!("Contract id {}", Contract::id()));
+    log(&format!("Contract owner {}", Contract::owner()));
+
+    log(&format!("Transaction id {}", Transaction::id()));
+    log(&format!("Transaction owner {}", Transaction::owner()));
+    log(&format!("Transaction target {}", Transaction::target()));
+}
+
 
 #[wasm_bindgen(js_name = initState)]
 pub fn init_state(state: &JsValue) {
-    log(&format!("Calling init state"));
-    STATE.lock().unwrap().state = state.into_serde().unwrap();
+    log(&format!("Calling init state 2"));
+    let state_parsed: State =  state.into_serde().unwrap();
+    log(&format!("state parsed"));
+    STATE.lock().unwrap().state = state_parsed.clone();
+    log(&format!("State set {}", state_parsed.ticker));
 }
 
 #[wasm_bindgen(js_name = currentState)]

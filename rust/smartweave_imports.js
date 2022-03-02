@@ -49,6 +49,27 @@ module.exports = {
       return {
         value: contractTxId
       }
+    },
+
+    viewContractState: async function (contractTxId) {
+      console.log('js: viewContractState before timeout');
+      await timeout(1000);
+      console.log('js: viewContractState after timeout');
+      return {
+        value: contractTxId
+      }
+    },
+
+    write: async function (contractTxId, input) {
+      console.log('js: write before timeout');
+      await timeout(1000);
+      console.log('js: write after timeout');
+    },
+
+    refreshState: async function (contractTxId, input) {
+      console.log('js: write before timeout');
+      await timeout(1000);
+      console.log('js: write after timeout');
     }
   }
 }

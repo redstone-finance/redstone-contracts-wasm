@@ -22,10 +22,10 @@ extern "C" {
     #[wasm_bindgen]
     pub type Contract;
 
-    #[wasm_bindgen(static_method_of = Contract, js_name = id)]
+    #[wasm_bindgen(static_method_of = Contract, js_name = contractId)]
     pub fn id() -> i32;
 
-    #[wasm_bindgen(static_method_of = Contract, js_name = owner)]
+    #[wasm_bindgen(static_method_of = Contract, js_name = contractOwner)]
     pub fn owner() -> String;
 }
 
@@ -53,6 +53,15 @@ extern "C" {
 
     #[wasm_bindgen(static_method_of = SmartWeave, js_name = readContractState)]
     pub async fn read_contract_state(contract_id: &str) -> JsValue;
+
+    #[wasm_bindgen(static_method_of = SmartWeave, js_name = viewContractState)]
+    pub async fn view_contract_state(contract_id: &str) -> JsValue;
+
+    #[wasm_bindgen(static_method_of = SmartWeave, js_name = write)]
+    pub async fn write(contract_id: &str, input: &JsValue) -> JsValue;
+
+    #[wasm_bindgen(static_method_of = SmartWeave, js_name = refreshState)]
+    pub async fn refresh_state();
 }
 
 #[wasm_bindgen(module = "/smartweave_imports.js")]

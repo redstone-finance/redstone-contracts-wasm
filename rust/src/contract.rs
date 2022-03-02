@@ -23,6 +23,7 @@ lazy_static! {
         });
 }
 
+
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     log(&format!("Calling handle"));

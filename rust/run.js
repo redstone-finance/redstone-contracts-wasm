@@ -14,6 +14,60 @@ main().finally();
 
 async function main() {
 
+ /* const path = require('path').join(__dirname, 'pkg', 'smartweave_contract_bg.wasm');
+  const bytes = require('fs').readFileSync(path);
+
+  const module = new WebAssembly.Module(bytes);
+  const imports = WebAssembly.Module.imports(module);
+  const exports = WebAssembly.Module.exports(module);
+  console.log(imports);
+  console.log(exports);
+  const wbindgenImports = imports.filter(imp => {
+    return imp.module === '__wbindgen_placeholder__';
+  }).map(imp => imp.name);
+
+  const baseFnNames = [
+    '__wbg_log_',
+    '__wbindgen_json_parse',
+    '__wbindgen_json_serialize',
+    '__wbindgen_object_drop_ref',
+    '__wbindgen_cb_drop',
+    '__wbg_readContractState',
+    '__wbg_viewContractState',
+    '__wbg_indephash',
+    '__wbg_height',
+    '__wbg_timestamp',
+    '__wbg_id',
+    '__wbg_owner',
+    '__wbg_target',
+    '__wbg_contractId',
+    '__wbg_contractOwner',
+    '__wbg_call',
+    '__wbg_new',
+    '__wbg_resolve',
+    '__wbg_then',
+    '__wbindgen_debug_string',
+    '__wbindgen_throw',
+    '__wbindgen_closure_wrapper'
+  ];
+
+  console.log({
+    baseLength: baseFnNames.length,
+    importsLength: wbindgenImports.length
+  });
+
+  if (baseFnNames.length != wbindgenImports.length) {
+    throw new Error("module not compatible with current sdk version");
+  }
+
+  const nameMapping = baseFnNames.reduce((acc, baseName) => {
+    acc[baseName] = wbindgenImports.find(wbImp => wbImp.startsWith(baseName));
+    return acc;
+  }, {});
+
+  console.log(nameMapping);*/
+
+
   smartweaveContract.initState(contractState);
   console.log("Initial contract state:", smartweaveContract.currentState());
 

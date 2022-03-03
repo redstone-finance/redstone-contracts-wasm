@@ -22,10 +22,10 @@ module.exports = {
     }
   },
   "Contract": {
-    owner: function () {
+    contractOwner: function () {
       return "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA";
     },
-    id: function () {
+    contractId: function () {
       return "sdfsdfs";
     },
   },

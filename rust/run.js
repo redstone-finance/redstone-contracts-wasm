@@ -67,13 +67,14 @@ async function main() {
 
   console.log(nameMapping);*/
 
+  console.log("BEGIN", smartweaveContract.currentState());
 
   smartweaveContract.initState(contractState);
   console.log("Initial contract state:", smartweaveContract.currentState());
 
   await testInteraction({
     function: "transfer",
-    amount: 42,
+    qty: 42,
     target: "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M"
   });
 
@@ -84,7 +85,7 @@ async function main() {
 
   await testInteraction({
     function: "transfer",
-    amount: 133,
+    qty: 133,
     target: "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M"
   });
 
@@ -109,7 +110,7 @@ async function main() {
    await testInteraction({ Add: { number: 7 } });
    await testInteraction({ ForeignCall: { contract_tx_id: "bad_contract" } });
    await testInteraction({ ForeignCall: { contract_tx_id: "DAJ" } });*/
-  console.log("\n\nDone!", smartweaveContract.currentState());
+  console.log("\n\nEND", smartweaveContract.currentState());
 }
 
 async function testInteraction(interaction) {

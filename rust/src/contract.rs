@@ -1,6 +1,6 @@
-use lazy_static::lazy_static;
-use std::sync::{Mutex};
 use wasm_bindgen::prelude::*;
+
+use std::cell::RefCell;
 
 use crate::action::Action;
 use crate::actions::balance::balance;
@@ -10,19 +10,9 @@ use crate::actions::transfer::transfer;
 use crate::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{HandlerResult, State};
 
-
-#[wasm_bindgen]
-pub struct StateWrapper {
-    state: State,
+thread_local! {
+    static STATE: RefCell<State> = RefCell::default();
 }
-
-lazy_static! {
-    static ref STATE: Mutex<StateWrapper> = Mutex::new(
-        StateWrapper {
-            state: State::default()
-        });
-}
-
 
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
@@ -35,7 +25,7 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     }
 
     // not sure about clone here
-    let current_state = STATE.lock().unwrap().state.clone();
+    let current_state = STATE.with(|service| service.borrow().clone());
 
     let result = match action.unwrap() {
         Action::Transfer { qty, target } => transfer(current_state, qty, target),
@@ -51,7 +41,7 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
         return if let HandlerResult::NewState(state) = handler_result {
             log("Setting new state");
             // not sure about clone here
-            STATE.lock().unwrap().state = state.clone();
+            STATE.with(|service| service.replace(state.clone()));
             None
         } else {
             Some(JsValue::from_serde(&result).unwrap())
@@ -62,9 +52,7 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
 }
 
 fn log_tx() {
-    log(&format!("calling log_tx"));
     log(&format!("Block indep_hash {}", Block::indep_hash()));
-    log(&format!("after indep_hash"));
     log(&format!("Block height {}", Block::height()));
     log(&format!("Block timestamp {}", Block::timestamp()));
 
@@ -80,10 +68,10 @@ fn log_tx() {
 #[wasm_bindgen(js_name = initState)]
 pub fn init_state(state: &JsValue) {
     log(&format!("Calling init state 2"));
-    let state_parsed: State =  state.into_serde().unwrap();
+    let state_parsed: State = state.into_serde().unwrap();
     log(&format!("state parsed"));
-    STATE.lock().unwrap().state = state_parsed.clone();
-    log(&format!("State set {}", state_parsed.ticker));
+
+    STATE.with(|service| service.replace(state_parsed));
 }
 
 #[wasm_bindgen(js_name = currentState)]
@@ -94,9 +82,8 @@ pub fn current_state() -> JsValue {
     // TODO: perf - according to docs:
     // "This is unlikely to be super speedy so it's not recommended for large payload"
     // - we should minimize calls to from_serde
-    let current_state = &STATE.lock().unwrap().state;
-
-    JsValue::from_serde(current_state).unwrap()
+    let current_state = STATE.with(|service| service.borrow().clone());
+    JsValue::from_serde(&current_state).unwrap()
 }
 
 

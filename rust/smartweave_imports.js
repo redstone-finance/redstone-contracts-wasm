@@ -47,9 +47,16 @@ module.exports = {
       await timeout(1000);
       console.log('js: readContractState after timeout');
       return {
-        value: contractTxId
+        "ticker": "FOREIGN_PST",
+        "name": "foreign call",
+        "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
+        "balances": {
+          "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M": 100,
+          "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA": 500
+        }
       }
     },
+
 
     viewContractState: async function (contractTxId) {
       console.log('js: viewContractState before timeout');

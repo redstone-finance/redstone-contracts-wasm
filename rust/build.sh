@@ -1,1 +1,1 @@
-wasm-pack build --target nodejs --release
+wasm-pack build --target nodejs --release --out-name rust-pst

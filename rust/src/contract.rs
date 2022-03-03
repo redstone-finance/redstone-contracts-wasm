@@ -16,7 +16,6 @@ thread_local! {
 
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
-    log(&format!("Calling handle"));
     log_tx();
 
     let action = interaction.into_serde();

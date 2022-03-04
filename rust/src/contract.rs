@@ -10,6 +10,35 @@ use crate::actions::transfer::transfer;
 use crate::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{HandlerResult, State};
 
+/*
+Note: in order do optimize communication between host and the WASM module,
+we're storing the state inside the WASM module (for the time of state evaluation).
+This allows to reduce the overhead of passing the state back and forth
+between the host and module with each contract interaction.
+In case of bigger states this overhead can be huge.
+Same approach has been implemented for the AssemblyScript version.
+
+So the flow (from the SDK perspective) is:
+1. SDK calls exported WASM module function "initState" (with lastly cached state or initial state,
+if cache is empty) - which initializes the state in the WASM module.
+2. SDK calls "handle" function for each of the interaction.
+If given interaction was modifying the state - it is updated inside the WASM module
+- but not returned to host.
+3. Whenever SDK needs to know the current state (eg. in order to perform
+caching or to simply get its value after evaluating all of the interactions)
+- it calls WASM's module "currentState" function.
+
+The handle function by default does not return the new state -
+it only updates it in the WASM module.
+The handle function returns a value only in case of error
+or calling a "view" function.
+
+In the future this might also allow to enhance the inner-contracts communication
+- e.g. if the execution network will store the state of the contracts - as the WASM contract module memory
+- it would allow to read other contract's state "directly" from WASM module memory.
+ */
+
+// inspired by https://github.com/dfinity/examples/blob/master/rust/basic_dao/src/basic_dao/src/lib.rs#L13
 thread_local! {
     static STATE: RefCell<State> = RefCell::default();
 }

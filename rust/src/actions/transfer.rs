@@ -1,5 +1,5 @@
 use crate::error::ContractError;
-use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustNotBeNegativeErr};
+use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustBeHigherThanZero};
 use crate::js_imports::{log, Transaction};
 use crate::state::{HandlerResult, State};
 
@@ -7,7 +7,7 @@ pub fn transfer(mut state: State, qty: u64, target: String) -> Result<HandlerRes
     log(&format!("Transfer called: {}: {}", target, qty));
 
     if qty == 0 {
-        return Err(TransferAmountMustNotBeNegativeErr);
+        return Err(TransferAmountMustBeHigherThanZero);
     }
 
     let caller = Transaction::owner();

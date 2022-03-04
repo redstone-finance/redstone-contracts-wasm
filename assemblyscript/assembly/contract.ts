@@ -60,6 +60,6 @@ function contract(action: ActionSchema): ResultSchema | null {
     }
     return handlerResult.result;
   } else {
-    throw new Error(`[CE:WTF] Unknown function ${action.function}`);
+    throw new Error(`[RE:WTF] Unknown function ${action.function}`);
   }
 }

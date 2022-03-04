@@ -1,12 +1,15 @@
 use wasm_bindgen::prelude::*;
 
 use std::cell::RefCell;
+use serde_json::Error;
 
 use crate::action::Action;
 use crate::actions::balance::balance;
 use crate::actions::evolve::evolve;
 use crate::actions::foreign_call::foreign_call;
 use crate::actions::transfer::transfer;
+use crate::error::ContractError;
+use crate::error::ContractError::RuntimeError;
 use crate::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{HandlerResult, State};
 
@@ -36,7 +39,7 @@ or calling a "view" function.
 In the future this might also allow to enhance the inner-contracts communication
 - e.g. if the execution network will store the state of the contracts - as the WASM contract module memory
 - it would allow to read other contract's state "directly" from WASM module memory.
- */
+*/
 
 // inspired by https://github.com/dfinity/examples/blob/master/rust/basic_dao/src/basic_dao/src/lib.rs#L13
 thread_local! {
@@ -47,27 +50,31 @@ thread_local! {
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     log_tx();
 
-    let action = interaction.into_serde();
+    let result: Result<HandlerResult, ContractError>;
+    let action: Result<Action, Error> = interaction.into_serde();
+
     if action.is_err() {
-        log(&format!("Error {}", action.as_ref().err().unwrap()));
+        // cannot pass any data from action.error here - ends up with
+        // "FnOnce called more than once" error from wasm-bindgen for
+        // "foreign_call" testcase.
+        result = Err(RuntimeError("Error while parsing input".to_string()));
+    } else {
+        // not sure about clone here
+        let current_state = STATE.with(|service| service.borrow().clone());
+
+        result = match action.unwrap() {
+            Action::Transfer { qty, target } => transfer(current_state, qty, target),
+            Action::Balance { target } => balance(current_state, target),
+            Action::Evolve { value } => evolve(current_state, value),
+            Action::ForeignCall { contract_tx_id } => foreign_call(current_state, contract_tx_id).await,
+        };
     }
-
-    // not sure about clone here
-    let current_state = STATE.with(|service| service.borrow().clone());
-
-    let result = match action.unwrap() {
-        Action::Transfer { qty, target } => transfer(current_state, qty, target),
-        Action::Balance { target } => balance(current_state, target),
-        Action::Evolve { value } => evolve(current_state, value),
-        Action::ForeignCall { contract_tx_id } => foreign_call(current_state, contract_tx_id).await,
-    };
 
     if result.is_ok() {
         log("Result ok");
         let handler_result = result.as_ref().ok().unwrap();
 
         return if let HandlerResult::NewState(state) = handler_result {
-            log("Setting new state");
             // not sure about clone here
             STATE.with(|service| service.replace(state.clone()));
             None
@@ -120,7 +127,7 @@ pub fn lang() -> String {
     return "rust/1.0".to_string();
 }
 
-// workaround for now to simplify type reading without as/loader
+// workaround for now to simplify type reading without as/loader or wasm-bindgen
 // 1 = assemblyscript
 // 2 = rust
 // 3 = go

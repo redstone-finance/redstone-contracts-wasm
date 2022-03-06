@@ -114,3 +114,6 @@ pkg
 
 # assemblyscript build folder
 build
+
+# go build folder
+out

@@ -33,7 +33,7 @@ export type ContractResultSchema = HandlerResultSchema<StateSchema, ResultSchema
 let contractState: StateSchema;
 
 @contract
-function contract(action: ActionSchema): ResultSchema | null {
+function handle(action: ActionSchema): ResultSchema | null {
   console.log(`Function called: "${action.function}"`);
   console.logO(`Smartweave:`, stringify<SmartweaveSchema>({
     contract: {
@@ -57,6 +57,9 @@ function contract(action: ActionSchema): ResultSchema | null {
     const handlerResult = functions.get(fn)(contractState, action);
     if (handlerResult.state != null) {
       contractState = handlerResult.state;
+    }
+    if (handlerResult.result != null) {
+      console.logO(`Result:`, stringify<ResultSchema>(handlerResult.result!!))
     }
     return handlerResult.result;
   } else {

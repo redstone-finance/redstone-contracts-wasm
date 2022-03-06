@@ -1,3 +1,4 @@
+//require('./wasm_exec_tiny.js');
 require('./wasm_exec.js');
 const fs = require('fs');
 
@@ -15,6 +16,13 @@ async function main() {
     go.run(wasm);
 
     console.log(wasm.exports);
+    console.log(MyGoFunc)
+    console.log(MyGoFunc())
+
+
+/*    console.log(wasm.exports.handle({}));
+    console.log(wasm.exports.lang());
+    console.log(wasm.exports.contractType());*/
 
     //wasm.exports.update();
 

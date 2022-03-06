@@ -11,3 +11,6 @@ Note: we're using `tinygo` compiler, as the default compiler produces huuuuge bi
 
 note: 
 use wasm_exec.js from tinygo, not the defaut one from Go - https://github.com/tinygo-org/tinygo/issues/2484
+
+note 2:
+no support for decoding json in tinygo - https://github.com/tinygo-org/tinygo/issues/2660

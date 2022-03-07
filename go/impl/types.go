@@ -15,8 +15,8 @@ type Action struct {
 
 type TransferAction struct {
 	Function string `json:"function"`
-	Target string `json:"target"`
-	Qty    uint64 `json:"qty"`
+	Target   string `json:"target"`
+	Qty      uint64 `json:"qty"`
 }
 
 type EvolveAction struct {
@@ -29,4 +29,8 @@ type BalanceAction struct {
 	Target string `json:"target"`
 }
 
-type ActionResult = interface {}
+type BalanceResult struct {
+	Balance uint64 `json:"balance"`
+}
+
+type ActionResult = interface{}

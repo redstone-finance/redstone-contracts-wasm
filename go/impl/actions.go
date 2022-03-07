@@ -1,12 +1,11 @@
-package actions
+package impl
 
 import (
 	"errors"
 	"fmt"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 )
 
-func Transfer(state impl.PstState, action impl.TransferAction) (*impl.PstState, error) {
+func Transfer(state PstState, action TransferAction) (*PstState, error) {
 	if action.Qty == 0 {
 		return nil, errors.New(fmt.Sprintf("[CE:ITQ] invalid transfer qty: %v", action.Qty))
 	}
@@ -36,9 +35,12 @@ func Transfer(state impl.PstState, action impl.TransferAction) (*impl.PstState, 
 	return &state, nil
 }
 
-func Balance(state impl.PstState, action impl.BalanceAction) (interface{}, error) {
+func Balance(state PstState, action BalanceAction) (*BalanceResult, error) {
+	println("balance called")
 	if targetBalance, ok := state.Balances[action.Target]; ok {
-		return targetBalance, nil
+		return &BalanceResult{
+			Balance: targetBalance,
+		}, nil
 	} else {
 		return nil, errors.New(fmt.Sprintf("[CE:TNF] target not found: %v", action.Target))
 	}

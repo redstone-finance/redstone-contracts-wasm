@@ -1,61 +1,27 @@
-package main
+package wasm
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/actions"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 	"syscall/js"
 )
 
-// the current state of the contract that contract developers have to define
-var contract *impl.Contract = nil
-
-
-// the function that contract developers actually need to implement
-func doHandle(action map[string]interface{}) (*impl.PstState, impl.ActionResult, error) {
-	fn := action["function"]
-
-	switch fn {
-	case "transfer":
-		// not sure how to "automatically" handle casting to concrete impl in Go.
-		// https://eagain.net/articles/go-json-kind/
-		// https://eagain.net/articles/go-dynamic-json/
-		var transfer impl.TransferAction
-		common.ConvertInto(action, &transfer)
-		state, err := actions.Transfer(contract.CloneState(), transfer)
-		return state, nil, err
-	case "balance":
-		var balance impl.BalanceAction
-		common.ConvertInto(action, &balance)
-		result, err := actions.Balance(contract.CloneState(), balance)
-		return nil, result, err
-	default:
-		return nil, nil, errors.New(fmt.Sprintf("[RE:WTF] unknown function: %v", fn))
-	}
-}
-
-
-
-// low-level WASM code...should be somehow hidden from the contract developer
-func main() {
+func Run(contract *impl.Contract) {
 	// the Go way of defining WASM exports...
 	// standard "exports" from the wasm module do not work here...
 	// that's kinda ugly TBH
-	js.Global().Set("handle", Handle())
-	js.Global().Set("initState", InitState())
-	js.Global().Set("currentState", CurrentState())
-	js.Global().Set("contractType", ContractType())
-	js.Global().Set("lang", Lang())
+	js.Global().Set("handle", handle(contract))
+	js.Global().Set("initState", initState(contract))
+	js.Global().Set("currentState", currentState(contract))
+	js.Global().Set("contractType", contractType())
+	js.Global().Set("lang", lang())
 
 	// Prevent the function from returning, which is required in a wasm module
-	// i.e. "Error: Go program has already exited" is thrown
+	// i.e. "Error: Go program has already exited" is thrown otherwise on host
 	<-make(chan bool)
 }
 
-func Handle() js.Func {
+func handle(contract *impl.Contract) js.Func {
 	// note: each 'exported' function has to be wrapped into
 	// js.FuncOf(func(this js.Value, args []js.Value) interface{}
 	// - that's kinda ugly too...
@@ -76,7 +42,7 @@ func Handle() js.Func {
 					doReject(err, reject)
 				}
 
-				state, result, err := doHandle(action)
+				state, result, err := contract.Handle(action)
 
 				if err != nil {
 					// err should be an instance of `error`, eg `errors.New("some error")`
@@ -85,7 +51,8 @@ func Handle() js.Func {
 					if state != nil {
 						contract.UpdateState(state)
 					}
-					resolve.Invoke(result)
+					resultMarshalled, _ := json.Marshal(result)
+					resolve.Invoke(string(resultMarshalled))
 				}
 			}()
 
@@ -103,26 +70,22 @@ func doReject(err error, reject js.Value) {
 	reject.Invoke(errorObject)
 }
 
-func Lang() interface{} {
+func lang() interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		return "go/1.0"
 	})
 }
 
-func CurrentState() interface{} {
+func currentState(contract *impl.Contract) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		data, _ := json.Marshal(contract.CurrentState())
 		return string(data)
 	})
 }
 
-func InitState() interface{} {
+func initState(contract *impl.Contract) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		if contract == nil {
-			println("calling init state")
-			contract = &impl.Contract{}
-			contract.InitState(args[0])
-		}
+		contract.InitState(args[0].String())
 		return nil
 	})
 }
@@ -133,7 +96,7 @@ func InitState() interface{} {
 // 3 = go
 // 4 = swift
 // 5 = c
-func ContractType() interface{} {
+func contractType() interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		return 3
 	})

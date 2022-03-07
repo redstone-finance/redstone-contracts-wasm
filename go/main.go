@@ -6,7 +6,7 @@ import (
 )
 
 // the current state of the contract that contract developers have to define
-var contract = impl.Contract{}
+var contract = impl.PstContract{}
 
 // handles all the WASM-JS related trickery...
 func main() {

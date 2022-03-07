@@ -1,5 +1,5 @@
 {
-  "name": "redstone-contracts-wasm",
+  "name": "redstone-contracts-wasm-as",
   "version": "0.0.1",
   "description": "WASM RedStone contracts for SmartWeave protocol",
   "main": "index.js",

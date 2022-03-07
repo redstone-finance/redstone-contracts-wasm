@@ -5,15 +5,23 @@ import (
 	"errors"
 	"fmt"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/block"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/console"
 )
 
-type Contract struct {
+type PstContract struct {
 	state PstState
 }
 
 // Handle the function that contract developers actually need to implement
-func (c *Contract) Handle(action map[string]interface{}) (*PstState, ActionResult, error) {
+func (c *PstContract) Handle(action map[string]interface{}) (*PstState, ActionResult, error) {
 	fn := action["function"]
+
+	console.Log("Calling", fn)
+
+	console.Log("Block height", block.Height())
+	console.Log("Block indep_hash", block.IndepHash())
+	console.Log("Block timestamp", block.Timestamp())
 
 	switch fn {
 	case "transfer":
@@ -34,21 +42,21 @@ func (c *Contract) Handle(action map[string]interface{}) (*PstState, ActionResul
 	}
 }
 
-func (c *Contract) InitState(stateJson string) {
+func (c *PstContract) InitState(stateJson string) {
 	var state PstState
 	json.Unmarshal([]byte(stateJson), &state)
 	c.UpdateState(&state)
 }
 
-func (c *Contract) UpdateState(newState *PstState) {
+func (c *PstContract) UpdateState(newState *PstState) {
 	c.state = *newState
 }
 
-func (c *Contract) CurrentState() PstState {
+func (c *PstContract) CurrentState() PstState {
 	return c.state
 }
 
-func (c *Contract) CloneState() PstState {
+func (c *PstContract) CloneState() PstState {
 	var clone PstState
 	common.DeepCopy(c.state, &clone)
 	return clone

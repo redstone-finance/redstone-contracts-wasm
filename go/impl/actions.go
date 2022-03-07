@@ -3,6 +3,7 @@ package impl
 import (
 	"errors"
 	"fmt"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/transaction"
 )
 
 func Transfer(state PstState, action TransferAction) (*PstState, error) {
@@ -10,8 +11,7 @@ func Transfer(state PstState, action TransferAction) (*PstState, error) {
 		return nil, errors.New(fmt.Sprintf("[CE:ITQ] invalid transfer qty: %v", action.Qty))
 	}
 
-	// TODO - from wasm import Transaction.owner()
-	caller := "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA"
+	caller := transaction.Owner()
 
 	if callerBalance, ok := state.Balances[caller]; ok {
 		if callerBalance < action.Qty {

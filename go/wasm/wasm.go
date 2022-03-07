@@ -6,7 +6,7 @@ import (
 	"syscall/js"
 )
 
-func Run(contract *impl.Contract) {
+func Run(contract *impl.PstContract) {
 	// the Go way of defining WASM exports...
 	// standard "exports" from the wasm module do not work here...
 	// that's kinda ugly TBH
@@ -21,7 +21,7 @@ func Run(contract *impl.Contract) {
 	<-make(chan bool)
 }
 
-func handle(contract *impl.Contract) js.Func {
+func handle(contract *impl.PstContract) js.Func {
 	// note: each 'exported' function has to be wrapped into
 	// js.FuncOf(func(this js.Value, args []js.Value) interface{}
 	// - that's kinda ugly too...
@@ -76,14 +76,14 @@ func lang() interface{} {
 	})
 }
 
-func currentState(contract *impl.Contract) interface{} {
+func currentState(contract *impl.PstContract) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		data, _ := json.Marshal(contract.CurrentState())
 		return string(data)
 	})
 }
 
-func initState(contract *impl.Contract) interface{} {
+func initState(contract *impl.PstContract) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		contract.InitState(args[0].String())
 		return nil

@@ -127,6 +127,14 @@ async function main() {
     // result should be target balance value - "view" functions return value
     console.log('Result from balance:', resultBalance);
 
+    console.log("\nCalling async handle - foreignCall");
+    const resultFc = await handle(JSON.stringify({
+        function: 'foreignCall',
+        target: 'some-random-contract',
+    }));
+    // result should be target balance value - "view" functions return value
+    console.log('Result from foreignCall:', resultFc);
+
     console.log("\n\nChecking exception handling (should throw here)");
     try {
         await handle(JSON.stringify({

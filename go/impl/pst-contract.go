@@ -37,6 +37,11 @@ func (c *PstContract) Handle(action map[string]interface{}) (*PstState, ActionRe
 		common.ConvertInto(action, &balance)
 		result, err := Balance(c.CloneState(), balance)
 		return nil, result, err
+	case "foreignCall":
+		var foreignCall ForeignCallAction
+		common.ConvertInto(action, &foreignCall)
+		result, err := ForeignCall(c.CloneState(), foreignCall)
+		return nil, result, err
 	default:
 		return nil, nil, errors.New(fmt.Sprintf("[RE:WTF] unknown function: %v", fn))
 	}

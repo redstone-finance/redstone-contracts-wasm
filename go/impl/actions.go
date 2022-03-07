@@ -3,6 +3,8 @@ package impl
 import (
 	"errors"
 	"fmt"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/console"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/smartweave"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/transaction"
 )
 
@@ -44,4 +46,13 @@ func Balance(state PstState, action BalanceAction) (*BalanceResult, error) {
 	} else {
 		return nil, errors.New(fmt.Sprintf("[CE:TNF] target not found: %v", action.Target))
 	}
+}
+
+func ForeignCall(state PstState, action ForeignCallAction) (interface{}, error) {
+	println("ForeignCall called")
+	result := smartweave.ReadContractState(action.ContractTxId)
+
+	console.Log("Result from foreign call", result)
+
+	return result, nil
 }

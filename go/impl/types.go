@@ -29,6 +29,11 @@ type BalanceAction struct {
 	Target string `json:"target"`
 }
 
+type ForeignCallAction struct {
+	Action
+	ContractTxId string `json:"contractTxId"`
+}
+
 type BalanceResult struct {
 	Balance uint64 `json:"balance"`
 }

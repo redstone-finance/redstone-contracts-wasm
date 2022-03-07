@@ -2,6 +2,7 @@ package wasm
 
 import (
 	"encoding/json"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/easyjson"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 	"syscall/js"
 )
@@ -34,15 +35,16 @@ func handle(contract *impl.PstContract) js.Func {
 
 			go func() {
 				actionJson := handleArgs[0].String()
-				var action map[string]interface{}
-				json.Unmarshal([]byte(actionJson), &action)
+				var action easyjson.Action
+				action.UnmarshalJSON([]byte(actionJson))
+				//json.Unmarshal([]byte(actionJson), &action)
 				_, err := json.Marshal(action)
 
 				if err != nil {
 					doReject(err, reject)
 				}
 
-				state, result, err := contract.Handle(action)
+				state, result, err := contract.Handle(action, []byte(actionJson))
 
 				if err != nil {
 					// err should be an instance of `error`, eg `errors.New("some error")`

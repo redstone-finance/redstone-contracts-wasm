@@ -3,12 +3,13 @@ package impl
 import (
 	"errors"
 	"fmt"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/easyjson"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/console"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/smartweave"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/transaction"
 )
 
-func Transfer(state PstState, action TransferAction) (*PstState, error) {
+func Transfer(state easyjson.PstState, action easyjson.TransferAction) (*easyjson.PstState, error) {
 	if action.Qty == 0 {
 		return nil, errors.New(fmt.Sprintf("[CE:ITQ] invalid transfer qty: %v", action.Qty))
 	}
@@ -37,10 +38,10 @@ func Transfer(state PstState, action TransferAction) (*PstState, error) {
 	return &state, nil
 }
 
-func Balance(state PstState, action BalanceAction) (*BalanceResult, error) {
+func Balance(state easyjson.PstState, action easyjson.BalanceAction) (*easyjson.BalanceResult, error) {
 	println("balance called")
 	if targetBalance, ok := state.Balances[action.Target]; ok {
-		return &BalanceResult{
+		return &easyjson.BalanceResult{
 			Balance: targetBalance,
 		}, nil
 	} else {
@@ -48,7 +49,7 @@ func Balance(state PstState, action BalanceAction) (*BalanceResult, error) {
 	}
 }
 
-func ForeignCall(state PstState, action ForeignCallAction) (interface{}, error) {
+func ForeignCall(state easyjson.PstState, action easyjson.ForeignCallAction) (interface{}, error) {
 	println("ForeignCall called")
 	result := smartweave.ReadContractState(action.ContractTxId)
 

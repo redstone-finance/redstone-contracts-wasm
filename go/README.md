@@ -1,18 +1,21 @@
 # Go smartweave example contract
 
 Note: we're using `tinygo` compiler, as the default compiler produces huuuuge binaries 
-(hello world example - ~2MB - probably because it adds all the WASI related stuff)
+(`hello world` example - ~2MB)
 ![img.png](img.png)
 
-## How to use
+## How to use (default Go compiler)
+- [Install easyjson](https://github.com/mailru/easyjson#install)
+- Run `easyjson -all easyjson/easyjson.go`
+- Build wasm contract file: `bash build.sh` (it should create `out` folder)
+- Run wasm contract simulation: `node run.js`
+
+## How to use (tinygo compiler)
 - [Install tinygo](https://tinygo.org/getting-started/install/)
-- Build wasm contract file: `bash build.sh` (it should create `pkg` folder)
-- Run wasm contract simulation: `node wasm_exec_tiny.js out/main.wasm`
+- [Install easyjson](https://github.com/mailru/easyjson#install)
+- Run `easyjson -all easyjson/easyjson.go`
+- Build wasm contract file: `bash build-tiny.sh` (it should create `out` folder)
+- Run wasm contract simulation: `node run-tiny.js`
 
-note: 
-use wasm_exec.js from tinygo, not the defaut one from Go - https://github.com/tinygo-org/tinygo/issues/2484
-
-note 2:
-no support for decoding json in tinygo - https://github.com/tinygo-org/tinygo/issues/2660
-
-async features - https://stackoverflow.com/a/68427221/18299469
+Size comparison for PST contract:  
+![img_1.png](img_1.png)

@@ -1,5 +1,6 @@
 package impl
 
+//easyjson:json
 type PstState struct {
 	Ticker    string            `json:"ticker"`
 	Name      string            `json:"name"`

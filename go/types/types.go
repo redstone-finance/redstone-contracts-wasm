@@ -14,7 +14,7 @@ type Action struct {
 }
 
 type TransferAction struct {
-	Action
+	Function string `json:"function"`
 	Target string `json:"target"`
 	Qty    uint64 `json:"qty"`
 }

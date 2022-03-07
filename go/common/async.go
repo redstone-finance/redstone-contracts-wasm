@@ -1,6 +1,7 @@
 package common
 
 import (
+	"encoding/json"
 	"syscall/js"
 )
 
@@ -29,4 +30,9 @@ func Await(awaitable js.Value) ([]js.Value, []js.Value) {
 	case err := <-catch:
 		return nil, err
 	}
+}
+
+func ConvertInto(action map[string]interface{}, into interface {}) {
+	jsonStr, _ := json.Marshal(action)
+	json.Unmarshal(jsonStr, into)
 }

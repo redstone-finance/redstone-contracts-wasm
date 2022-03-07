@@ -17,9 +17,9 @@ async function main() {
 
     console.log(wasm.exports);
 
-    console.log('lang():', lang());
-    console.log('contractType():', contractType());
-    console.log('initState():', initState(JSON.stringify(
+    console.log('\nlang():', lang());
+    console.log('\ncontractType():', contractType());
+    console.log('\ninitState():', initState(JSON.stringify(
         {
             "ticker": "EXAMPLE_PST_TOKEN",
             "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
@@ -30,16 +30,18 @@ async function main() {
             }
         }
     )));
-    console.log("Calling async handle");
+    console.log('\ncurrentState()', currentState());
+
+    console.log("\nCalling async handle");
     const result = await handle(JSON.stringify({
         function: 'transfer',
-        target: 'ppe',
-        qty: 345345
+        target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
+        qty: 555555
     }));
     console.log('Result from async handle:', result);
-    console.log('currentState()', currentState());
+    console.log('\ncurrentState()', currentState());
 
-    console.log("Checking exception handling");
+    console.log("\n\nChecking exception handling (should throw here)");
     try {
         await handle(JSON.stringify({
             function: 'someRandomFunction',

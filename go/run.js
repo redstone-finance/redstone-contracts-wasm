@@ -8,7 +8,7 @@ async function main() {
 
     console.log(go.importObject)
 
-    const wasmBinary = fs.readFileSync('./out/main.wasm');
+    const wasmBinary = fs.readFileSync('./out/contract.wasm');
 
     const module = await WebAssembly.instantiate(wasmBinary, go.importObject);
 
@@ -16,14 +16,10 @@ async function main() {
     go.run(wasm);
 
     console.log(wasm.exports);
-    console.log(handle)
-    console.log(
-        'Calling handle',
-        handle(JSON.stringify({function: 'transfer', target: 'ppe', qty: 555})))
 
-    console.log('Calling lang', lang());
-    console.log('Calling contractType', contractType());
-    console.log('Calling initState', initState(JSON.stringify(
+    console.log('lang():', lang());
+    console.log('contractType():', contractType());
+    console.log('initState():', initState(JSON.stringify(
         {
             "ticker": "EXAMPLE_PST_TOKEN",
             "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
@@ -34,7 +30,24 @@ async function main() {
             }
         }
     )));
-    console.log('Calling current state', currentState());
+    console.log("Calling async handle");
+    const result = await handle(JSON.stringify({
+        function: 'transfer',
+        target: 'ppe',
+        qty: 345345
+    }));
+    console.log('Result from async handle:', result);
+    console.log('currentState()', currentState());
+
+    console.log("Checking exception handling");
+    try {
+        await handle(JSON.stringify({
+            function: 'someRandomFunction',
+        }));
+    } catch (e) {
+        console.error(e);
+    }
+
 }
 
 main().finally();

@@ -14,3 +14,5 @@ use wasm_exec.js from tinygo, not the defaut one from Go - https://github.com/ti
 
 note 2:
 no support for decoding json in tinygo - https://github.com/tinygo-org/tinygo/issues/2660
+
+async features - https://stackoverflow.com/a/68427221/18299469

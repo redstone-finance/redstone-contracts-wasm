@@ -3,20 +3,13 @@ package main
 // Import the package to access the Wasm environment
 import (
 	"encoding/json"
+	"errors"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
 	"syscall/js"
 )
 
-type PstState struct {
-	Ticker    string            `json:"ticker"`
-	Name      string            `json:"name"`
-	Owner     string            `json:"owner"`
-	Evolve    string            `json:"evolve"`
-	CanEvolve bool              `json:"canEvolve"`
-	Balances  map[string]uint64 `json:"balances"`
-}
-
 // the current state of the contract..at least it's easier than in Rust ;-)
-var currentState PstState
+var currentState types.PstState
 
 func main() {
 	// the Go way...standard "exports" from the wasm module do not work here...
@@ -31,17 +24,53 @@ func main() {
 	<-make(chan bool)
 }
 
+// the function that contract developers actually need to implement
+func doHandle(action types.Action) (interface{}, error) {
+	switch {
+	case action.Function == "transfer":
+		return "transfer", nil
+	case action.Function == "balance":
+		return "balance", nil
+	case action.Function == "evolve":
+		return "evolve", nil
+	default:
+		return nil, errors.New("[RE:WTF] unknown function")
+	}
+}
+
 func Handle() js.Func {
 	// note: each 'exported' function has to be wrapped into
 	// js.FuncOf(func(this js.Value, args []js.Value) interface{}
 	// - that's kinda ugly too...
-	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		actionJson := args[0].String()
-		var state PstState
-		json.Unmarshal([]byte(actionJson), &state)
-		data, _ := json.Marshal(state)
+	return js.FuncOf(func(this js.Value, handleArgs []js.Value) interface{} {
 
-		return string(data)
+		promisifiedHandler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			resolve := args[0]
+			reject := args[1]
+
+			go func() {
+				actionJson := handleArgs[0].String()
+				var action types.Action
+				json.Unmarshal([]byte(actionJson), &action)
+				_, err := json.Marshal(action)
+
+				result, err := doHandle(action)
+
+				if err != nil {
+					// err should be an instance of `error`, eg `errors.New("some error")`
+					errorConstructor := js.Global().Get("Error")
+					errorObject := errorConstructor.New(err.Error())
+					reject.Invoke(errorObject)
+				} else {
+					resolve.Invoke(result)
+				}
+			}()
+
+			return nil
+		})
+
+		promiseConstructor := js.Global().Get("Promise")
+		return promiseConstructor.New(promisifiedHandler)
 	})
 }
 

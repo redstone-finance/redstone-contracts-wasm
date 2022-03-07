@@ -16,16 +16,25 @@ async function main() {
     go.run(wasm);
 
     console.log(wasm.exports);
-    console.log(MyGoFunc)
-    console.log(MyGoFunc())
+    console.log(handle)
+    console.log(
+        'Calling handle',
+        handle(JSON.stringify({function: 'transfer', target: 'ppe', qty: 555})))
 
-
-/*    console.log(wasm.exports.handle({}));
-    console.log(wasm.exports.lang());
-    console.log(wasm.exports.contractType());*/
-
-    //wasm.exports.update();
-
+    console.log('Calling lang', lang());
+    console.log('Calling contractType', contractType());
+    console.log('Calling initState', initState(JSON.stringify(
+        {
+            "ticker": "EXAMPLE_PST_TOKEN",
+            "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
+            "canEvolve": true,
+            "balances": {
+                "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M": 10000000,
+                "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA": 23111222
+            }
+        }
+    )));
+    console.log('Calling current state', currentState());
 }
 
 main().finally();

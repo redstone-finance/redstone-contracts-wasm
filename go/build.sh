@@ -1,2 +1,2 @@
-# tinygo build -o out/contract.wasm -target wasm contract.go
+# tinygo build -o out/impl.wasm -target wasm impl.go
 GOOS=js GOARCH=wasm go build -o out/contract.wasm contract.go

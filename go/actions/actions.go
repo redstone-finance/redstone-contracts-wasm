@@ -3,12 +3,12 @@ package actions
 import (
 	"errors"
 	"fmt"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 )
 
-func Transfer(state *types.PstState, action types.TransferAction) error {
+func Transfer(state impl.PstState, action impl.TransferAction) (*impl.PstState, error) {
 	if action.Qty == 0 {
-		return errors.New(fmt.Sprintf("[CE:ITQ] invalid transfer qty: %v", action.Qty))
+		return nil, errors.New(fmt.Sprintf("[CE:ITQ] invalid transfer qty: %v", action.Qty))
 	}
 
 	// TODO - from wasm import Transaction.owner()
@@ -16,7 +16,7 @@ func Transfer(state *types.PstState, action types.TransferAction) error {
 
 	if callerBalance, ok := state.Balances[caller]; ok {
 		if callerBalance < action.Qty {
-			return errors.New(fmt.Sprintf("[CE:CBNE] caller balance not enough: %v", state.Balances[caller]))
+			return nil, errors.New(fmt.Sprintf("[CE:CBNE] caller balance not enough: %v", state.Balances[caller]))
 		}
 
 		callerBalance -= action.Qty
@@ -30,8 +30,16 @@ func Transfer(state *types.PstState, action types.TransferAction) error {
 		}
 
 	} else {
-		return errors.New(fmt.Sprintf("[CE:CNF] caller not found: %v", caller))
+		return nil, errors.New(fmt.Sprintf("[CE:CNF] caller not found: %v", caller))
 	}
 
-	return nil
+	return &state, nil
+}
+
+func Balance(state impl.PstState, action impl.BalanceAction) (interface{}, error) {
+	if targetBalance, ok := state.Balances[action.Target]; ok {
+		return targetBalance, nil
+	} else {
+		return nil, errors.New(fmt.Sprintf("[CE:TNF] target not found: %v", action.Target))
+	}
 }

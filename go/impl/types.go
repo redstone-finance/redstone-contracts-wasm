@@ -1,4 +1,4 @@
-package types
+package impl
 
 type PstState struct {
 	Ticker    string            `json:"ticker"`
@@ -28,3 +28,5 @@ type BalanceAction struct {
 	Action
 	Target string `json:"target"`
 }
+
+type ActionResult = interface {}

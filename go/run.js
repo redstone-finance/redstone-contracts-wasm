@@ -32,14 +32,23 @@ async function main() {
     )));
     console.log('\ncurrentState()', currentState());
 
-    console.log("\nCalling async handle");
-    const result = await handle(JSON.stringify({
+    console.log("\nCalling async handle - transfer");
+    const resultTransfer = await handle(JSON.stringify({
         function: 'transfer',
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
         qty: 555555
     }));
-    console.log('Result from async handle:', result);
+    // result should be null - state modifying functions do not return value
+    console.log('Result from transfer:', resultTransfer);
     console.log('\ncurrentState()', currentState());
+
+    console.log("\nCalling async handle - balance");
+    const resultBalance = await handle(JSON.stringify({
+        function: 'balance',
+        target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
+    }));
+    // result should be target balance value - "view" functions return value
+    console.log('Result from balance:', resultBalance);
 
     console.log("\n\nChecking exception handling (should throw here)");
     try {
@@ -49,7 +58,6 @@ async function main() {
     } catch (e) {
         console.error(e);
     }
-
 }
 
 main().finally();

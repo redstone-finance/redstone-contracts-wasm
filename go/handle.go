@@ -6,33 +6,38 @@ import (
 	"fmt"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/actions"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 	"syscall/js"
 )
 
 // the current state of the contract that contract developers have to define
-var currentState types.PstState
+var contract *impl.Contract = nil
+
 
 // the function that contract developers actually need to implement
-func doHandle(action map[string]interface{}) (interface{}, error) {
+func doHandle(action map[string]interface{}) (*impl.PstState, impl.ActionResult, error) {
 	fn := action["function"]
+
 	switch fn {
 	case "transfer":
-		// not sure how to "automatically" handle casting to concrete type in Go.
+		// not sure how to "automatically" handle casting to concrete impl in Go.
 		// https://eagain.net/articles/go-json-kind/
 		// https://eagain.net/articles/go-dynamic-json/
-		var transfer types.TransferAction
+		var transfer impl.TransferAction
 		common.ConvertInto(action, &transfer)
-		actions.Transfer(&currentState, transfer)
-		return transfer.Target, nil
-	case "evolve":
-		return "evolve", nil
+		state, err := actions.Transfer(contract.CloneState(), transfer)
+		return state, nil, err
 	case "balance":
-		return "balance", nil
+		var balance impl.BalanceAction
+		common.ConvertInto(action, &balance)
+		result, err := actions.Balance(contract.CloneState(), balance)
+		return nil, result, err
 	default:
-		return nil, errors.New(fmt.Sprintf("[RE:WTF] unknown function: %v", fn))
+		return nil, nil, errors.New(fmt.Sprintf("[RE:WTF] unknown function: %v", fn))
 	}
 }
+
+
 
 // low-level WASM code...should be somehow hidden from the contract developer
 func main() {
@@ -71,12 +76,15 @@ func Handle() js.Func {
 					doReject(err, reject)
 				}
 
-				result, err := doHandle(action)
+				state, result, err := doHandle(action)
 
 				if err != nil {
 					// err should be an instance of `error`, eg `errors.New("some error")`
 					doReject(err, reject)
 				} else {
+					if state != nil {
+						contract.UpdateState(state)
+					}
 					resolve.Invoke(result)
 				}
 			}()
@@ -103,15 +111,18 @@ func Lang() interface{} {
 
 func CurrentState() interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		data, _ := json.Marshal(currentState)
+		data, _ := json.Marshal(contract.CurrentState())
 		return string(data)
 	})
 }
 
 func InitState() interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		stateJson := args[0].String()
-		json.Unmarshal([]byte(stateJson), &currentState)
+		if contract == nil {
+			println("calling init state")
+			contract = &impl.Contract{}
+			contract.InitState(args[0])
+		}
 		return nil
 	})
 }

@@ -7,5 +7,9 @@ type Action struct {
 type ActionResult = interface{}
 
 //easyjson:skip
-type SwContract interface {
+type SwContract[S any] interface {
+	Handle(action Action, actionBytes []byte) (*S, ActionResult, error)
+	InitState(stateJson string)
+	UpdateState(newState *S)
+	CurrentState() S
 }

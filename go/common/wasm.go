@@ -1,13 +1,12 @@
-package wasm
+package common
 
 import (
 	"encoding/json"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
 	"syscall/js"
 )
 
-func Run(contract *impl.PstContract) {
+func Run[T any](contract common_types.SwContract[T]) {
 	// the Go way of defining WASM exports...
 	// standard "exports" from the wasm module do not work here...
 	// that's kinda ugly TBH
@@ -22,7 +21,7 @@ func Run(contract *impl.PstContract) {
 	<-make(chan bool)
 }
 
-func handle(contract *impl.PstContract) js.Func {
+func handle[T any](contract common_types.SwContract[T]) js.Func {
 	// note: each 'exported' function has to be wrapped into
 	// js.FuncOf(func(this js.Value, args []js.Value) interface{}
 	// - that's kinda ugly too...
@@ -80,14 +79,14 @@ func lang() interface{} {
 	})
 }
 
-func currentState(contract *impl.PstContract) interface{} {
+func currentState[T any](contract common_types.SwContract[T]) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		data, _ := json.Marshal(contract.CurrentState())
 		return string(data)
 	})
 }
 
-func initState(contract *impl.PstContract) interface{} {
+func initState[T any](contract common_types.SwContract[T]) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		contract.InitState(args[0].String())
 		return nil

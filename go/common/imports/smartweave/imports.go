@@ -6,7 +6,7 @@ import (
 )
 
 func ReadContractState(contractTxId string) js.Value {
-	promise := importSmartWeave().Call("readContractState", contractTxId).JSValue()
+	promise := importSmartWeave().Call("readContractState", contractTxId)
 	result, _ := common.Await(promise)
 
 	return result[0]

@@ -1,4 +1,8 @@
-package easyjson
+package types
+
+import (
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
+)
 
 type PstState struct {
 	Ticker    string            `json:"ticker"`
@@ -9,10 +13,6 @@ type PstState struct {
 	Balances  map[string]uint64 `json:"balances"`
 }
 
-type Action struct {
-	Function string `json:"function"`
-}
-
 type TransferAction struct {
 	Function string `json:"function"`
 	Target   string `json:"target"`
@@ -20,22 +20,20 @@ type TransferAction struct {
 }
 
 type EvolveAction struct {
-	Action
+	common_types.Action
 	Value string `json:"target"`
 }
 
 type BalanceAction struct {
-	Action
+	common_types.Action
 	Target string `json:"target"`
 }
 
 type ForeignCallAction struct {
-	Action
+	common_types.Action
 	ContractTxId string `json:"contractTxId"`
 }
 
 type BalanceResult struct {
 	Balance uint64 `json:"balance"`
 }
-
-type ActionResult = interface{}

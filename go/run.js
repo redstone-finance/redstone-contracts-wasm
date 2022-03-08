@@ -77,7 +77,7 @@ async function main() {
         }
     }
 
-    const wasmBinary = fs.readFileSync('./out/contract.wasm');
+    const wasmBinary = fs.readFileSync('./.out/contract.wasm');
     /*const meteredWasmBinary = metering.meterWASM(wasmBinary, {
         meterType: "i32",
     });*/

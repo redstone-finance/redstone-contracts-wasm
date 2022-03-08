@@ -3,17 +3,18 @@ package impl
 import (
 	"errors"
 	"fmt"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/easyjson"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/block"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/imports/console"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/block"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/console"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
 )
 
 type PstContract struct {
-	state easyjson.PstState
+	state types.PstState
 }
 
 // Handle the function that contract developers actually need to implement
-func (c *PstContract) Handle(action easyjson.Action, actionBytes []byte) (*easyjson.PstState, easyjson.ActionResult, error) {
+func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*types.PstState, common_types.ActionResult, error) {
 	fn := action.Function
 
 	console.Log("Calling", fn)
@@ -27,18 +28,27 @@ func (c *PstContract) Handle(action easyjson.Action, actionBytes []byte) (*easyj
 		// not sure how to "automatically" handle casting to concrete action impl in Go.
 		// https://eagain.net/articles/go-json-kind/
 		// https://eagain.net/articles/go-dynamic-json/
-		var transfer easyjson.TransferAction
-		transfer.UnmarshalJSON(actionBytes)
+		var transfer types.TransferAction
+		err := transfer.UnmarshalJSON(actionBytes)
+		if err != nil {
+			return nil, nil, err
+		}
 		state, err := Transfer(c.CloneState(), transfer)
 		return state, nil, err
 	case "balance":
-		var balance easyjson.BalanceAction
-		balance.UnmarshalJSON(actionBytes)
+		var balance types.BalanceAction
+		err := balance.UnmarshalJSON(actionBytes)
+		if err != nil {
+			return nil, nil, err
+		}
 		result, err := Balance(c.CloneState(), balance)
 		return nil, result, err
 	case "foreignCall":
-		var foreignCall easyjson.ForeignCallAction
-		foreignCall.UnmarshalJSON(actionBytes)
+		var foreignCall types.ForeignCallAction
+		err := foreignCall.UnmarshalJSON(actionBytes)
+		if err != nil {
+			return nil, nil, err
+		}
 		result, err := ForeignCall(c.CloneState(), foreignCall)
 		return nil, result, err
 	default:
@@ -47,27 +57,33 @@ func (c *PstContract) Handle(action easyjson.Action, actionBytes []byte) (*easyj
 }
 
 func (c *PstContract) InitState(stateJson string) {
-	var state easyjson.PstState
-	state.UnmarshalJSON([]byte(stateJson))
-	//json.Unmarshal([]byte(stateJson), &state)
+	var state types.PstState
+	err := state.UnmarshalJSON([]byte(stateJson))
+	if err != nil {
+		return // TODO: throw in a similar way as in handle
+	}
 	c.UpdateState(&state)
 }
 
-func (c *PstContract) UpdateState(newState *easyjson.PstState) {
+func (c *PstContract) UpdateState(newState *types.PstState) {
 	c.state = *newState
 }
 
-func (c *PstContract) CurrentState() easyjson.PstState {
+func (c *PstContract) CurrentState() types.PstState {
 	return c.state
 }
 
 // CloneState TODO: discuss whether it is necessary
 // it allows to make the given action transactional, but
 // at the cost of performance
-func (c *PstContract) CloneState() easyjson.PstState {
+func (c *PstContract) CloneState() types.PstState {
 	json, _ := c.state.MarshalJSON()
-	state := easyjson.PstState{}
-	state.UnmarshalJSON(json)
+	state := types.PstState{}
+	err := state.UnmarshalJSON(json)
+	if err != nil {
+		// TODO: return error
+		return types.PstState{}
+	}
 
 	return state
 }

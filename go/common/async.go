@@ -30,13 +30,3 @@ func Await(awaitable js.Value) ([]js.Value, []js.Value) {
 		return nil, err
 	}
 }
-
-func DeepCopy(src, dest interface{}) (err error) {
-	dest = &src
-	return nil
-	/*buf := bytes.Buffer{}
-	if err = gob.NewEncoder(&buf).Encode(src); err != nil {
-		return
-	}
-	return gob.NewDecoder(&buf).Decode(dest)*/
-}

@@ -1,12 +1,11 @@
 package console
 
 import (
-	"fmt"
 	"syscall/js"
 )
 
 func Log(args ...interface{}) {
-	importConsole().Call("log", fmt.Sprintf("[WASM]: %v", args[0]), args[1:])
+	importConsole().Call("log", args)
 }
 
 func importConsole() js.Value {

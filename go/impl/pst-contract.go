@@ -2,7 +2,6 @@ package impl
 
 import (
 	"errors"
-	"fmt"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/block"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/console"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
@@ -52,7 +51,7 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*t
 		result, err := ForeignCall(c.CloneState(), foreignCall)
 		return nil, result, err
 	default:
-		return nil, nil, errors.New(fmt.Sprintf("[RE:WTF] unknown function: %v", fn))
+		return nil, nil, errors.New("[RE:WTF] unknown function: " + fn)
 	}
 }
 

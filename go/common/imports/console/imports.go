@@ -5,7 +5,7 @@ import (
 )
 
 func Log(args ...interface{}) {
-	importConsole().Call("log", args)
+	importConsole().Call("log", args[0], args[1:])
 }
 
 func importConsole() js.Value {

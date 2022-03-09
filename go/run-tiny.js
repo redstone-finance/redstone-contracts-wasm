@@ -26,7 +26,7 @@ async function main() {
     global.redstone.go = {
         console: {
             log: function (...args) {
-                console.log(args[0], args.slice(1));
+                console.log(`[WASM] ${args[0]}`, ...args.slice(1));
             }
         },
         Transaction: {
@@ -102,7 +102,7 @@ async function main() {
             }
         }
     )));
-    console.log('\ncurrentState()', currentState());
+    console.log('\ncurrentState()', JSON.parse(currentState()));
 
     console.log("\nCalling async handle - transfer");
 
@@ -117,7 +117,7 @@ async function main() {
     console.log('Result from transfer:', resultTransfer);
     console.log('Gas used', usedGas);
 
-    console.log('\ncurrentState()', currentState());
+    console.log('\ncurrentState()', JSON.parse(currentState()));
 
     console.log("\nCalling async handle - balance");
     const resultBalance = await handle(JSON.stringify({

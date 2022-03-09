@@ -15,6 +15,4 @@ pub fn balance(state: State, target: String) -> Result<HandlerResult, ContractEr
     } else {
         Ok(HandlerResult::Balance(*state.balances.get(&target).unwrap()))
     }
-
-
 }

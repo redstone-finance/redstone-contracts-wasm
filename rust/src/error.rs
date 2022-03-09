@@ -3,7 +3,7 @@ use serde::Serialize;
 #[derive(Serialize)]
 pub enum ContractError {
   RuntimeError(String),
-    TransferAmountMustBeHigherThanZero,
+  TransferAmountMustBeHigherThanZero,
   IDontLikeThisContract,
   CallerBalanceNotEnough(u64),
   OnlyOwnerCanEvolve,

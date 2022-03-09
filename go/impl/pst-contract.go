@@ -13,7 +13,7 @@ type PstContract struct {
 }
 
 // Handle the function that contract developers actually need to implement
-func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*types.PstState, common_types.ActionResult, error) {
+func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (interface{}, common_types.ActionResult, error) {
 	fn := action.Function
 
 	console.Log("Calling", fn)
@@ -21,6 +21,8 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*t
 	console.Log("Block height", block.Height())
 	console.Log("Block indep_hash", block.IndepHash())
 	console.Log("Block timestamp", block.Timestamp())
+
+	clonedState := c.CloneState().(types.PstState)
 
 	switch fn {
 	case "transfer":
@@ -32,7 +34,7 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*t
 		if err != nil {
 			return nil, nil, err
 		}
-		state, err := Transfer(c.CloneState(), transfer)
+		state, err := Transfer(clonedState, transfer)
 		return state, nil, err
 	case "balance":
 		var balance types.BalanceAction
@@ -40,7 +42,7 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*t
 		if err != nil {
 			return nil, nil, err
 		}
-		result, err := Balance(c.CloneState(), balance)
+		result, err := Balance(clonedState, balance)
 		return nil, result, err
 	case "foreignCall":
 		var foreignCall types.ForeignCallAction
@@ -48,7 +50,7 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (*t
 		if err != nil {
 			return nil, nil, err
 		}
-		result, err := ForeignCall(c.CloneState(), foreignCall)
+		result, err := ForeignCall(clonedState, foreignCall)
 		return nil, result, err
 	default:
 		return nil, nil, errors.New("[RE:WTF] unknown function: " + fn)
@@ -64,18 +66,20 @@ func (c *PstContract) InitState(stateJson string) {
 	c.UpdateState(&state)
 }
 
-func (c *PstContract) UpdateState(newState *types.PstState) {
-	c.state = *newState
+func (c *PstContract) UpdateState(newState interface{}) {
+	// note: we're first type asserting here to the pointer to types.PstState
+	// - and the retrieving value from the pointer
+	c.state = *(newState.(*types.PstState))
 }
 
-func (c *PstContract) CurrentState() types.PstState {
+func (c *PstContract) CurrentState() interface{} {
 	return c.state
 }
 
 // CloneState TODO: discuss whether it is necessary
 // it allows to make the given action transactional, but
 // at the cost of performance
-func (c *PstContract) CloneState() types.PstState {
+func (c *PstContract) CloneState() interface{} {
 	json, _ := c.state.MarshalJSON()
 	state := types.PstState{}
 	err := state.UnmarshalJSON(json)

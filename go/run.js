@@ -26,7 +26,7 @@ async function main() {
     global.redstone.go = {
         console: {
             log: function (...args) {
-                console.log(args[0], args.slice(1));
+                console.log(args[0], ...args.slice(1));
             }
         },
         Transaction: {

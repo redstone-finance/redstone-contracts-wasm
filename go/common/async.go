@@ -1,6 +1,7 @@
 package common
 
 import (
+	"math/rand"
 	"syscall/js"
 )
 
@@ -29,4 +30,14 @@ func Await(awaitable js.Value) ([]js.Value, []js.Value) {
 	case err := <-catch:
 		return nil, err
 	}
+}
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func RandSeq(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
 }

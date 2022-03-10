@@ -2,19 +2,30 @@ package common
 
 import (
 	"encoding/json"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/wasm_module"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
+	"math/rand"
 	"syscall/js"
+	"time"
 )
 
 func Run(contract common_types.SwContract) {
+	// generating random module id and registering it on host
+	// a workaround for potential wasm modules collision
+	rand.Seed(time.Now().UnixNano())
+	moduleId := RandSeq(20)
+	js.Global().Set(moduleId, make(map[string]interface{}))
+	wasmModule := js.Global().Get(moduleId)
 	// the Go way of defining WASM exports...
 	// standard "exports" from the wasm module do not work here...
 	// that's kinda ugly TBH
-	js.Global().Set("handle", handle(contract))
-	js.Global().Set("initState", initState(contract))
-	js.Global().Set("currentState", currentState(contract))
-	js.Global().Set("contractType", contractType())
-	js.Global().Set("lang", lang())
+	wasmModule.Set("handle", handle(contract))
+	wasmModule.Set("initState", initState(contract))
+	wasmModule.Set("currentState", currentState(contract))
+	wasmModule.Set("contractType", contractType())
+	wasmModule.Set("lang", lang())
+
+	wasm_module.RegisterWasmModule(moduleId)
 
 	// Prevent the function from returning, which is required in a wasm module
 	// i.e. "Error: Go program has already exited" is thrown otherwise on host

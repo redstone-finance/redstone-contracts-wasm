@@ -16,12 +16,14 @@ async function main() {
 
     let usedGas = 0;
 
-    console.log(go.importObject)
+    //console.log(go.importObject)
     go.importObject.metering = {
         usegas: function (value) {
             usedGas += value;
         }
     }
+
+    let moduleExports = {};
 
     global.redstone.go = {
         console: {
@@ -74,8 +76,16 @@ async function main() {
                     }
                 }
             },
+        },
+        WasmModule: {
+            registerWasmModule: function(moduleId) {
+                moduleExports = global[moduleId];
+                delete moduleId;
+                console.log(moduleExports);
+            }
         }
     }
+
 
     const wasmBinary = fs.readFileSync('./.out/contract_tiny.wasm');
     /*const meteredWasmBinary = metering.meterWASM(wasmBinary, {
@@ -85,13 +95,14 @@ async function main() {
     const module = await WebAssembly.instantiate(wasmBinary, go.importObject);
 
     const wasm = module.instance;
-    go.run(wasm);
 
     console.log(wasm.exports);
-
-    console.log('\nlang():', lang());
-    console.log('\ncontractType():', contractType());
-    console.log('\ninitState():', initState(JSON.stringify(
+    console.log('calling go run');
+    go.run(wasm);
+    console.log('go run called');
+    console.log('\nlang():', moduleExports.lang());
+    console.log('\ncontractType():', moduleExports.contractType());
+    console.log('\ninitState():', moduleExports.initState(JSON.stringify(
         {
             "ticker": "EXAMPLE_PST_TOKEN",
             "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
@@ -102,13 +113,13 @@ async function main() {
             }
         }
     )));
-    console.log('\ncurrentState()', JSON.parse(currentState()));
+    console.log('\ncurrentState()', JSON.parse(moduleExports.currentState()));
 
     console.log("\nCalling async handle - transfer");
 
     usedGas = 0;
 
-    const resultTransfer = await handle(JSON.stringify({
+    const resultTransfer = await moduleExports.handle(JSON.stringify({
         function: 'transfer',
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
         qty: 555555
@@ -117,10 +128,10 @@ async function main() {
     console.log('Result from transfer:', resultTransfer);
     console.log('Gas used', usedGas);
 
-    console.log('\ncurrentState()', JSON.parse(currentState()));
+    console.log('\ncurrentState()', JSON.parse(moduleExports.currentState()));
 
     console.log("\nCalling async handle - balance");
-    const resultBalance = await handle(JSON.stringify({
+    const resultBalance = await moduleExports.handle(JSON.stringify({
         function: 'balance',
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
     }));
@@ -128,7 +139,7 @@ async function main() {
     console.log('Result from balance:', resultBalance);
 
     console.log("\nCalling async handle - foreignCall");
-    const resultFc = await handle(JSON.stringify({
+    const resultFc = await moduleExports.handle(JSON.stringify({
         function: 'foreignCall',
         target: 'some-random-contract',
     }));
@@ -137,7 +148,7 @@ async function main() {
 
     console.log("\n\nChecking exception handling (should throw here)");
     try {
-        await handle(JSON.stringify({
+        await moduleExports.handle(JSON.stringify({
             function: 'someRandomFunction',
         }));
     } catch (e) {

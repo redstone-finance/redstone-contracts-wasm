@@ -1,13 +1,7 @@
-# Go smartweave example contract
+# Go SmartWeave example contract
 
 ## Install go 1.17
 https://go.dev/doc/install
-
-## How to use (default Go compiler)
-- [Install easyjson](https://github.com/mailru/easyjson#install)
-- Run `easyjson -all easyjson/easyjson.go`
-- Build wasm contract file: `bash build.sh` (it should create `out` folder)
-- Run wasm contract simulation: `node run.js`
 
 ## How to use (tinygo compiler)
 - [Install tinygo](https://tinygo.org/getting-started/install/)

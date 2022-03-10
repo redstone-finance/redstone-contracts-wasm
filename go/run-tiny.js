@@ -88,11 +88,11 @@ async function main() {
 
 
     const wasmBinary = fs.readFileSync('./.out/contract_tiny.wasm');
-    /*const meteredWasmBinary = metering.meterWASM(wasmBinary, {
+    const meteredWasmBinary = metering.meterWASM(wasmBinary, {
         meterType: "i32",
-    });*/
+    });
 
-    const module = await WebAssembly.instantiate(wasmBinary, go.importObject);
+    const module = await WebAssembly.instantiate(meteredWasmBinary, go.importObject);
 
     const wasm = module.instance;
 

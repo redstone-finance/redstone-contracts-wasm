@@ -1,7 +1,7 @@
 package block
 
 import (
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports"
 	"syscall/js"
 )
 
@@ -18,10 +18,5 @@ func Timestamp() int {
 }
 
 func importBlock() js.Value {
-	return js.Global().
-		Get("redstone").
-		Get("go").
-		Get(common.GetWasmInstance().ModuleId).
-		Get("imports").
-		Get("Block")
+	return imports.RedStone().Get("Block")
 }

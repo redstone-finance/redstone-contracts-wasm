@@ -2,6 +2,7 @@ package smartweave
 
 import (
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports"
 	"syscall/js"
 )
 
@@ -13,10 +14,5 @@ func ReadContractState(contractTxId string) js.Value {
 }
 
 func importSmartWeave() js.Value {
-	return js.Global().
-		Get("redstone").
-		Get("go").
-		Get(common.GetWasmInstance().ModuleId).
-		Get("imports").
-		Get("SmartWeave")
+	return imports.RedStone().Get("SmartWeave")
 }

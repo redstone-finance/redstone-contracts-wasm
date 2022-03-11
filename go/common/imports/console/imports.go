@@ -1,7 +1,7 @@
 package console
 
 import (
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports"
 	"syscall/js"
 )
 
@@ -10,11 +10,5 @@ func Log(args ...interface{}) {
 }
 
 func importConsole() js.Value {
-	println(common.GetWasmInstance().ModuleId)
-	return js.Global().
-		Get("redstone").
-		Get("go").
-		Get(common.GetWasmInstance().ModuleId).
-		Get("imports").
-		Get("console")
+	return imports.RedStone().Get("console")
 }

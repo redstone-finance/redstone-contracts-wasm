@@ -2,7 +2,6 @@ package impl
 
 import (
 	"errors"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/console"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/smartweave"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/transaction"
 	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
@@ -10,7 +9,7 @@ import (
 
 func Transfer(state types.PstState, action types.TransferAction) (*types.PstState, error) {
 	if action.Qty == 0 {
-		return nil, errors.New("[CE:ITQ] invalid transfer qty: " + string(action.Qty))
+		return nil, errors.New("[CE:ITQ] invalid transfer qty")
 	}
 
 	caller := transaction.Owner()
@@ -38,7 +37,6 @@ func Transfer(state types.PstState, action types.TransferAction) (*types.PstStat
 }
 
 func Balance(state types.PstState, action types.BalanceAction) (*types.BalanceResult, error) {
-	println("balance called")
 	if targetBalance, ok := state.Balances[action.Target]; ok {
 		return &types.BalanceResult{
 			Balance: targetBalance,
@@ -48,11 +46,17 @@ func Balance(state types.PstState, action types.BalanceAction) (*types.BalanceRe
 	}
 }
 
-func ForeignCall(state types.PstState, action types.ForeignCallAction) (interface{}, error) {
-	println("ForeignCall called")
+func ForeignCall(state types.PstState, action types.ForeignCallAction) (*types.PstState, error) {
+	if action.ContractTxId == "bad_contract" {
+		return nil, errors.New("[CE:WFC] Wrong foreign contract")
+	}
+
 	result := smartweave.ReadContractState(action.ContractTxId)
+	if result.Get("ticker").String() == "FOREIGN_PST" {
+		for key, _ := range state.Balances {
+			state.Balances[key] += 1000
+		}
+	}
 
-	console.Log("Result from foreign call", result)
-
-	return result, nil
+	return &state, nil
 }

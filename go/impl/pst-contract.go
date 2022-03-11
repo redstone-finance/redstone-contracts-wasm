@@ -15,7 +15,6 @@ type PstContract struct {
 // Handle the function that contract developers actually need to implement
 func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (interface{}, common_types.ActionResult, error) {
 	fn := action.Function
-
 	console.Log("Calling", fn)
 
 	console.Log("Block height", block.Height())
@@ -50,8 +49,8 @@ func (c *PstContract) Handle(action common_types.Action, actionBytes []byte) (in
 		if err != nil {
 			return nil, nil, err
 		}
-		result, err := ForeignCall(clonedState, foreignCall)
-		return nil, result, err
+		state, err := ForeignCall(clonedState, foreignCall)
+		return state, nil, err
 	default:
 		return nil, nil, errors.New("[RE:WTF] unknown function: " + fn)
 	}

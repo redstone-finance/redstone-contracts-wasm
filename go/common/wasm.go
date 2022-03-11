@@ -29,6 +29,7 @@ func Run(contract common_types.SwContract) {
 	// a workaround for potential wasm modules collision
 	rand.Seed(time.Now().UnixNano())
 	moduleId := RandSeq(20)
+
 	js.Global().Set(moduleId, make(map[string]interface{}))
 	wasmModule := js.Global().Get(moduleId)
 	// the Go way of defining WASM exports...

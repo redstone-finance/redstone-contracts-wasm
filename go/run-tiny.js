@@ -1,5 +1,4 @@
 require('./wasm_exec_tiny.js');
-//require('./wasm_exec.js');
 const fs = require('fs');
 const metering = require('wasm-metering')
 
@@ -94,7 +93,7 @@ async function main() {
         }
     };
 
-    const wasmBinary = fs.readFileSync('./.out/contract_tiny.wasm');
+    const wasmBinary = fs.readFileSync('./.out/go-pst.wasm');
     const meteredWasmBinary = metering.meterWASM(wasmBinary, {
         meterType: "i32",
     });

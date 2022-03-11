@@ -9,6 +9,21 @@ import (
 	"time"
 )
 
+type WasmInstance struct {
+	ModuleId string
+}
+
+var singleton *WasmInstance
+
+func GetWasmInstance() *WasmInstance {
+	// it is not thread safe, but wasm is single-threaded
+	// alternatively could use sync.Once - but it would increase the binary size.
+	if singleton == nil {
+		singleton = &WasmInstance{}
+	}
+	return singleton
+}
+
 func Run(contract common_types.SwContract) {
 	// generating random module id and registering it on host
 	// a workaround for potential wasm modules collision
@@ -25,6 +40,7 @@ func Run(contract common_types.SwContract) {
 	wasmModule.Set("contractType", contractType())
 	wasmModule.Set("lang", lang())
 
+	GetWasmInstance().ModuleId = moduleId
 	wasm_module.RegisterWasmModule(moduleId)
 
 	// Prevent the function from returning, which is required in a wasm module

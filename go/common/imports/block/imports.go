@@ -1,6 +1,9 @@
 package block
 
-import "syscall/js"
+import (
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
+	"syscall/js"
+)
 
 func IndepHash() string {
 	return importBlock().Call("indep_hash").String()
@@ -15,5 +18,10 @@ func Timestamp() int {
 }
 
 func importBlock() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("Block")
+	return js.Global().
+		Get("redstone").
+		Get("go").
+		Get(common.GetWasmInstance().ModuleId).
+		Get("imports").
+		Get("Block")
 }

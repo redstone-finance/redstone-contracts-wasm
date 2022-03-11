@@ -13,5 +13,10 @@ func ReadContractState(contractTxId string) js.Value {
 }
 
 func importSmartWeave() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("SmartWeave")
+	return js.Global().
+		Get("redstone").
+		Get("go").
+		Get(common.GetWasmInstance().ModuleId).
+		Get("imports").
+		Get("SmartWeave")
 }

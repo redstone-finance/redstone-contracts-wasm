@@ -25,67 +25,74 @@ async function main() {
 
     let moduleExports = {};
 
+    let _moduleId;
+
     global.redstone.go = {
-        console: {
-            log: function (...args) {
-                console.log(`[WASM] ${args[0]}`, ...args.slice(1));
-            }
-        },
-        Transaction: {
-            id: function () {
-                return "transaction.id";
-            },
-            owner: function () {
-                return "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA";
-            },
-            target: function () {
-                return "transaction.target";
-            }
-        },
-        Block: {
-            indep_hash: function () {
-                return "block.indep_hash";
-            },
-            height: function () {
-                return 876345;
-            },
-            timestamp: function () {
-                return 234234234
-            }
-        },
-        Contract: {
-            id: function() {
-                return "Contract.id";
-            },
-            owner: function() {
-                return "Contract.owner";
-            }
-        },
-        SmartWeave: {
-            readContractState: async function (contractTxId) {
-                console.log('js: readContractState before timeout');
-                await timeout(1000);
-                console.log('js: readContractState after timeout');
-                return {
-                    "ticker": "FOREIGN_PST",
-                    "name": "foreign call",
-                    "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
-                    "balances": {
-                        "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M": 100,
-                        "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA": 500
-                    }
-                }
-            },
-        },
         WasmModule: {
-            registerWasmModule: function(moduleId) {
+            registerWasmModule: function (moduleId) {
+                console.log("registerWasmModule", moduleId)
                 moduleExports = global[moduleId];
                 delete moduleId;
+                _moduleId = moduleId;
                 console.log(moduleExports);
+                global.redstone.go[_moduleId] = {}
+                global.redstone.go[_moduleId].imports = {
+                    console: {
+                        log: function (...args) {
+                            console.log(`[WASM] ${args[0]}`, ...args.slice(1));
+                        }
+                    },
+                    Transaction: {
+                        id: function () {
+                            return "transaction.id";
+                        },
+                        owner: function () {
+                            return "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA";
+                        },
+                        target: function () {
+                            return "transaction.target";
+                        }
+                    },
+                    Block: {
+                        indep_hash: function () {
+                            return "block.indep_hash";
+                        },
+                        height: function () {
+                            return 876345;
+                        },
+                        timestamp: function () {
+                            return 234234234
+                        }
+                    },
+                    Contract: {
+                        id: function () {
+                            return "Contract.id";
+                        },
+                        owner: function () {
+                            return "Contract.owner";
+                        }
+                    },
+                    SmartWeave: {
+                        readContractState: async function (contractTxId) {
+                            console.log('js: readContractState before timeout');
+                            await timeout(1000);
+                            console.log('js: readContractState after timeout');
+                            return {
+                                "ticker": "FOREIGN_PST",
+                                "name": "foreign call",
+                                "owner": "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
+                                "balances": {
+                                    "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M": 100,
+                                    "33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA": 500
+                                }
+                            }
+                        },
+                    },
+                };
+
             }
         }
-    }
-
+    };
 
     const wasmBinary = fs.readFileSync('./.out/contract_tiny.wasm');
     const meteredWasmBinary = metering.meterWASM(wasmBinary, {
@@ -93,7 +100,6 @@ async function main() {
     });
 
     const module = await WebAssembly.instantiate(meteredWasmBinary, go.importObject);
-
     const wasm = module.instance;
 
     console.log(wasm.exports);

@@ -1,6 +1,7 @@
 package console
 
 import (
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
 	"syscall/js"
 )
 
@@ -9,17 +10,11 @@ func Log(args ...interface{}) {
 }
 
 func importConsole() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("console")
-}
-
-func importTransaction() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("Transaction")
-}
-
-func importContract() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("Contract")
-}
-
-func importSmartWeave() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("SmartWeave")
+	println(common.GetWasmInstance().ModuleId)
+	return js.Global().
+		Get("redstone").
+		Get("go").
+		Get(common.GetWasmInstance().ModuleId).
+		Get("imports").
+		Get("console")
 }

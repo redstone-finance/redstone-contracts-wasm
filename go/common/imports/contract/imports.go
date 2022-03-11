@@ -1,6 +1,7 @@
 package contract
 
 import (
+	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
 	"syscall/js"
 )
 
@@ -13,5 +14,10 @@ func Owner() string {
 }
 
 func importContract() js.Value {
-	return js.Global().Get("redstone").Get("go").Get("Contract")
+	return js.Global().
+		Get("redstone").
+		Get("go").
+		Get(common.GetWasmInstance().ModuleId).
+		Get("imports").
+		Get("Contract")
 }

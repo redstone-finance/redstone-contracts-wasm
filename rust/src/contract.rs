@@ -19,7 +19,7 @@ we're storing the state inside the WASM module (for the time of state evaluation
 This allows to reduce the overhead of passing the state back and forth
 between the host and module with each contract interaction.
 In case of bigger states this overhead can be huge.
-Same approach has been implemented for the AssemblyScript version.
+Same approach has been implemented for the AssemblyScript and Go versions.
 
 So the flow (from the SDK perspective) is:
 1. SDK calls exported WASM module function "initState" (with lastly cached state or initial state,
@@ -123,8 +123,8 @@ pub fn current_state() -> JsValue {
 
 
 #[wasm_bindgen()]
-pub fn lang() -> String {
-    return "rust/1.0".to_string();
+pub fn version() -> i32 {
+    return 1;
 }
 
 // workaround for now to simplify type reading without as/loader or wasm-bindgen
@@ -133,8 +133,8 @@ pub fn lang() -> String {
 // 3 = go
 // 4 = swift
 // 5 = c
-#[wasm_bindgen(js_name = type)]
-pub fn contract_type() -> i32 {
+#[wasm_bindgen]
+pub fn lang() -> i32 {
     return 2;
 }
 

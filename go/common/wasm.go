@@ -38,8 +38,8 @@ func Run(contract common_types.SwContract) {
 	wasmModule.Set("handle", handle(contract))
 	wasmModule.Set("initState", initState(contract))
 	wasmModule.Set("currentState", currentState(contract))
-	wasmModule.Set("contractType", contractType())
 	wasmModule.Set("lang", lang())
+	wasmModule.Set("version", version())
 
 	GetWasmInstance().ModuleId = moduleId
 	wasm_module.RegisterWasmModule(moduleId)
@@ -101,12 +101,6 @@ func doReject(err error, reject js.Value) {
 	reject.Invoke(errorObject)
 }
 
-func lang() interface{} {
-	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		return "go/1.0"
-	})
-}
-
 func currentState(contract common_types.SwContract) interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		data, _ := json.Marshal(contract.CurrentState())
@@ -121,13 +115,19 @@ func initState(contract common_types.SwContract) interface{} {
 	})
 }
 
-// ContractType workaround for now to simplify type reading without as/loader or wasm-bindgen
+func version() interface{} {
+	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		return 1
+	})
+}
+
+// Lang workaround for now to simplify type reading without as/loader or wasm-bindgen
 // 1 = assemblyscript
 // 2 = rust
 // 3 = go
 // 4 = swift
 // 5 = c
-func contractType() interface{} {
+func lang() interface{} {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		return 3
 	})

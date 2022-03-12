@@ -58,7 +58,6 @@ module.exports = ContractTransform
 const handle_wrapper = `
 export function handle(_action: string): string {
   const action = parse<ActionSchema>(_action);
-
   const result = __inner_handle(action);
 
   return stringify(result);
@@ -72,8 +71,8 @@ export function currentState(): string {
   return stringify<StateSchema>(contractState);
 }
 
-export function lang(): string {
-  return "assemblyscript/1.0";
+export function version(): i32 {
+  return 1;
 }
 
 // workaround for now to simplify type reading without as/loader
@@ -82,7 +81,7 @@ export function lang(): string {
 // 3 = go
 // 4 = swift
 // 5 = c
-export function type(): i32 { 
+export function lang(): i32 { 
   return 1;
 };
 `;

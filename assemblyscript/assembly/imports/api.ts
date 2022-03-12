@@ -19,7 +19,7 @@ export type ContractFn<S, A, R> = (state: S, action: A) => HandlerResultSchema<S
 
 @serializable
 export class HandlerResultSchema<S, R> {
-  state: S
+  state: S | null
   result: R | null
 }
 

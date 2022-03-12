@@ -1,11 +1,10 @@
-// commons imports - do not remove!
+// common imports - do not remove (even if IDE reports as non-used)!
 import {
   Block,
   console,
   Contract,
   ContractFn,
   HandlerResultSchema,
-  msg,
   SmartweaveSchema,
   parse,
   stringify,
@@ -18,7 +17,6 @@ import {decrement} from "./actions/decrement";
 import {fullName} from "./actions/fullName";
 import {foreignRead} from "./actions/foreignRead";
 import {infLoop} from "./actions/infLoop";
-
 import {ActionSchema, ResultSchema, StateSchema} from "./schemas";
 
 const functions: Map<string, ContractFn<StateSchema, ActionSchema, ResultSchema>> = new Map();
@@ -33,9 +31,9 @@ export type ContractResultSchema = HandlerResultSchema<StateSchema, ResultSchema
 let contractState: StateSchema;
 
 @contract
-function handle(action: ActionSchema): ResultSchema | null {
+function handle(state: StateSchema, action: ActionSchema): ResultSchema | null {
   console.log(`Function called: "${action.function}"`);
-  console.logO(`Smartweave:`, stringify<SmartweaveSchema>({
+  console.logO(`SmartWeave:`, stringify<SmartweaveSchema>({
     contract: {
       id: Contract.id(),
       owner: Contract.owner()
@@ -54,9 +52,9 @@ function handle(action: ActionSchema): ResultSchema | null {
 
   const fn = action.function;
   if (functions.has(fn)) {
-    const handlerResult = functions.get(fn)(contractState, action);
+    const handlerResult = functions.get(fn)(state, action);
     if (handlerResult.state != null) {
-      contractState = handlerResult.state;
+      contractState = handlerResult.state!!;
     }
     if (handlerResult.result != null) {
       console.logO(`Result:`, stringify<ResultSchema>(handlerResult.result!!))

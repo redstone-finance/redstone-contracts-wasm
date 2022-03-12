@@ -51,6 +51,6 @@ export class ContractSchema {
 
 @serializable
 export class HandlerResultSchema {
-  state: StateSchema
+  state: StateSchema | null
   result: ResultSchema | null
 }

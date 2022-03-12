@@ -58,7 +58,8 @@ module.exports = ContractTransform
 const handle_wrapper = `
 export function handle(_action: string): string {
   const action = parse<ActionSchema>(_action);
-  const result = __inner_handle(action);
+  const state = parse<StateSchema>(currentState());
+  const result = __inner_handle(state, action);
 
   return stringify(result);
 }

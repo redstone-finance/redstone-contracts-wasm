@@ -1,7 +1,8 @@
-use crate::error::ContractError;
-use crate::js_imports::{log, SmartWeave};
-use crate::state::{HandlerResult, State};
 use serde::{Deserialize, Serialize};
+use crate::error::ContractError;
+use crate::state::State;
+use crate::contract_utils::js_imports::{log, SmartWeave};
+use crate::contract_utils::handler_result::HandlerResult;
 
 #[derive(Serialize, Deserialize)]
 pub struct JsAsyncResult {

@@ -1,7 +1,8 @@
 use crate::error::ContractError;
 use crate::error::ContractError::WalletHasNoBalanceDefined;
-use crate::js_imports::log;
-use crate::state::{HandlerResult, State};
+use crate::contract_utils::js_imports::log;
+use crate::contract_utils::handler_result::HandlerResult;
+use crate::state::State;
 
 pub fn balance(state: State, target: String) -> Result<HandlerResult, ContractError> {
     log(&format!("Balance called {}", target));

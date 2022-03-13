@@ -1,11 +1,10 @@
-use crate::state::{State};
+use crate::state::{State, HandlerResult};
 use crate::action::Action;
 use crate::actions::balance::balance;
 use crate::actions::evolve::evolve;
 use crate::actions::foreign_call::foreign_call;
 use crate::actions::transfer::transfer;
 use crate::error::ContractError;
-use crate::contract_utils::handler_result::HandlerResult;
 
 pub async fn handle(current_state: State, action: Action) -> Result<HandlerResult, ContractError> {
     match action {

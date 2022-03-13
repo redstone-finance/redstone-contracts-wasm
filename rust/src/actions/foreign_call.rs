@@ -1,13 +1,7 @@
-use serde::{Deserialize, Serialize};
 use crate::error::ContractError;
-use crate::state::State;
-use crate::contract_utils::js_imports::{log, SmartWeave};
-use crate::contract_utils::handler_result::HandlerResult;
-
-#[derive(Serialize, Deserialize)]
-pub struct JsAsyncResult {
-    pub value: String,
-}
+use crate::state::{State, HandlerResult};
+use crate::contract_utils::js_imports::log;
+use crate::contract_utils::foreign_call::read_foreign_contract_state;
 
 pub async fn foreign_call(mut state: State, contract_tx_id: String) -> Result<HandlerResult, ContractError> {
     log(&format!("foreign_call: {}", contract_tx_id));
@@ -15,14 +9,16 @@ pub async fn foreign_call(mut state: State, contract_tx_id: String) -> Result<Ha
         Err(ContractError::IDontLikeThisContract)
     } else {
         log("Before Async call");
-        let foreign_contract_state: State = SmartWeave::read_contract_state(&contract_tx_id)
-            .await.into_serde().unwrap();
+
+        let foreign_contract_state: State =
+            read_foreign_contract_state(&contract_tx_id).await;
+
         log(&format!("After Async call: {}", foreign_contract_state.ticker));
 
-        // some dummy logic - just for the sake of the integration test
+        // Some dummy logic - just for the sake of the integration test
         if foreign_contract_state.ticker == "FOREIGN_PST" {
-            for (_, val) in state.balances.iter_mut() {
-                *val += 1000 ;
+            for val in state.balances.values_mut() {
+                *val += 1000;
             }
         }
 

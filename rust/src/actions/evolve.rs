@@ -1,8 +1,7 @@
 use crate::error::ContractError;
 use crate::error::ContractError::{EvolveNotAllowed, OnlyOwnerCanEvolve};
-use crate::state::State;
+use crate::state::{State, HandlerResult};
 use crate::contract_utils::js_imports::Transaction;
-use crate::contract_utils::handler_result::HandlerResult;
 
 pub fn evolve(mut state: State, value: String) -> Result<HandlerResult, ContractError> {
     match state.can_evolve {

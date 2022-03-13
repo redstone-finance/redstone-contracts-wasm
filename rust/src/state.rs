@@ -1,14 +1,6 @@
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum HandlerResult {
-    NewState(State),
-    Balance(u64),
-}
-
-
 #[derive(Serialize, Deserialize, Clone, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct State {

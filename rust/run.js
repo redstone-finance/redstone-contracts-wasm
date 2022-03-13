@@ -115,7 +115,7 @@ async function main() {
 
 async function testInteraction(interaction) {
   console.log("\n\nExecuting interaction:", interaction);
-  const executionResult = await smartweaveContract.handle(interaction);
+  const executionResult = await smartweaveContract.handle_entrypoint(interaction);
 
   console.log("Execution result", executionResult);
 

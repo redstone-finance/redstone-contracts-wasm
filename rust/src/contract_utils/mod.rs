@@ -4,4 +4,4 @@
 
 pub mod js_imports;
 pub mod entrypoint;
-pub mod handler_result;
+pub mod foreign_call;

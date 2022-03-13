@@ -8,8 +8,7 @@ use std::cell::RefCell;
 use serde_json::Error;
 
 use crate::contract_utils::js_imports::{Block, Transaction, log, Contract};
-use crate::contract_utils::handler_result::HandlerResult;
-use crate::state::{State};
+use crate::state::{State, HandlerResult};
 use crate::action::Action;
 use crate::contract::handle;
 use crate::error::ContractError;

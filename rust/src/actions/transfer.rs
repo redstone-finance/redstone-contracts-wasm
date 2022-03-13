@@ -1,8 +1,7 @@
 use crate::error::ContractError;
 use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustBeHigherThanZero};
-use crate::state::{State};
+use crate::state::{State, HandlerResult};
 use crate::contract_utils::js_imports::{log, Transaction};
-use crate::contract_utils::handler_result::HandlerResult;
 
 pub fn transfer(mut state: State, qty: u64, target: String) -> Result<HandlerResult, ContractError> {
     log(&format!("Transfer called: {}: {}", target, qty));
@@ -12,26 +11,25 @@ pub fn transfer(mut state: State, qty: u64, target: String) -> Result<HandlerRes
     }
 
     let caller = Transaction::owner();
-
     let balances = &mut state.balances;
-    let caller_balance = balances.get_mut(&caller).unwrap();
 
-    if *caller_balance < qty {
-        return Err(CallerBalanceNotEnough(*caller_balance));
+    // Checking if caller has enough funds
+    let caller_balance = *balances.get(&caller).unwrap_or(&0);
+    if caller_balance < qty {
+        return Err(CallerBalanceNotEnough(caller_balance));
     }
 
-    *caller_balance -= qty;
+    // Update caller balance
+    balances.insert(caller, caller_balance - qty);
 
-    if balances.contains_key(&target) {
-        *balances.get_mut(&target).unwrap() += qty;
-    } else {
-        balances.insert(target, qty);
-    };
+    // Update target balance
+    let target_balance = *balances.get(&target).unwrap_or(&0);
+    balances.insert(target, target_balance + qty);
 
+    // Debug logging
     for (key, value) in &state.balances {
         log(&format!("{}: {}", key, value));
     }
-
 
     Ok(HandlerResult::NewState(state))
 }

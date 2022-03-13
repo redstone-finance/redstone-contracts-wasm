@@ -11,3 +11,10 @@ pub struct State {
     pub can_evolve: Option<bool>,
     pub balances: HashMap<String, u64>,
 }
+
+#[derive(Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum HandlerResult {
+    NewState(State),
+    Balance(u64),
+}

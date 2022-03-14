@@ -96,17 +96,17 @@ pub fn current_state() -> JsValue {
 }
 
 #[wasm_bindgen()]
-pub fn lang() -> String {
-    return "rust/1.0".to_string();
+pub fn version() -> i32 {
+    return 1;
 }
 
-// workaround for now to simplify type reading without as/loader or wasm-bindgen
+// Workaround for now to simplify type reading without as/loader or wasm-bindgen
 // 1 = assemblyscript
 // 2 = rust
 // 3 = go
 // 4 = swift
 // 5 = c
-#[wasm_bindgen(js_name = type)]
-pub fn contract_type() -> i32 {
+#[wasm_bindgen]
+pub fn lang() -> i32 {
     return 2;
 }

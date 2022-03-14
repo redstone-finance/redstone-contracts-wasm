@@ -14,7 +14,7 @@ main().finally();
 
 async function main() {
 
- /* const path = require('path').join(__dirname, 'pkg', 'smartweave_contract_bg.wasm');
+  const path = require('path').join(__dirname, 'pkg', 'rust-pst_bg.wasm');
   const bytes = require('fs').readFileSync(path);
 
   const module = new WebAssembly.Module(bytes);
@@ -65,9 +65,9 @@ async function main() {
     return acc;
   }, {});
 
-  console.log(nameMapping);*/
+  console.log(nameMapping);
 
-  console.log("BEGIN", smartweaveContract.currentState());
+  /*console.log("BEGIN", smartweaveContract.currentState());
 
   smartweaveContract.initState(contractState);
   console.log("Initial contract state:", smartweaveContract.currentState());
@@ -102,7 +102,7 @@ async function main() {
   await testInteraction({
     function: "foreignCall",
     contract_tx_id: "-Daj"
-  });
+  });*/
 
   /* await testInteraction({ Subtract: { number: 43 } });
    await testInteraction({ Subtract: { number: 12 } });

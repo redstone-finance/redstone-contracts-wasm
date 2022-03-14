@@ -7,7 +7,6 @@ use wasm_bindgen::prelude::*;
 use std::cell::RefCell;
 use serde_json::Error;
 
-use crate::contract_utils::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{State, HandlerResult};
 use crate::action::Action;
 use crate::contract;
@@ -48,8 +47,6 @@ thread_local! {
 
 #[wasm_bindgen()]
 pub async fn handle(interaction: JsValue) -> Option<JsValue> {
-    log_tx();
-
     let result: Result<HandlerResult, ContractError>;
     let action: Result<Action, Error> = interaction.into_serde();
 
@@ -66,7 +63,6 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     }
 
     if result.is_ok() {
-        log("Result ok");
         let handler_result = result.as_ref().ok().unwrap();
 
         return if let HandlerResult::NewState(state) = handler_result {
@@ -81,33 +77,16 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     }
 }
 
-fn log_tx() {
-    log(&format!("Block indep_hash {}", Block::indep_hash()));
-    log(&format!("Block height {}", Block::height()));
-    log(&format!("Block timestamp {}", Block::timestamp()));
-
-    log(&format!("Contract id {}", Contract::id()));
-    log(&format!("Contract owner {}", Contract::owner()));
-
-    log(&format!("Transaction id {}", Transaction::id()));
-    log(&format!("Transaction owner {}", Transaction::owner()));
-    log(&format!("Transaction target {}", Transaction::target()));
-}
-
 
 #[wasm_bindgen(js_name = initState)]
 pub fn init_state(state: &JsValue) {
-    log(&format!("Calling init state 2"));
     let state_parsed: State = state.into_serde().unwrap();
-    log(&format!("state parsed"));
 
     STATE.with(|service| service.replace(state_parsed));
 }
 
 #[wasm_bindgen(js_name = currentState)]
 pub fn current_state() -> JsValue {
-    log(&format!("Calling current state"));
-
     // not sure if that's deterministic - which is very important for the execution network.
     // TODO: perf - according to docs:
     // "This is unlikely to be super speedy so it's not recommended for large payload"

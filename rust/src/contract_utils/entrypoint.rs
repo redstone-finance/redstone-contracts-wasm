@@ -10,7 +10,7 @@ use serde_json::Error;
 use crate::contract_utils::js_imports::{Block, Transaction, log, Contract};
 use crate::state::{State, HandlerResult};
 use crate::action::Action;
-use crate::contract::handle;
+use crate::contract;
 use crate::error::ContractError;
 
 /*
@@ -47,7 +47,7 @@ thread_local! {
 }
 
 #[wasm_bindgen()]
-pub async fn handle_entrypoint(interaction: JsValue) -> Option<JsValue> {
+pub async fn handle(interaction: JsValue) -> Option<JsValue> {
     log_tx();
 
     let result: Result<HandlerResult, ContractError>;
@@ -62,7 +62,7 @@ pub async fn handle_entrypoint(interaction: JsValue) -> Option<JsValue> {
         // not sure about clone here
         let current_state = STATE.with(|service| service.borrow().clone());
 
-        result = handle(current_state, action.unwrap()).await;
+        result = contract::handle(current_state, action.unwrap()).await;
     }
 
     if result.is_ok() {

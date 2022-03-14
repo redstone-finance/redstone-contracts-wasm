@@ -116,7 +116,6 @@ pub fn current_state() -> JsValue {
     JsValue::from_serde(&current_state).unwrap()
 }
 
-
 #[wasm_bindgen()]
 pub fn lang() -> String {
     return "rust/1.0".to_string();

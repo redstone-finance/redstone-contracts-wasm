@@ -1,11 +1,12 @@
-use crate::error::ContractError;
 use crate::error::ContractError::WalletHasNoBalanceDefined;
-use crate::state::{State, HandlerResult};
+use crate::state::State;
+use crate::action::{QueryResponseMsg::Balance, ActionResult};
+use crate::contract_utils::handler_result::HandlerResult::QueryResponse;
 
-pub fn balance(state: State, target: String) -> Result<HandlerResult, ContractError> {
+pub fn balance(state: State, target: String) -> ActionResult {
     if !state.balances.contains_key(&target) {
         Err(WalletHasNoBalanceDefined(target))
     } else {
-        Ok(HandlerResult::Balance(*state.balances.get(&target).unwrap()))
+        Ok(QueryResponse(Balance(*state.balances.get(&target).unwrap())))
     }
 }

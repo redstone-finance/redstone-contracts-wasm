@@ -1,9 +1,11 @@
-use crate::error::ContractError;
 use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustBeHigherThanZero};
-use crate::state::{State, HandlerResult};
+use crate::state::State;
+use crate::action::ActionResult;
+use crate::contract_utils::handler_result::HandlerResult;
 use crate::contract_utils::js_imports::Transaction;
 
-pub fn transfer(mut state: State, qty: u64, target: String) -> Result<HandlerResult, ContractError> {
+
+pub fn transfer(mut state: State, qty: u64, target: String) -> ActionResult {
     if qty == 0 {
         return Err(TransferAmountMustBeHigherThanZero);
     }

@@ -1,8 +1,10 @@
 use crate::error::ContractError;
-use crate::state::{State, HandlerResult};
+use crate::state::State;
 use crate::contract_utils::foreign_call::read_foreign_contract_state;
+use crate::action::ActionResult;
+use crate::contract_utils::handler_result::HandlerResult;
 
-pub async fn foreign_call(mut state: State, contract_tx_id: String) -> Result<HandlerResult, ContractError> {
+pub async fn foreign_call(mut state: State, contract_tx_id: String) -> ActionResult {
     if contract_tx_id == "bad_contract" {
         Err(ContractError::IDontLikeThisContract)
     } else {

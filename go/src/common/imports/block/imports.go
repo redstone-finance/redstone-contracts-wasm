@@ -1,7 +1,7 @@
 package block
 
 import (
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports"
 	"syscall/js"
 )
 

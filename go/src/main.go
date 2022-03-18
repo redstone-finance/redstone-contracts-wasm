@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/impl"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/impl"
 )
 
 // contract - implementation of the SwContract interface

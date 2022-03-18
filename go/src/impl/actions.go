@@ -2,9 +2,9 @@ package impl
 
 import (
 	"errors"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/smartweave"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/transaction"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports/smartweave"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports/transaction"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/types"
 )
 
 func Transfer(state types.PstState, action types.TransferAction) (*types.PstState, error) {

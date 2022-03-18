@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common_types"
 )
 
 type PstState struct {

@@ -2,10 +2,10 @@ package impl
 
 import (
 	"errors"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/block"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/console"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports/block"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports/console"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common_types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/types"
 )
 
 type PstContract struct {

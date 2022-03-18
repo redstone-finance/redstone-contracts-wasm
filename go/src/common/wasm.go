@@ -2,8 +2,8 @@ package common
 
 import (
 	"encoding/json"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common/imports/wasm_module"
-	"github.com/redstone-finance/redstone-contracts-wasm/go/common_types"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common/imports/wasm_module"
+	"github.com/redstone-finance/redstone-contracts-wasm/go/src/common_types"
 	"math/rand"
 	"syscall/js"
 	"time"
